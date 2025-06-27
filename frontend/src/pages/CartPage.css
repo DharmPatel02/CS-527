@@ -1,0 +1,164 @@
+.cart-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.cart-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 50px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.empty-cart p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.empty-cart button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.empty-cart button:hover {
+  background-color: #45a049;
+}
+
+.cart-content {
+  display: flex;
+  gap: 30px;
+}
+
+.cart-items {
+  flex: 2;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.cart-item img {
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+
+.item-details {
+  flex: 1;
+}
+
+.item-details h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.item-details p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.remove-btn {
+  padding: 8px 15px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background-color: #d32f2f;
+}
+
+.cart-summary {
+  flex: 1;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.cart-summary h3 {
+  margin-top: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.checkout-btn:hover {
+  background-color: #45a049;
+}
+
+.success-message {
+  background-color: #4caf50;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Keep the existing nav styles consistent with other pages */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background-color: #282c34;
+  color: white;
+  align-items: center;
+}
+
+.top-nav .nav-links a,
+.top-nav .search-bar {
+  margin-left: 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.top-nav .search-bar{
+  color: black;
+
+}
+
+.top-nav .search-bar {
+  padding: 5px;
+}

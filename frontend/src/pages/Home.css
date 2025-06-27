@@ -1,0 +1,63 @@
+/* Updated Blue Theme */
+:root {
+  --ice-blue: #f0f8ff;
+  --primary-blue: #2a5c82;
+  --teal-accent: #3aa6b9;
+  --dark-teal: #2d7d8f;
+  --navy-text: #1a374d;
+  --font-primary: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.homepage-container {
+  background-color: var(--ice-blue);
+}
+
+.auth-box {
+  box-shadow: 0 10px 30px rgba(42, 92, 130, 0.1);
+}
+
+.welcome-section {
+  background: linear-gradient(135deg, var(--primary-blue), #1a374d);
+}
+
+.login-title {
+  color: var(--navy-text);
+}
+
+.login-options button {
+  background: var(--teal-accent);
+  border: 2px solid var(--primary-blue);
+}
+
+.login-options button:hover {
+  background: var(--dark-teal);
+  border-color: var(--dark-teal);
+}
+
+.bid-hammer-logo {
+  color: var(--teal-accent);
+  text-shadow: 2px 2px 4px rgba(26, 55, 77, 0.2);
+}
+
+/* Add these new styles for enhanced blue theme */
+.welcome-section h1 {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.login-section {
+  background: rgba(240, 248, 255, 0.9);
+  border-radius: 0 20px 20px 0;
+}
+
+.auth-box {
+  border: 2px solid var(--primary-blue);
+}
+
+@media (max-width: 768px) {
+  .welcome-section {
+    background: linear-gradient(180deg, var(--primary-blue), #1a374d);
+  }
+  .login-section {
+    border-radius: 0 0 20px 20px;
+  }
+}

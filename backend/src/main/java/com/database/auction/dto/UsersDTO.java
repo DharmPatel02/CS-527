@@ -1,0 +1,27 @@
+package com.database.auction.dto;
+
+import com.database.auction.enums.RoleType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+//@AllArgsConstructor
+public class UsersDTO {
+    private Integer user_id;
+    private String username;
+    private String password_hash;
+    private String email;
+    private RoleType role;
+
+
+//    public UsersDTO(Integer user_id, String username, String password_hash, String email, RoleType role) {
+//        this.user_id = user_id;
+//        this.username = username;
+//        this.password_hash = password_hash;
+//        this.email = email;
+//        this.role = role;
+//    }
+}

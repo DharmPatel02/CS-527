@@ -1,0 +1,32 @@
+.buyer-cart {
+  margin-top: 20px;
+}
+
+.buyer-cart table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.buyer-cart th, .buyer-cart td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.buyer-cart button {
+  margin: 0 5px;
+}
+
+.cart-summary {
+  text-align: right;
+}
+
+.checkout-btn {
+  background-color: #2196F3;
+  margin-top: 10px;
+}
+
+.checkout-btn:hover {
+  background-color: #1976D2;
+}

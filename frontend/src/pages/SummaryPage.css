@@ -1,0 +1,392 @@
+/* .summary-page {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.summary-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  padding: 5px 10px;
+}
+
+.nav-links a.active {
+  font-weight: bold;
+  border-bottom: 2px solid #0066cc;
+}
+
+.filter-controls {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.filter-controls button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.filter-controls button.active {
+  background: #0066cc;
+  color: white;
+}
+
+.vehicle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.vehicle-card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.vehicle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-image-container {
+  height: 200px;
+  overflow: hidden;
+}
+
+.vehicle-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.vehicle-card:hover .vehicle-image {
+  transform: scale(1.05);
+}
+
+.vehicle-info {
+  padding: 15px;
+}
+
+.vehicle-info h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+}
+
+.vehicle-year,
+.vehicle-price {
+  margin: 5px 0;
+  color: #666;
+}
+
+.vehicle-price {
+  font-weight: bold;
+  color: #0066cc;
+  font-size: 1.1rem;
+}
+
+.vehicle-meta {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.vehicle-type {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+.vehicle-type.car {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.vehicle-type.bike {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.vehicle-type.truck {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.view-details-btn {
+  width: 100%;
+  padding: 8px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.loading-container,
+.error-container {
+  text-align: center;
+  padding: 50px;
+}
+
+.error-container button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+} */
+/* Add to both CSS files */
+.qa-button {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 0.9rem;
+}
+
+.qa-button:hover {
+  background-color: #0052a3;
+}
+
+.card-footer > div {
+  display: flex;
+  gap: 8px;
+}
+.summary-page {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.summary-nav,
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  padding: 5px 10px;
+  position: relative;
+}
+
+.nav-links a.active {
+  font-weight: bold;
+  border-bottom: 2px solid #0066cc;
+}
+
+/* Notification bell link and badge */
+.notif-link {
+  font-size: 1.3rem;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: red;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.7rem;
+}
+
+.filter-controls {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.filter-controls button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.filter-controls button.active {
+  background: #0066cc;
+  color: white;
+}
+
+.vehicle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.vehicle-card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.vehicle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-image-container {
+  height: 200px;
+  overflow: hidden;
+}
+
+.vehicle-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.vehicle-card:hover .vehicle-image {
+  transform: scale(1.05);
+}
+
+.vehicle-info {
+  padding: 15px;
+}
+
+.vehicle-info h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+}
+
+.vehicle-year,
+.vehicle-price {
+  margin: 5px 0;
+  color: #666;
+}
+
+.vehicle-price {
+  font-weight: bold;
+  color: #0066cc;
+  font-size: 1.1rem;
+}
+
+.vehicle-meta {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.vehicle-type {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+.vehicle-type.car {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.vehicle-type.bike {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.vehicle-type.truck {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.view-details-btn {
+  width: 100%;
+  padding: 8px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.loading-container,
+.error-container {
+  text-align: center;
+  padding: 50px;
+}
+
+.error-container button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .vehicle-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Add to both CSS files */
+.qa-button {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 0.9rem;
+}
+
+.qa-button:hover {
+  background-color: #0052a3;
+}
+
+.card-footer > div {
+  display: flex;
+  gap: 8px;
+}
