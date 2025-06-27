@@ -46,7 +46,9 @@ const App = () => {
       {/* <Navbar cartItemCount={cartItems.length} /> */}
       <Routes>
         {/* public */}
-        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} /> */}
+        {/* <Route path="/HomePage" element={<HomePage />} /> */}
+        <Route path="/" element={<HomePage />} />
         <Route path="/HomePage" element={<HomePage />} />
         <Route path="/login" element={<HomePage />} />{" "}
         {/* <Route path="/seller-items" element={<SellerItems />} /> */}
@@ -73,15 +75,13 @@ const App = () => {
           path="/summary/:category"
           element={<CategoryPage addToCart={addToCart} />}
         />
+        <Route path="/:itemId" element={<ItemDetail />} />
+        <Route path="/questions/:auctionId" element={<QuestionPage />} />
         <Route
-          path="/:itemId"
-          element={<ItemDetail />}
-        />
-
-<Route path="/questions/:auctionId" element={<QuestionPage />} />
-        <Route path="/NotificationsPage/:userId" element={<NotificationsPage />} />                {/* <Route path="/seller-profile" element={<SellerProfile />} /> */}
-
-
+          path="/NotificationsPage/:userId"
+          element={<NotificationsPage />}
+        />{" "}
+        {/* <Route path="/seller-profile" element={<SellerProfile />} /> */}
         {/* legacy/unprefixed category/item */}
         {/* <Route
           path="/:category"

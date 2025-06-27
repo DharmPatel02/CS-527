@@ -89,7 +89,7 @@ public class AuctionItemsController {
     @GetMapping("/{auctionId}")
     public ResponseEntity<AuctionItemDto> getAuctionItemByAuctionId(
             @PathVariable int auctionId) {
-log.info("In auction Item Controller");
+        log.info("In auction Item Controller");
         AuctionItemDto dto = auctionItemsService.findAuctionItemByAuctionId(auctionId);
         return ResponseEntity.ok(dto);
     }
@@ -99,22 +99,22 @@ log.info("In auction Item Controller");
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public ResponseEntity<Void> uploadAuctionItem(
-          //  @RequestParam int auctionId,
-          @PathVariable("seller_id") int sellerId,
-          @RequestParam("item_name") String itemName,
-          @RequestParam("category") Category category,
-          @RequestParam("starting_price") Double startingPrice,
-          @RequestParam("bid_increment") Double bidIncrement,
-          @RequestParam("closing_time")
-          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-          LocalDateTime closingTime,
-          @RequestParam("start_time")
-          //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-          String startT,
-          @RequestParam(value = "description", required = false) String description,
-          @RequestParam("min_price")       Double minPrice,
-          @RequestParam(value = "current_bid", required = false) Double currentBid,
-          @RequestParam("images") MultipartFile[] images
+            //  @RequestParam int auctionId,
+            @PathVariable("seller_id") int sellerId,
+            @RequestParam("item_name") String itemName,
+            @RequestParam("category") Category category,
+            @RequestParam("starting_price") Double startingPrice,
+            @RequestParam("bid_increment") Double bidIncrement,
+            @RequestParam("closing_time")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            LocalDateTime closingTime,
+            @RequestParam("start_time")
+            //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            String startT,
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam("min_price")       Double minPrice,
+            @RequestParam(value = "current_bid", required = false) Double currentBid,
+            @RequestParam("images") MultipartFile[] images
     ) throws IOException, SchedulerException {
         LocalDateTime startTime;
         log.info("inserting the items");
@@ -131,7 +131,7 @@ log.info("In auction Item Controller");
 
         // 1) Save AuctionItems
         AuctionItems item = new AuctionItems();
-       // item.setauction_id(auctionId);
+        // item.setauction_id(auctionId);
         item.setseller_id(sellerId);
         item.setitem_name(itemName);
         item.setCategory(category);
@@ -144,9 +144,9 @@ log.info("In auction Item Controller");
         item.setMinPrice(minPrice);
 
         // ────────────────────────────────────────────────────────────
-        // ★ Here’s the new bit: manually assign the primary key ★
-        Long maxId = auctionItemsRepository.findMaxId();      // calls your @Query MAX(id)
-        item.setId(maxId + 1);                   // next sequential id
+        // ★ Here's the new bit: manually assign the primary key ★
+        Long maxAuctionId = auctionItemsRepository.findMaxAuctionId();
+        item.setauction_id((int)(maxAuctionId + 1));
         // ────────────────────────────────────────────────────────────
         AuctionItems saved = auctionItemsRepository.save(item);
 
