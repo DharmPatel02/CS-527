@@ -1,0 +1,224 @@
+.item-details-page {
+  padding: 20px;
+}
+
+.top-nav {
+  background-color: #1a2526;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.item-details-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.item-image img {
+  width: 400px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.item-info {
+  flex: 1;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.item-info h1 {
+  margin: 0 0 10px;
+  font-size: 24px;
+}
+
+.item-info p {
+  margin: 5px 0;
+}
+
+.place-bid-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.place-bid-button:hover {
+  background-color: #218838;
+}
+
+.place-bid-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.auto-bid {
+  margin-top: 10px;
+}
+
+.auto-bid label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.auto-bid input {
+  width: 100px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.item-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 40px;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+.item-detail > .alert {
+  width: 100% !important;
+}
+
+.itemdetail-img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+}
+
+.detail-content {
+  max-width: 500px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detail-content h1 {
+  font-size: 28px;
+  color: #333;
+  margin: 0;
+  text-transform: lowercase;
+}
+
+.detail-content p {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Place Bid button styling */
+.place-bid-button {
+  padding: 12px 20px;
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+  width: fit-content;
+  text-transform: uppercase;
+}
+
+.place-bid-button:hover {
+  background-color: #218838;
+}
+
+.place-bid-button:disabled {
+  background-color: #c3e6cb;
+  cursor: not-allowed;
+}
+
+/* Auto-Bid Section styling */
+.auto-bid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.auto-bid label {
+  font-weight: 500;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.auto-bid input {
+  padding: 8px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+}
+
+.auto-bid-button {
+  padding: 12px 20px;
+  background-color: #17a2b8;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: fit-content;
+}
+
+.auto-bid-button:hover:not(:disabled) {
+  background-color: #138496;
+}
+
+.auto-bid-button:disabled {
+  background-color: #c3e6cb;
+  cursor: not-allowed;
+}
+
+.validation-error {
+  color: #d9534f;
+  font-size: 14px;
+  margin: -8px 0 0 0;
+}
+
+.alert-text {
+  color: #d9534f;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* Current Bid Owner Info */
+.current-bid-owner {
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.current-bid-owner.you {
+  color: #28a745; /* Green when you placed the bid */
+}
+
+.current-bid-owner.other {
+  color: #dc3545; /* Red when someone else placed the bid */
+}

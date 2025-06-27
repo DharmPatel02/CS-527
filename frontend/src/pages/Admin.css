@@ -1,0 +1,66 @@
+/* CustomerRepAdmin.css */
+
+.admin-rep-panel {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fdfdfd;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.admin-rep-panel h2,
+.admin-rep-panel h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.create-rep form,
+.report-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.create-rep input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.create-rep button,
+.report-section button {
+  width: fit-content;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.create-rep button:hover,
+.report-section button:hover {
+  background-color: #0056b3;
+}
+
+.report-data {
+  margin-top: 15px;
+  line-height: 1.6;
+}
+
+.report-data ul {
+  margin-top: 10px;
+  padding-left: 20px;
+  list-style: disc;
+}

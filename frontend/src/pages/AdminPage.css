@@ -1,0 +1,376 @@
+/* General container styling */
+.admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Header styling */
+.admin-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.admin-header h1 {
+  font-size: 2.5em;
+  color: #333;
+  margin: 0;
+}
+
+.header-divider {
+  width: 100px;
+  height: 4px;
+  background: #007bff;
+  margin: 10px auto;
+  border-radius: 2px;
+}
+
+/* Form wrapper and toggle button */
+.form-wrapper {
+  margin-bottom: 40px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-form-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: auto;
+  min-width: 250px; /* Increased to fit "Create Customer Representative Account" */
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+.toggle-form-btn:hover {
+  background: #0056b3;
+}
+
+/* Customer representative form */
+.create-rep-form {
+  margin-top: 20px;
+}
+
+.create-rep-form h2 {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-label {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1em;
+  transition: border-color 0.3s;
+  width: 100%; /* Full width to match screenshot */
+  box-sizing: border-box; /* Ensure padding doesn’t affect width */
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.form-input::placeholder {
+  color: #aaa; /* Lighter placeholder text to match screenshot */
+}
+
+/* Messages */
+.message {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.success-message {
+  background: #d4edda;
+  color: #155724;
+}
+
+/* Buttons */
+.submit-btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.3s;
+  max-width: 250px; /* Match toggle-form-btn width */
+  width: 100%;
+  white-space: nowrap;
+}
+
+.submit-btn:hover {
+  background: #0056b3;
+}
+
+.btn-arrow {
+  font-size: 1.2em;
+}
+
+/* Button group for Create and Cancel buttons */
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+/* Cancel button styling */
+.cancel-btn {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.3s;
+  max-width: 150px;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.cancel-btn:hover {
+  background: #b02a37;
+}
+
+/* Sales report section */
+.report-section {
+  margin-top: 30px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.report-section h2 {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+
+.filter-container select,
+.filter-container input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 200px;
+  font-size: 1em;
+  width: 100%; /* Full width to match screenshot */
+  box-sizing: border-box;
+}
+
+.filter-container select {
+  min-width: 250px; /* Match the width of the toggle-form-btn for consistency */
+}
+
+/* Report results and item cards */
+.report-results {
+  margin-top: 20px;
+}
+
+.report-results h3 {
+  font-size: 1.3em;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.item-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  transition: transform 0.2s;
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+}
+
+.item-name {
+  margin: 0 0 10px;
+  font-size: 1.2em;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.item-details p {
+  margin: 5px 0;
+  font-size: 0.95em;
+  color: #555;
+}
+
+.item-details p strong {
+  color: #222;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .admin-container {
+    padding: 15px;
+  }
+
+  .admin-header h1 {
+    font-size: 2em;
+  }
+
+  .toggle-form-btn,
+  .submit-btn,
+  .cancel-btn,
+  .filter-container select {
+    max-width: 100%;
+    min-width: 100%;
+  }
+
+  .filter-container select,
+  .filter-container input {
+    min-width: 100%;
+  }
+
+  .items-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .button-group {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+/* .items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.item-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  transition: transform 0.2s;
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+}
+
+.item-name {
+  margin: 0 0 10px;
+  font-size: 1.2em;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.item-details p {
+  margin: 5px 0;
+  font-size: 0.95em;
+  color: #555;
+}
+
+.item-details p strong {
+  color: #222;
+}
+
+.admin-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.create-rep-form {
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.create-rep-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.create-rep-form button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.create-rep-form button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.success-message {
+  color: #28a745;
+  margin-top: 10px;
+  font-weight: bold;
+} */

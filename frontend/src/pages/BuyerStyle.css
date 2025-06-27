@@ -1,0 +1,51 @@
+.app {
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  nav {
+    margin-bottom: 20px;
+  }
+  
+  nav button {
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  .dashboard, .buyer-page {
+    width: 450px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .item-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .item-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background: white;
+    text-align: center;
+  }
+  
+  .item-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    object-fit: cover;
+    margin-bottom: 5px;
+  }
+  

@@ -1,0 +1,55 @@
+/* SellerProfileStyle.css */
+
+.seller-profile {
+    padding: 40px;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .profile-header h2 {
+    margin: 0;
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .profile-header button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .profile-header button:hover {
+    background-color: #138496;
+  }
+  
+  .profile-details {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    max-width: 500px;
+  }
+  
+  .profile-details p {
+    font-size: 1rem;
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  .profile-details strong {
+    color: #333;
+  }
+  

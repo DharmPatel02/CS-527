@@ -1,0 +1,120 @@
+INSERT INTO Auction_Items (id, auction_id, seller_id, item_name, category, starting_price, bid_increment, reserve_price, closing_time, description)
+VALUES (1, 101, 1, 'Toyota Camry', 'car', 5000.00, 200.00, 6000.00, '2025-05-01 18:00:00', 'Used sedan in good condition.');
+
+INSERT INTO Auction_Items (id, auction_id, seller_id, item_name, category, starting_price, bid_increment, reserve_price, closing_time, description)
+VALUES (2, 102, 2, 'Honda Civic', 'car', 4500.00, 150.00, 5500.00, '2025-05-02 18:00:00', 'Reliable compact sedan with low mileage.');
+
+INSERT INTO Auction_Items (id, auction_id, seller_id, item_name, category, starting_price, bid_increment, reserve_price, closing_time, description)
+VALUES (3, 103, 3, 'Ford F-150', 'truck', 8000.00, 300.00, 9000.00, '2025-05-03 18:00:00', 'Well-maintained pickup truck, perfect for work.');
+
+INSERT INTO Auction_Items (id, auction_id, seller_id, item_name, category, starting_price, bid_increment, reserve_price, closing_time, description)
+VALUES (4, 104, 4, 'Chevrolet Silverado', 'truck', 8500.00, 350.00, 9500.00, '2025-05-04 18:00:00', 'Heavy-duty truck in excellent condition.');
+
+INSERT INTO Auction_Items (id, auction_id, seller_id, item_name, category, starting_price, bid_increment, reserve_price, closing_time, description)
+VALUES (5, 105, 5, 'Harley Davidson', 'bike', 7000.00, 250.00, 8000.00, '2025-05-05 18:00:00', 'Classic Harley Davidson motorcycle in pristine shape.');
+
+INSERT INTO Auction_Items (id, auction_id, seller_id, item_name, category, starting_price, bid_increment, reserve_price, closing_time, description)
+VALUES (6, 106, 6, 'Ducati Monster', 'bike', 9500.00, 400.00, 11000.00, '2025-05-06 18:00:00', 'Performance bike in superb condition.');
+
+INSERT INTO Auction_Items (id, auction_id, seller_id, item_name, category, starting_price, bid_increment, reserve_price, closing_time, description)
+VALUES (7, 107, 7, 'BMW 3 Series', 'car', 12000.00, 500.00, 13000.00, '2025-05-07 18:00:00', 'Luxury sedan loaded with modern features.');
+
+INSERT INTO Auction_Items (id, auction_id, seller_id, item_name, category, starting_price, bid_increment, reserve_price, closing_time, description)
+VALUES (8, 108, 8, 'Kawasaki Ninja', 'bike', 8500.00, 300.00, 9500.00, '2025-05-08 18:00:00', 'Sport bike with excellent performance.');
+
+INSERT INTO Auction_Items (id, auction_id, seller_id, item_name, category, starting_price, bid_increment, reserve_price, closing_time, description)
+VALUES (9, 109, 9, 'Nissan Altima', 'car', 4800.00, 180.00, 5800.00, '2025-05-09 18:00:00', 'Sedan with updated technology features.');
+
+INSERT INTO Auction_Items (id, auction_id, seller_id, item_name, category, starting_price, bid_increment, reserve_price, closing_time, description)
+VALUES (10, 110, 10, 'RAM 1500', 'truck', 9000.00, 320.00, 10000.00, '2025-05-10 18:00:00', 'Reliable truck with a history of regular maintenance.');
+
+
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (1, 'http://example.com/images/camry1.jpg', 1);
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (2, 'http://example.com/images/camry2.jpg', 1);
+
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (3, 'http://example.com/images/civic1.jpg', 2);
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (4, 'http://example.com/images/civic2.jpg', 2);
+
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (5, 'http://example.com/images/f150_1.jpg', 3);
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (6, 'http://example.com/images/f150_2.jpg', 3);
+
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (7, 'http://example.com/images/silverado1.jpg', 4);
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (8, 'http://example.com/images/silverado2.jpg', 4);
+
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (9, 'http://example.com/images/harley1.jpg', 5);
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (10, 'http://example.com/images/harley2.jpg', 5);
+
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (11, 'http://example.com/images/ducati1.jpg', 6);
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (12, 'http://example.com/images/ducati2.jpg', 6);
+
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (13, 'http://example.com/images/bmw1.jpg', 7);
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (14, 'http://example.com/images/bmw2.jpg', 7);
+
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (15, 'http://example.com/images/ninja1.jpg', 8);
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (16, 'http://example.com/images/ninja2.jpg', 8);
+
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (17, 'http://example.com/images/altima1.jpg', 9);
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (18, 'http://example.com/images/altima2.jpg', 9);
+
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (19, 'http://example.com/images/ram1.jpg', 10);
+INSERT INTO Auction_Images (id, image_url, auction_item_id) 
+VALUES (20, 'http://example.com/images/ram2.jpg', 10);
+
+-- 1. Drop the old surrogate id column
+ALTER TABLE Users
+  DROP COLUMN id;
+
+-- 2. Convert user_id into the primary key and auto-increment
+ALTER TABLE Users
+  MODIFY COLUMN user_id INT NOT NULL AUTO_INCREMENT,
+  ADD PRIMARY KEY (user_id);
+
+UPDATE auction_items
+SET current_bid = starting_price
+WHERE auction_id > 0;
+
+ALTER TABLE user_details
+  MODIFY COLUMN first_name   VARCHAR(100),
+  MODIFY COLUMN last_name    VARCHAR(100),
+  MODIFY COLUMN address      VARCHAR(255),
+  MODIFY COLUMN phone_number VARCHAR(50);
+
+
+ALTER TABLE auction_items DROP COLUMN reserve_price;
+
+ALTER TABLE `Auction_Items`
+  MODIFY COLUMN `auction_id` INT NOT NULL AUTO_INCREMENT,
+  ADD UNIQUE (`auction_id`);
+
+ALTER TABLE Auction_Items
+  ADD COLUMN min_price DOUBLE;
+
+ ALTER TABLE `Auction_Items`
+    ADD COLUMN `start_time` DATETIME;
+
+ ----- New change ------
+
+ALTER TABLE auction_items
+  ADD COLUMN buyer_id INT NULL,
+  ADD CONSTRAINT `fk_auction_winner`
+    FOREIGN KEY (`buyer_id`)
+    REFERENCES `users`(`user_id`);

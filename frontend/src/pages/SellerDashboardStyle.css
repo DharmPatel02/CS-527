@@ -1,0 +1,163 @@
+.seller-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.alert {
+  padding: 12px;
+  background-color: #f8d7da;
+  color: #721c24;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+}
+
+.new-item-form {
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.new-item-form h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.25rem;
+}
+.new-item-form input,
+.new-item-form textarea,
+.new-item-form select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+.new-item-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+.new-item-form button {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.new-item-form button:hover {
+  background-color: #0056b3;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+.items-table th,
+.items-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  vertical-align: middle;
+}
+.items-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+.items-table img {
+  border-radius: 4px;
+  max-width: 50px;
+  max-height: 50px;
+}
+
+@media (max-width: 768px) {
+  .items-table,
+  .items-table thead,
+  .items-table tbody,
+  .items-table th,
+  .items-table td,
+  .items-table tr {
+    display: block;
+  }
+  .items-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  .items-table tr {
+    margin-bottom: 1rem;
+  }
+  .items-table td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+  .items-table td:before {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+  .items-table td:nth-of-type(1):before { content: "Item"; }
+  .items-table td:nth-of-type(2):before { content: "Category"; }
+  .items-table td:nth-of-type(3):before { content: "Bid"; }
+  .items-table td:nth-of-type(4):before { content: "Closes"; }
+  .items-table td:nth-of-type(5):before { content: "Images"; }
+}
+
+.profile {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.file-input-section {
+  margin: 1rem 0;
+}
+
+.file-input-section label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.selected-files {
+  margin-top: 0.5rem;
+}
+
+.selected-files p {
+  margin: 0;
+  font-weight: bold;
+}
+
+.selected-files ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0 0;
+}
+
+.selected-files li {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.seller-pro{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  }

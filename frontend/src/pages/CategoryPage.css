@@ -1,0 +1,696 @@
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #282c34;
+  color: white;
+}
+
+.top-nav .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.top-nav .nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.top-nav .nav-links a {
+  margin-left: 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.top-nav .nav-links a:hover {
+  text-decoration: underline;
+}
+
+.top-nav .search-bar {
+  margin-left: 20px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+/* Container for the list of cards */
+.item-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Auction card */
+.card {
+  display: flex;
+  width: 650px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+/* Image on the left */
+.card-img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Body on the right */
+.card-body {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-body h2 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.card-desc {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+/* Pricing and category info */
+.card-info {
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+/* Footer with closing time and buttons */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* VIEW DEAL button */
+.view-deal {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-left: 2%;
+}
+.view-deal,
+.notify-me {
+  background-color: #4caf50;
+}
+
+.view-deal:hover {
+  background-color: #45a049;
+}
+
+/* ADD TO CART button */
+.add-to-cart {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 0.9rem;
+}
+
+.add-to-cart:hover {
+  background-color: #0069d9;
+}
+
+/* Add to both CSS files */
+.qa-button {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 0.9rem;
+}
+
+.qa-button:hover {
+  background-color: #0052a3;
+}
+
+.card-footer > div {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 2%;
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* ──────────────────────────────────────────────
+   TOP NAVIGATION
+────────────────────────────────────────────── */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #282c34;
+  color: #fff;
+}
+
+.top-nav .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.top-nav .nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.top-nav .nav-links a {
+  margin-left: 1.25rem;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.top-nav .nav-links a:hover {
+  text-decoration: underline;
+}
+
+.top-nav .search-bar {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.notif-badge {
+  background: #ff3b3b;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0 0.4rem;
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+}
+
+/* ──────────────────────────────────────────────
+   ALERTS
+────────────────────────────────────────────── */
+.alert {
+  max-width: 1200px;
+  margin: 1rem auto;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.alert.success {
+  background: #e6ffed;
+  border: 1px solid #28a745;
+  color: #216e2e;
+}
+
+.alert.error {
+  background: #ffe6e6;
+  border: 1px solid #dc3545;
+  color: #843029;
+}
+
+/* ──────────────────────────────────────────────
+   SECTION TITLES
+────────────────────────────────────────────── */
+.title-auction {
+  font-size: 2rem;
+  color: #0069d9;
+  text-align: center;
+  margin: 2rem 0 1rem;
+}
+
+/* ──────────────────────────────────────────────
+   CARD LIST (Responsive Grid)
+────────────────────────────────────────────── */
+.item-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(650px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  justify-content: center;
+}
+
+/* ──────────────────────────────────────────────
+   CARD
+────────────────────────────────────────────── */
+.card {
+  display: flex;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Image on left */
+.card-img {
+  flex: 0 0 300px;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Body on right */
+.card-body {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-body h2 {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem;
+  color: #222;
+}
+
+.card-desc {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.card-info {
+  font-size: 0.9rem;
+  color: #444;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+/* Footer at bottom */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-footer span {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.title-auction {
+  color: #0069d9;
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* ──────────────────────────────────────────────
+   TOP NAVIGATION
+────────────────────────────────────────────── */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #282c34;
+  color: #fff;
+}
+
+.top-nav .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.top-nav .nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.top-nav .nav-links a {
+  margin-left: 1.25rem;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.top-nav .nav-links a:hover {
+  text-decoration: underline;
+}
+
+.top-nav .search-bar {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.notif-badge {
+  background: #ff3b3b;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0 0.4rem;
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+}
+
+/* ──────────────────────────────────────────────
+   ALERTS
+────────────────────────────────────────────── */
+.alert {
+  max-width: 1200px;
+  margin: 1rem auto;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.alert.success {
+  background: #e6ffed;
+  border: 1px solid #28a745;
+  color: #216e2e;
+}
+
+.alert.error {
+  background: #ffe6e6;
+  border: 1px solid #dc3545;
+  color: #843029;
+}
+
+/* ──────────────────────────────────────────────
+   SECTION TITLES
+────────────────────────────────────────────── */
+.title-auction {
+  font-size: 2rem;
+  color: #0069d9;
+  text-align: center;
+  margin: 2rem 0 1rem;
+}
+
+/* ──────────────────────────────────────────────
+   CARD LIST (Responsive Grid)
+────────────────────────────────────────────── */
+.item-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(650px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  justify-content: center;
+}
+
+/* ──────────────────────────────────────────────
+   CARD
+────────────────────────────────────────────── */
+.card {
+  display: flex;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Image on left */
+.card-img {
+  flex: 0 0 300px;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Body on right */
+.card-body {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-body h2 {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem;
+  color: #222;
+}
+
+.card-desc {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.card-info {
+  font-size: 0.9rem;
+  color: #444;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+/* Footer at bottom */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-footer span {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* ──────────────────────────────────────────────
+   BUTTONS
+────────────────────────────────────────────── */
+.notify-me,
+.view-deal {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.notify-me:hover,
+.view-deal:hover {
+  background-color: #45a049;
+}
+
+/* Optional cart button */
+.add-to-cart {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.add-to-cart:hover {
+  background-color: #0069d9;
+}
+
+/* ----------------------------------------------------------------------- */
+
+:root {
+  --color-bg: #f9f9f9;
+  --color-card: #ffffff;
+  --color-primary: #4caf50;
+  --color-primary-light: #67c17b;
+  --color-secondary: #007bff;
+  --color-secondary-light: #339fff;
+  --color-text: #333333;
+  --color-muted: #666666;
+  --radius: 16px;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --transition: 0.3s ease;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: var(--color-bg);
+  margin: 0;
+  padding: 0;
+}
+
+/* Container for cards */
+.item-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(650px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Card base */
+.card {
+  display: flex;
+  background: var(--color-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 8px 20px var(--shadow);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px var(--shadow);
+}
+
+/* Left image */
+.card-img {
+  flex: 0 0 40%;
+  object-fit: cover;
+  height: 100%;
+  transition: transform var(--transition);
+}
+.card:hover .card-img {
+  transform: scale(1.05);
+}
+
+/* Right content */
+.card-body {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Title */
+.card-body h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Description */
+.card-desc {
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;     /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5rem;
+  max-height: 3rem; 
+}
+
+/* Price & category row */
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+.card-info .badge-cat {
+  background: var(--color-secondary-light);
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Footer with time & buttons */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Shared button styles */
+.card-footer button {
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+/* ──────────────────────────────────────────────
+   FIXED VIEW DEAL BUTTON
+────────────────────────────────────────────── */
+.view-deal,
+.notify-me {
+  /* your existing gradients, padding, etc… */
+  background: linear-gradient(135deg, #4caf50, #67c17b);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+
+  /* NEW: prevent wrapping and enforce a minimum width */
+  display: inline-block;
+  white-space: nowrap;
+  min-width: 120px;
+  text-align: center;
+
+  /* keep your hover-lift if you had one */
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.view-deal:hover,
+.notify-me:hover {
+  background: linear-gradient(135deg, #67c17b, #4caf50);
+  transform: translateY(-2px);
+}
+
+/* ADD TO CART */
+.add-to-cart {
+  background: linear-gradient(
+    135deg,
+    var(--color-secondary),
+    var(--color-secondary-light)
+  );
+  color: #fff;
+  margin-left: 0.5rem;
+}
+.add-to-cart:hover {
+  background: linear-gradient(
+    135deg,
+    var(--color-secondary-light),
+    var(--color-secondary)
+  );
+  transform: translateY(-2px);
+}
