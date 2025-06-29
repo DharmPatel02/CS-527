@@ -1,117 +1,676 @@
+/* Enhanced Edit Profile Popup Styles */
+:root {
+  --primary-color: #2a5c82;
+  --secondary-color: #3aa6b9;
+  --accent-color: #ffd700;
+  --text-dark: #2c3e50;
+  --text-light: #6c757d;
+  --text-muted: #adb5bd;
+  --bg-white: #ffffff;
+  --border-color: #dee2e6;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+}
+
+/* Enhanced Overlay */
 .edit-popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(44, 62, 80, 0.6);
+  backdrop-filter: blur(2px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Enhanced Popup Content */
 .edit-popup-content {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
+  background: var(--bg-white);
+  padding: 40px;
+  border-radius: 20px;
+  width: 480px;
   max-width: 90%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(42, 92, 130, 0.1);
+  position: relative;
+  transform: scale(0.95);
+  animation: popIn 0.3s ease-out forwards;
+  border: 2px solid var(--secondary-color);
+  margin: 1rem;
+}
+
+@keyframes popIn {
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Enhanced Header - Matching Car/Truck Page Style */
+.edit-popup-content h2 {
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0 0 30px 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+  padding-right: 2rem;
+  text-transform: uppercase;
   position: relative;
 }
 
-.edit-popup-content h2 {
-  color: #333;
-  font-size: 20px;
-  margin-bottom: 15px;
-  text-align: center;
+.edit-popup-content h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(
+    135deg,
+    var(--secondary-color) 0%,
+    var(--primary-color) 100%
+  );
+  border-radius: 2px;
 }
 
+/* Enhanced Close Button */
 .close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(108, 117, 125, 0.08);
   border: none;
-  font-size: 20px;
+  font-size: 1.25rem;
   cursor: pointer;
-  color: #777;
+  color: var(--text-muted);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .close-btn:hover {
-  color: #333;
+  background: rgba(220, 53, 69, 0.1);
+  color: var(--danger-color);
 }
 
+/* Modern Form Groups - Matching Car/Truck Page Style */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group label {
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #555;
 }
 
 .form-group input {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  font-size: 14px;
-  background-color: #f9f9f9;
+  padding: 15px 18px;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+  color: var(--text-dark);
   box-sizing: border-box;
+  font-family: inherit;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #2196f3;
-  box-shadow: 0 0 5px rgba(33, 150, 243, 0.3);
+  border-color: var(--secondary-color);
+  background: var(--bg-white);
+  box-shadow: 0 0 0 3px rgba(58, 166, 185, 0.1);
 }
 
+.form-group input:hover:not(:focus) {
+  border-color: var(--secondary-color);
+  background: var(--bg-white);
+}
+
+.form-group input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* Error Message Styling */
+.edit-popup-content p[style*="color: red"] {
+  background: rgba(220, 53, 69, 0.08);
+  color: var(--danger-color) !important;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+  border-left: 3px solid var(--danger-color);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Modern Buttons - Matching Car/Truck Page Style */
 .popup-buttons {
-  margin-top: 15px;
+  margin-top: 30px;
   display: flex;
-  gap: 10px;
+  gap: 15px;
   justify-content: center;
 }
 
 .save-btn,
 .cancel-btn {
-  padding: 8px 20px;
-  border: none;
-  border-radius: 5px;
+  /* Reset all default button styles */
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  outline: none !important;
+  background-clip: padding-box !important;
+
+  /* Identical dimensions and shape */
+  padding: 15px 30px !important;
+  border: none !important;
+  border-radius: 25px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  min-width: 150px !important;
+  max-width: 150px !important;
+  width: 150px !important;
+  height: 50px !important;
+
+  /* Layout and positioning */
+  position: relative;
+  overflow: hidden;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+
+  /* Typography */
+  font-family: inherit !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  text-transform: none !important;
+  vertical-align: middle !important;
 }
 
 .save-btn {
-  background: #4caf50;
+  background: linear-gradient(
+    135deg,
+    var(--secondary-color) 0%,
+    var(--primary-color) 100%
+  );
   color: white;
+  box-shadow: 0 4px 15px rgba(58, 166, 185, 0.3);
 }
 
-.save-btn:hover {
-  background: #45a049;
+.save-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(58, 166, 185, 0.4);
+  background: linear-gradient(135deg, var(--primary-color) 0%, #1e4a68 100%);
 }
 
 .save-btn:disabled {
-  background: #a5d6a7; /* Lighter shade when disabled */
+  background: linear-gradient(
+    135deg,
+    var(--text-muted) 0%,
+    #999 100%
+  ) !important;
   cursor: not-allowed;
+  opacity: 0.6;
+  transform: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  padding: 15px 30px !important;
+  border-radius: 25px !important;
+  min-width: 150px !important;
+  max-width: 150px !important;
+  height: 50px !important;
+  border: none !important;
 }
 
 .cancel-btn {
-  background: #f44336;
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
   color: white;
+  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
 }
 
-.cancel-btn:hover {
-  background: #d32f2f;
+.cancel-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(73, 80, 87, 0.4);
 }
 
 .cancel-btn:disabled {
-  background: #ef9a9a; /* Lighter shade when disabled */
+  background: linear-gradient(
+    135deg,
+    var(--text-muted) 0%,
+    #999 100%
+  ) !important;
+  opacity: 0.6;
   cursor: not-allowed;
+  transform: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  padding: 15px 30px !important;
+  border-radius: 25px !important;
+  min-width: 150px !important;
+  max-width: 150px !important;
+  height: 50px !important;
+  border: none !important;
+}
+
+/* Success Popup Enhancement */
+.edit-popup-content[style*="padding: 15px"] {
+  padding: 1.5rem !important;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.edit-popup-content p[style*="color: #4caf50"] {
+  background: rgba(40, 167, 69, 0.08) !important;
+  color: var(--success-color) !important;
+  padding: 1rem !important;
+  border-radius: 8px !important;
+  margin: 0 !important;
+  border: 1px solid rgba(40, 167, 69, 0.2) !important;
+  font-weight: 500 !important;
+  font-size: 1rem !important;
+  position: relative;
+}
+
+/* Field Error Styling */
+.field-error {
+  color: var(--danger-color);
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 0.4rem;
+  display: block;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Disabled Input Styling */
+.form-group input:disabled {
+  background: #e9ecef;
+  color: var(--text-muted);
+  cursor: not-allowed;
+  border-color: #ced4da;
+  opacity: 0.65;
+}
+
+.form-group input:disabled:hover {
+  border-color: #ced4da;
+  background: #e9ecef;
+}
+
+/* Error State for Inputs */
+.form-group input.error,
+.form-group input:invalid:not(:placeholder-shown):not(:focus) {
+  border-color: var(--danger-color);
+  background-color: rgba(220, 53, 69, 0.05);
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+/* Enhanced Focus State */
+.form-group input:focus:not(:disabled) {
+  outline: none;
+  border-color: var(--secondary-color);
+  background: var(--bg-white);
+  box-shadow: 0 0 0 3px rgba(58, 166, 185, 0.1);
+}
+
+/* Button Loading State Text */
+.save-btn:disabled,
+.cancel-btn:disabled {
+  pointer-events: none;
+}
+
+/* Loading State */
+.save-btn:disabled::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.8rem;
+  height: 0.8rem;
+  margin: -0.4rem 0 0 -0.4rem;
+  border: 1px solid transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Professional Success Popup */
+.success-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(44, 62, 80, 0.6);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.success-popup-content {
+  background: var(--bg-white);
+  padding: 40px;
+  border-radius: 20px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 10px 30px rgba(40, 167, 69, 0.2);
+  position: relative;
+  transform: scale(0.95);
+  animation: successPop 0.4s ease-out forwards;
+  border: 3px solid var(--success-color);
+  text-align: center;
+  margin: 1rem;
+}
+
+.success-popup-overlay .success-popup-content p,
+.success-popup-content > p,
+div.success-popup-content p {
+  color: #ffffff !important;
+  font-size: 1.2rem !important;
+  font-weight: 900 !important;
+  font-family: inherit !important;
+  margin: 0 0 30px 0 !important;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+  padding: 20px !important;
+  border-radius: 15px !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3) !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+  letter-spacing: 0.5px !important;
+  text-align: center !important;
+  font-style: normal !important;
+}
+
+.success-popup-content p::before,
+.success-message-text::before {
+  content: "✅";
+  font-size: 1.5rem;
+  margin-right: 5px;
+}
+
+/* Ultra-specific styling for success message */
+p.success-message-text,
+.success-popup-content .success-message-text,
+.success-popup-overlay .success-popup-content .success-message-text {
+  color: #2c3e50 !important;
+  font-weight: 900 !important;
+  font-size: 1.3rem !important;
+  background: transparent !important;
+  padding: 10px !important;
+  border-radius: 0 !important;
+  margin: 0 0 25px 0 !important;
+  display: block !important;
+  text-align: center !important;
+  letter-spacing: 0.5px !important;
+  font-family: inherit !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  line-height: 1.4 !important;
+}
+
+.success-close-btn {
+  background: linear-gradient(135deg, var(--success-color) 0%, #20c997 100%);
+  color: white !important;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+  min-width: 120px;
+}
+
+.success-close-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(40, 167, 69, 0.4);
+  background: linear-gradient(135deg, #20c997 0%, var(--success-color) 100%);
+}
+
+@keyframes successPop {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .edit-popup-content {
+    width: 85%;
+    padding: 30px;
+    margin: 0.5rem;
+  }
+
+  .edit-popup-content h2 {
+    font-size: 1.4rem;
+    padding-right: 1.5rem;
+    margin-bottom: 25px;
+  }
+
+  .popup-buttons {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    width: 100% !important;
+    padding: 12px 20px !important;
+    min-width: auto !important;
+    max-width: none !important;
+    height: 45px !important;
+    border-radius: 25px !important;
+    border: none !important;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group input {
+    padding: 12px 15px;
+    font-size: 15px;
+  }
+
+  /* Success Popup Mobile Styling */
+  .success-popup-content {
+    width: 85%;
+    padding: 30px 25px;
+    margin: 0.5rem;
+  }
+
+  .success-popup-content p {
+    font-size: 1.1rem !important;
+    padding: 18px !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .success-close-btn {
+    padding: 12px 25px;
+    font-size: 15px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .edit-popup-content {
+    padding: 25px;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .edit-popup-content h2 {
+    font-size: 1.2rem;
+  }
+
+  /* Success Popup Small Mobile Styling */
+  .success-popup-content {
+    width: 90%;
+    padding: 25px 20px;
+  }
+
+  .success-popup-content p {
+    font-size: 1rem !important;
+    padding: 15px !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .success-popup-content p::before {
+    font-size: 1.2rem;
+  }
+
+  .success-close-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    min-width: 100px;
+  }
+}
+
+/* Focus Trap Styling */
+.edit-popup-overlay:focus {
+  outline: none;
+}
+
+/* Enhanced Visual Feedback */
+.form-group input:valid:not(:placeholder-shown) {
+  border-color: var(--success-color);
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2328a745"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  padding-right: 2.5rem;
+}
+
+.form-group input:invalid:not(:placeholder-shown):not(:focus) {
+  border-color: var(--danger-color);
+  background-color: rgba(220, 53, 69, 0.05);
+}
+
+/* Subtle Animation for Form Fields */
+.form-group {
+  position: relative;
+  overflow: hidden;
+}
+
+.form-group::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.form-group:focus-within::before {
+  transform: scaleX(1);
+}
+
+/* Disabled Input Styling */
+.form-group input:disabled {
+  background-color: rgba(108, 117, 125, 0.1);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  border-color: var(--border-color);
+}
+
+.form-group input:disabled:hover {
+  border-color: var(--border-color);
+}
+
+/* Error State for Inputs */
+.form-group input.error,
+.form-group input:invalid:not(:placeholder-shown):not(:focus) {
+  border-color: var(--danger-color);
+  background-color: rgba(220, 53, 69, 0.05);
+}
+
+/* Enhanced Focus State */
+.form-group input:focus:not(:disabled) {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(42, 92, 130, 0.1);
+  background-color: rgba(240, 248, 255, 0.5);
+}
+
+/* Button Loading State Text */
+.save-btn:disabled,
+.cancel-btn:disabled {
+  pointer-events: none;
 }

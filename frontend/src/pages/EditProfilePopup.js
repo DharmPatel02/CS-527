@@ -161,10 +161,78 @@ const EditProfilePopup = ({ userData, onClose, onSave }) => {
       </div>
 
       {showSuccess && (
-        <div className="success-popup-overlay">
-          <div className="success-popup-content">
-            <p>Profile updated successfully!</p>
-            <button className="success-close-btn" onClick={handleSuccessClose}>
+        <div
+          style={{
+            position: "fixed",
+            top: "0",
+            left: "0",
+            right: "0",
+            bottom: "0",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: "9999",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: "40px",
+              borderRadius: "20px",
+              textAlign: "center",
+              border: "3px solid #28a745",
+              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+              maxWidth: "400px",
+              width: "90%",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "3rem",
+                marginBottom: "20px",
+              }}
+            >
+              ✅
+            </div>
+            <h2
+              style={{
+                color: "#28a745",
+                fontSize: "1.5rem",
+                fontWeight: "bold",
+                margin: "0 0 20px 0",
+                fontFamily: "inherit",
+              }}
+            >
+              SUCCESS!
+            </h2>
+            <p
+              style={{
+                color: "#2c3e50",
+                fontSize: "1.2rem",
+                fontWeight: "bold",
+                margin: "0 0 30px 0",
+                fontFamily: "inherit",
+              }}
+            >
+              Profile updated successfully!
+            </p>
+            <button
+              onClick={handleSuccessClose}
+              style={{
+                backgroundColor: "#28a745",
+                color: "white",
+                border: "none",
+                padding: "15px 30px",
+                borderRadius: "25px",
+                fontSize: "16px",
+                fontWeight: "bold",
+                cursor: "pointer",
+                fontFamily: "inherit",
+              }}
+              onMouseOver={(e) => (e.target.style.backgroundColor = "#20c997")}
+              onMouseOut={(e) => (e.target.style.backgroundColor = "#28a745")}
+            >
               Close
             </button>
           </div>

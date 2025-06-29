@@ -122,7 +122,7 @@ const QuestionPage = () => {
         className="ask-question-btn"
         onClick={() => setShowForm(!showForm)}
       >
-        {showForm ? "Cancel" : "Ask Your Question"}
+        {showForm ? "✖ Cancel" : "💬 Ask Your Question"}
       </button>
 
       {showForm && (
@@ -130,12 +130,12 @@ const QuestionPage = () => {
           <textarea
             value={newQuestion}
             onChange={(e) => setNewQuestion(e.target.value)}
-            placeholder="Type your question here..."
+            placeholder="What would you like to know about this auction item? Ask your question here..."
             required
           />
           {submitError && <div className="error">{submitError}</div>}
           <button type="submit" className="submit-question-btn">
-            Submit Question
+            📤 Submit Question
           </button>
         </form>
       )}
@@ -146,7 +146,8 @@ const QuestionPage = () => {
         <div className="error">Error: {error}</div>
       ) : questions.length === 0 ? (
         <p className="no-questions">
-          There are no questions present for this product at this moment.
+          No questions have been asked about this auction item yet. Be the first
+          to ask!
         </p>
       ) : (
         <div className="questions-list">
@@ -158,6 +159,18 @@ const QuestionPage = () => {
               {q.answer && (
                 <div className="answer">
                   <strong>A:</strong> {q.answer}
+                </div>
+              )}
+              {!q.answer && (
+                <div
+                  className="answer"
+                  style={{
+                    background: "rgba(108, 117, 125, 0.1)",
+                    borderColor: "#6c757d",
+                    color: "#6c757d",
+                  }}
+                >
+                  <em>Awaiting seller's response...</em>
                 </div>
               )}
             </div>

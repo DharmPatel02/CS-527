@@ -12,18 +12,21 @@ const CategoryPage = ({ addToCart }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
 
-  const myUserId = localStorage.getItem('userId');
+  const myUserId = localStorage.getItem("userId");
 
   // Fetch auctions
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch("http://localhost:8080/auth/auction-items/summary", {
-          credentials: 'include',
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem('token')}`
+        const res = await fetch(
+          "http://localhost:8080/auth/auction-items/summary",
+          {
+            credentials: "include",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
           }
-        });
+        );
         if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
         const data = await res.json();
         console.log("fetched auctions:", data);
@@ -41,7 +44,7 @@ const CategoryPage = ({ addToCart }) => {
   useEffect(() => {
     if (!myUserId) {
       setError("Please log in to view this page.");
-      navigate('/login');
+      navigate("/login");
       return;
     }
 
@@ -50,20 +53,20 @@ const CategoryPage = ({ addToCart }) => {
         const res = await fetch(
           `http://localhost:8080/auth/notifications?userId=${myUserId}`,
           {
-            credentials: 'include',
+            credentials: "include",
             headers: {
-              "Authorization": `Bearer ${localStorage.getItem('token')}`
-            }
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
           }
         );
         if (res.ok) {
           const data = await res.json();
           setNotifs(data);
         } else {
-          console.error('Failed to load notifications:', res.status);
+          console.error("Failed to load notifications:", res.status);
         }
       } catch (err) {
-        console.error('Error fetching notifications:', err);
+        console.error("Error fetching notifications:", err);
       }
     };
 
@@ -79,20 +82,20 @@ const CategoryPage = ({ addToCart }) => {
       const res = await fetch(
         `http://localhost:8080/auth/notifications/${id}/read`,
         {
-          method: 'POST',
-          credentials: 'include',
+          method: "POST",
+          credentials: "include",
           headers: {
-            "Authorization": `Bearer ${localStorage.getItem('token')}`
-          }
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       if (res.ok) {
-        setNotifs(prev => prev.filter(n => n.id !== id));
+        setNotifs((prev) => prev.filter((n) => n.id !== id));
       } else {
-        console.error('Failed to mark notification read:', res.status);
+        console.error("Failed to mark notification read:", res.status);
       }
     } catch (err) {
-      console.error('Error marking notification read:', err);
+      console.error("Error marking notification read:", err);
     }
   };
 
@@ -127,7 +130,7 @@ const CategoryPage = ({ addToCart }) => {
   );
 
   return (
-    <div>
+    <div className="page-container">
       <nav className="top-nav">
         <div className="logo">VEHICLE SHOP</div>
         <div className="nav-links">
@@ -140,17 +143,25 @@ const CategoryPage = ({ addToCart }) => {
             placeholder="Search items..."
             className="search-bar"
             value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <NavLink to={`/NotificationsPage/${myUserId}`}>
-            Notifications {notifs.length > 0 && <span className="notif-badge">{notifs.length}</span>}
+            Notifications{" "}
+            {notifs.length > 0 && (
+              <span className="notif-badge">{notifs.length}</span>
+            )}
           </NavLink>
           <NavLink to="/profile">Profile</NavLink>
           {/* <NavLink to="/cart">Cart</NavLink> */}
         </div>
       </nav>
 
-      <h1>{category?.toUpperCase()}S</h1>
+      <div className="category-header">
+        <h1 className="category-title">{category?.toUpperCase()}S</h1>
+        <div className="category-subtitle">
+          Browse our selection of premium {category}s
+        </div>
+      </div>
 
       <div className="item-list">
         {loading ? (
@@ -158,11 +169,19 @@ const CategoryPage = ({ addToCart }) => {
         ) : error ? (
           <p style={{ color: "red" }}>{error}</p>
         ) : filtered.length === 0 ? (
-          <p>No active {category}s found.</p>
+          <div className="no-results-message">
+            <div className="no-results-icon">
+              {category === "car" ? "🚗" : category === "bike" ? "🏍️" : "🚛"}
+            </div>
+            <h4>No active {category}s found</h4>
+            <p>
+              We don't have any {category}s available for auction right now.
+              Check back soon for new listings!
+            </p>
+          </div>
         ) : (
           filtered.map((item) => (
             <div className="card" key={item.auctionId}>
-              
               <img
                 className="card-img"
                 src={getImageUrl(item)}
@@ -174,10 +193,12 @@ const CategoryPage = ({ addToCart }) => {
                 <p className="card-desc">{item.description}</p>
 
                 <div className="card-info">
-                <span>
-                        Current Bid: £
-                        {item.currentBid !== undefined ? item.currentBid : item.startingPrice}
-                      </span>
+                  <span>
+                    Current Bid: £
+                    {item.currentBid !== undefined
+                      ? item.currentBid
+                      : item.startingPrice}
+                  </span>
                   <span>Category: {item.category}</span>
                 </div>
 
@@ -188,20 +209,16 @@ const CategoryPage = ({ addToCart }) => {
 
                   <button
                     className="view-deal"
-                    onClick={() =>
-                      navigate(`/${item.auctionId}`)
-                    }
+                    onClick={() => navigate(`/${item.auctionId}`)}
                   >
                     VIEW DEAL
                   </button>
                   <button
-                          className="qa-button"
-                          onClick={() =>
-                            navigate(`/questions/${item.auctionId}`)
-                          }
-                        >
-                          Q&A
-                        </button>
+                    className="qa-button"
+                    onClick={() => navigate(`/questions/${item.auctionId}`)}
+                  >
+                    Q&A
+                  </button>
                 </div>
               </div>
             </div>

@@ -51,13 +51,12 @@ const CartPage = () => {
       <nav className="top-nav">
         <div className="logo">VEHICLE SHOP</div>
         <div className="nav-links">
-        <NavLink to="/summary">Home</NavLink>
-        <NavLink to="/summary/car">Car</NavLink>
+          <NavLink to="/summary">Home</NavLink>
+          <NavLink to="/summary/car">Car</NavLink>
           <NavLink to="/summary/bike">Bike</NavLink>
           <NavLink to="/summary/truck">Truck</NavLink>
           <input type="text" placeholder="Search..." className="search-bar" />
           <a href="/profile">Profile</a>
-          <a href="/cart">Cart ({cartItems.length})</a>
         </div>
       </nav>
 

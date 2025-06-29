@@ -9,7 +9,7 @@ import CategoryPage from "./pages/CategoryPage";
 import ItemDetail from "./pages/ItemDetails";
 import SummaryPage from "./pages/summaryPage";
 import ProfilePage from "./pages/ProfilePage";
-import CartPage from "./pages/CartPage";
+// import CartPage from "./pages/CartPage"; // Cart functionality disabled
 import Admin from "./pages/Admin";
 import { useAuth } from "./context/AuthContext";
 import { ItemProvider } from "./pages/ItemContext";
@@ -89,7 +89,8 @@ const App = () => {
         />
         <Route path="/:category/:auctionId" element={<ItemDetail />} /> */}
         {/* cart & profile */}
-        <Route
+        {/* Cart functionality disabled */}
+        {/* <Route
           path="/cart"
           element={
             <CartPage
@@ -98,7 +99,7 @@ const App = () => {
               addToOrders={addToOrders}
             />
           }
-        />
+        /> */}
         <Route path="/profile" element={<ProfilePage orders={orders} />} />
       </Routes>
     </ItemProvider>
