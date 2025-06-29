@@ -1,19 +1,33 @@
+/* Reset and full-width layout */
+* {
+  box-sizing: border-box;
+}
+
 /* Navbar container */
 .navbar {
-  padding: 10px 20px;
-  background: #333;
+  width: 100%;
+  margin: 0;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #2c3e50, #34495e);
   color: #fff;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  /* Ensure no extra space */
+  box-sizing: border-box;
 }
 
 /* Container for links */
 .nav-links {
   display: flex;
-  gap: 20px;
+  gap: 30px;
   align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 /* Base link styles */
@@ -22,34 +36,76 @@
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
-  transition: color 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 /* Active link styles */
 .active-link {
   font-weight: bold;
-  border-bottom: 2px solid #ff4757;
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid #f39c12;
 }
 
 /* Hover effect for links */
 .link:hover {
-  color: #ff4757;
+  background: rgba(255, 255, 255, 0.1);
+  color: #f39c12;
+  transform: translateY(-1px);
 }
 
 /* Logout button styles */
 .logout-button {
-  background: #ff4757;
+  background: #e74c3c;
   color: #fff;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 10px 18px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 500;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 /* Hover effect for logout button */
 .logout-button:hover {
-  background: #e84118;
+  background: #c0392b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 15px;
+  }
+
+  .nav-links {
+    gap: 15px;
+  }
+
+  .link,
+  .logout-button {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 8px 10px;
+  }
+
+  .nav-links {
+    gap: 10px;
+  }
+
+  .link,
+  .logout-button {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
 }

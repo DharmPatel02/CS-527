@@ -1,191 +1,353 @@
+/* Modern Login/Signup Popup - Matching Auction System Design */
+:root {
+  --primary-blue: #2a5c82;
+  --secondary-teal: #3aa6b9;
+  --accent-gold: #ffd700;
+  --navy-text: #2c3e50;
+  --white: #ffffff;
+  --soft-gray: #f8f9fa;
+  --border-gray: #dee2e6;
+  --light-teal: rgba(58, 166, 185, 0.1);
+  --success-green: #28a745;
+  --error-red: #dc3545;
+}
+
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(44, 62, 80, 0.6);
+  backdrop-filter: blur(3px);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .popup-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
+  background: var(--white);
+  padding: 40px;
+  border-radius: 20px;
+  width: 420px;
+  max-width: 90%;
   text-align: center;
   position: relative;
-  margin: 0 auto; /* Center the popup */
+  box-shadow: 0 15px 35px rgba(42, 92, 130, 0.15);
+  border: 2px solid var(--secondary-teal);
+  transform: scale(0.95);
+  animation: popIn 0.3s ease-out forwards;
+}
+
+@keyframes popIn {
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Professional Header and Close Button */
+.popup-content h2 {
+  color: var(--primary-blue);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 30px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  padding-right: 2rem;
+}
+
+.popup-content h2::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(
+    135deg,
+    var(--secondary-teal) 0%,
+    var(--primary-blue) 100%
+  );
+  border-radius: 2px;
 }
 
 .close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
+  top: 15px;
+  right: 15px;
+  background: rgba(108, 117, 125, 0.1);
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   cursor: pointer;
-  color: #000;
+  color: var(--navy-text);
+  width: 35px;
+  height: 35px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .close-btn:hover {
-  color: #ff0000;
+  background: rgba(220, 53, 69, 0.1);
+  color: var(--error-red);
+  transform: rotate(90deg);
 }
 
-.popup-content input {
-  width: calc(100% - 40px); /* Adjust width to account for padding */
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
+/* Modern Form Inputs */
+.popup-content input,
+.popup-content input[type="text"],
+.popup-content input[type="email"],
 .popup-content input[type="password"] {
-  width: calc(100% - 40px); /* Adjust width to account for padding */
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-.forgot-password-btn {
-  width: calc(100% - 40px); /* Adjust width to account for padding */
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  padding: 18px 20px !important;
+  margin: 4px 0 !important;
+  border: 2px solid var(--border-gray) !important;
+  border-radius: 12px !important;
+  font-size: 16px !important;
+  font-family: inherit !important;
+  background: var(--soft-gray) !important;
+  color: var(--navy-text) !important;
+  transition: all 0.3s ease !important;
+  box-sizing: border-box !important;
+  display: block !important;
 }
 
+/* Extra specific targeting for username and password spacing */
+.popup-content input[type="text"] + input[type="password"] {
+  margin-top: 4px !important;
+}
+
+.popup-content form input {
+  margin: 4px 0 !important;
+}
+
+.popup-content input:focus,
+.popup-content input[type="text"]:focus,
+.popup-content input[type="email"]:focus,
+.popup-content input[type="password"]:focus {
+  outline: none !important;
+  border-color: var(--secondary-teal) !important;
+  background: var(--white) !important;
+  box-shadow: 0 0 0 3px rgba(58, 166, 185, 0.1) !important;
+  transform: translateY(-1px) !important;
+}
+
+.popup-content input:hover:not(:focus),
+.popup-content input[type="text"]:hover:not(:focus),
+.popup-content input[type="email"]:hover:not(:focus),
+.popup-content input[type="password"]:hover:not(:focus) {
+  border-color: var(--secondary-teal) !important;
+  background: var(--white) !important;
+}
+
+.popup-content input::placeholder,
+.popup-content input[type="text"]::placeholder,
+.popup-content input[type="email"]::placeholder,
+.popup-content input[type="password"]::placeholder {
+  color: #adb5bd !important;
+  opacity: 0.8 !important;
+  font-weight: 400 !important;
+}
+/* Modern Button Styling */
 .popup-content button[type="submit"] {
-  width: calc(100% - 40px); /* Adjust width to account for padding */
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
+  width: 100%;
+  padding: 18px 25px;
+  background: linear-gradient(
+    135deg,
+    var(--secondary-teal) 0%,
+    var(--primary-blue) 100%
+  );
+  color: var(--white);
   border: none;
-  border-radius: 5px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 5px;
+  margin: 20px 0 15px 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(58, 166, 185, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .popup-content button[type="submit"]:hover {
-  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(58, 166, 185, 0.4);
+  background: linear-gradient(135deg, var(--primary-blue) 0%, #1e4a68 100%);
 }
 
+.popup-content button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+.forgot-password-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background: transparent;
+  color: var(--secondary-teal);
+  border: 2px solid var(--secondary-teal);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: all 0.3s ease;
+}
+
+.forgot-password-btn:hover {
+  background: var(--secondary-teal);
+  color: var(--white);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(58, 166, 185, 0.2);
+}
+
+/* Enhanced Text and Links */
 .popup-content p {
-  margin-top: 10px;
+  margin: 20px 0 10px 0;
+  color: var(--navy-text);
+  font-size: 15px;
+  font-weight: 400;
 }
 
 .popup-content span {
-  color: #007bff;
+  color: var(--secondary-teal);
   cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
 .popup-content span:hover {
-  text-decoration: underline;
+  color: var(--primary-blue);
+  text-decoration: none;
 }
 
-/* Add this to your existing LoginPopup.css */
+/* Error Message Styling */
+.popup-content p[style*="color: red"] {
+  background: rgba(220, 53, 69, 0.1) !important;
+  color: var(--error-red) !important;
+  padding: 12px 16px !important;
+  border-radius: 8px !important;
+  border-left: 4px solid var(--error-red) !important;
+  margin: 15px 0 !important;
+  font-weight: 500 !important;
+  text-align: left !important;
+}
+
+/* Enhanced Success Popup */
 .success-popup {
   position: fixed;
-  top: 50%;
+  top: 30px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #4caf50;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--success-green) 0%, #20c997 100%);
   color: white;
-  padding: 15px 30px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  animation: fadeInOut 3s ease-in-out;
-}
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-/* .popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px 35px;
+  border-radius: 25px;
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+  z-index: 1001;
+  animation: successSlideIn 0.4s ease-out;
+  font-weight: 600;
+  font-size: 1.1rem;
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 10px;
 }
 
-.popup-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
-  text-align: center;
+.success-popup::before {
+  content: "✅";
+  font-size: 1.2rem;
 }
 
-.close-btn {
-  float: right;
-  cursor: pointer;
-  font-size: 1.5rem;
+@keyframes successSlideIn {
+  from {
+    top: -60px;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.9);
+  }
+  to {
+    top: 30px;
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
 }
 
-.popup-content input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .popup-content {
+    width: 90%;
+    padding: 30px 25px;
+    margin: 20px;
+  }
+
+  .popup-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    padding-right: 1.5rem;
+  }
+
+  .popup-content h2::after {
+    width: 60px;
+    height: 3px;
+  }
+
+  .popup-content input {
+    padding: 15px 18px;
+    font-size: 15px;
+    margin: 3px 0 !important;
+  }
+
+  .popup-content button[type="submit"] {
+    padding: 15px 20px;
+    font-size: 15px;
+  }
+
+  .forgot-password-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .success-popup {
+    padding: 15px 25px;
+    font-size: 1rem;
+    top: 20px;
+  }
 }
 
-.popup-content button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+@media (max-width: 480px) {
+  .popup-content {
+    width: 95%;
+    padding: 25px 20px;
+  }
 
-.popup-content button:hover {
-  background-color: #0056b3;
-}
+  .popup-content h2 {
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+  }
 
-.popup-content p {
-  margin-top: 10px;
-}
+  .popup-content input {
+    padding: 12px 15px;
+    margin: 3px 0 !important;
+  }
 
-.popup-content span {
-  color: #007bff;
-  cursor: pointer;
+  .popup-content button[type="submit"] {
+    padding: 12px 18px;
+    font-size: 14px;
+  }
 }
-
-.popup-content span:hover {
-  text-decoration: underline;
-} */

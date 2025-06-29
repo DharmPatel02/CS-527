@@ -1,400 +1,313 @@
-/* Blue Theme Styles */
+/* Simple & Clean HomePage Styles */
 :root {
-  --sky-light: #e8f4ff;
+  --ice-blue: #f0f8ff;
   --primary-blue: #2a5c82;
-  --accent-teal: #3aa6b9;
-  --deep-navy: #1a374d;
-  --bright-cyan: #67c6e3;
-  --button-hover: #2d7d8f;
-  --text-dark: #2f4858;
+  --teal-accent: #3aa6b9;
+  --dark-teal: #2d7d8f;
+  --navy-text: #1a374d;
+  --gold-accent: #ffd700;
   --pure-white: #ffffff;
+  --soft-gray: #f8f9fa;
+  --light-gray: #e9ecef;
+  --shadow-light: rgba(42, 92, 130, 0.1);
+  --shadow-medium: rgba(42, 92, 130, 0.2);
+  --shadow-heavy: rgba(42, 92, 130, 0.3);
   --font-primary: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.homepage-container {
-  height: 100vh;
-  width: 100vw;
-  background: linear-gradient(
-    135deg,
-    var(--sky-light) 0%,
-    var(--pure-white) 100%
-  );
-  display: flex;
-  justify-content: center;
-  align-items: center;
+* {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  box-sizing: border-box;
+}
+
+body {
   font-family: var(--font-primary);
+  overflow-x: hidden;
 }
 
-.auth-box {
-  background: var(--pure-white);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(42, 92, 130, 0.15);
-  display: flex;
-  width: 95%;
-  height: 90vh;
-  max-width: 1400px;
-  margin: auto;
-  border: 2px solid var(--primary-blue);
-}
-
-/* Welcome Section */
-.welcome-section {
-  flex: 1;
-  padding: 40px;
+.homepage-container {
+  min-height: 100vh;
   background: linear-gradient(
-    145deg,
-    var(--primary-blue) 0%,
-    var(--deep-navy) 100%
+    135deg,
+    var(--ice-blue) 0%,
+    var(--pure-white) 100%
   );
-  border-radius: 20px 0 0 20px;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue) 0%,
+    var(--dark-teal) 100%
+  );
   color: var(--pure-white);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 60px 20px;
   text-align: center;
-  position: relative;
-  overflow: hidden;
 }
 
-.welcome-section::before {
-  content: "";
-  position: absolute;
-  top: -50px;
-  left: -50px;
-  width: 200px;
-  height: 200px;
-  background: rgba(1, 169, 220, 0.295);
-  border-radius: 50%;
+.hero-content {
+  max-width: 700px;
+  margin: 0 auto;
 }
 
-.welcome-section::after {
-  content: "";
-  position: absolute;
-  bottom: -50px;
-  right: -50px;
-  width: 150px;
-  height: 150px;
-  background: rgba(58, 166, 185, 0.2);
-  border-radius: 50%;
+.logo-section {
+  margin-bottom: 1.5rem;
 }
 
-.logo-container {
-  margin-top: auto;
-  z-index: 1;
-}
-
-.bid-hammer-logo {
-  font-size: clamp(4rem, 8vw, 6rem);
-  margin-bottom: 2rem;
+.hammer-icon {
+  font-size: 2.5rem;
   display: block;
-  animation: hammerBounce 1s ease-in-out infinite;
-  color: var(--bright-cyan);
-  text-shadow: 2px 2px 4px rgba(26, 55, 77, 0.3);
+  margin-bottom: 0.8rem;
 }
 
-.welcome-section h1 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  margin-bottom: 2rem;
-  line-height: 1.2;
-  font-weight: 600;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+.brand-title {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: var(--pure-white);
 }
 
-.welcome-section p {
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
-  line-height: 1.6;
-  margin-bottom: auto;
-  padding: 0 15%;
+.brand-subtitle {
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  color: var(--gold-accent);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero-description p {
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  line-height: 1.5;
   color: rgba(255, 255, 255, 0.9);
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 /* Login Section */
 .login-section {
-  flex: 1;
-  padding: 5%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: rgba(232, 244, 255, 0.4);
-  border-radius: 0 20px 20px 0;
+  padding: 60px 20px 80px;
+  background: var(--pure-white);
 }
 
-.login-title {
-  color: var(--deep-navy);
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
-  margin-bottom: 8%;
+.login-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  color: var(--navy-text);
+  font-weight: 700;
   text-align: center;
-  font-weight: 600;
+  margin-bottom: 3rem;
   position: relative;
 }
 
-.login-title::after {
+.section-title::after {
   content: "";
-  display: block;
-  width: 60px;
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
   height: 3px;
-  background: var(--accent-teal);
-  margin: 15px auto;
+  background: var(--teal-accent);
+  border-radius: 2px;
 }
 
-.login-options {
-  width: 100%;
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
+/* 2x2 Grid Layout */
+.login-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2.5rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.login-options button {
-  padding: 3vh 5%;
-  border: 2px solid var(--primary-blue);
-  border-radius: 15px;
+.login-card {
   background: var(--pure-white);
-  color: var(--primary-blue);
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 100%;
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  box-shadow: 0 10px 30px var(--shadow-medium);
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 350px;
 }
 
-.login-options button:hover {
-  background: var(--primary-blue);
-  color: var(--pure-white);
-  transform: translateY(-3px);
-  box-shadow: 0 7px 20px rgba(42, 92, 130, 0.2);
-}
-
-.login-options button::before {
+.login-card::before {
   content: "";
   position: absolute;
   top: 0;
-  left: -100%;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--teal-accent), var(--primary-blue));
+}
+
+.buyer-card::before {
+  background: linear-gradient(90deg, var(--primary-blue), var(--teal-accent));
+}
+
+.seller-card::before {
+  background: linear-gradient(90deg, var(--gold-accent), #ff8c00);
+}
+
+.rep-card::before {
+  background: linear-gradient(90deg, var(--teal-accent), var(--dark-teal));
+}
+
+.admin-card::before {
+  background: linear-gradient(90deg, var(--navy-text), #000);
+}
+
+.login-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px var(--shadow-heavy);
+}
+
+.buyer-card:hover {
+  border-color: var(--primary-blue);
+}
+
+.seller-card:hover {
+  border-color: var(--gold-accent);
+}
+
+.rep-card:hover {
+  border-color: var(--teal-accent);
+}
+
+.admin-card:hover {
+  border-color: var(--navy-text);
+}
+
+.card-header {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-icon-large {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.login-card h3 {
+  font-size: 1.8rem;
+  color: var(--navy-text);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.login-card p {
+  color: var(--primary-blue);
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.primary-button {
   width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
-  transition: 0.5s;
+  padding: 18px 25px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2rem;
+  align-self: flex-end;
 }
 
-.login-options button:hover::before {
-  left: 100%;
+.buyer-button {
+  background: linear-gradient(135deg, var(--primary-blue), var(--teal-accent));
+  color: var(--pure-white);
 }
 
-@keyframes hammerBounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
+.seller-button {
+  background: linear-gradient(135deg, var(--gold-accent), #ff8c00);
+  color: var(--navy-text);
+}
+
+.rep-button {
+  background: linear-gradient(135deg, var(--teal-accent), var(--dark-teal));
+  color: var(--pure-white);
+}
+
+.admin-button {
+  background: linear-gradient(135deg, var(--navy-text), #000);
+  color: var(--pure-white);
+}
+
+.primary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .auth-box {
-    flex-direction: column;
-    height: auto;
-    min-height: 100vh;
-    width: 100%;
-    border-radius: 0;
-    border: none;
-  }
-
-  .welcome-section {
-    border-radius: 0;
-    padding: 15% 10%;
-    min-height: 50vh;
-    background: linear-gradient(
-      180deg,
-      var(--primary-blue) 0%,
-      var(--deep-navy) 100%
-    );
+  .hero-section {
+    padding: 50px 15px;
   }
 
   .login-section {
-    padding: 15% 10%;
-    min-height: 50vh;
-    border-radius: 0;
+    padding: 50px 15px 60px;
   }
 
-  .bid-hammer-logo {
-    font-size: 4rem;
+  .login-container {
+    max-width: 100%;
   }
 
-  .login-options button {
+  .login-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+    gap: 2rem;
+    max-width: 400px;
+  }
+
+  .login-card {
+    padding: 2.5rem 2rem;
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 40px 10px;
+  }
+
+  .login-section {
+    padding: 40px 10px 50px;
+  }
+
+  .login-card {
+    padding: 2rem 1.5rem;
+    min-height: 280px;
+  }
+
+  .card-icon-large {
+    font-size: 3rem;
+  }
+
+  .login-card h3 {
+    font-size: 1.5rem;
+  }
+
+  .primary-button {
     padding: 15px 20px;
+    font-size: 1.1rem;
   }
 }
-.top-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background-color: #282c34;
-  color: white;
-}
-
-.top-nav .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.top-nav .nav-links {
-  display: flex;
-  align-items: center;
-}
-
-.top-nav .nav-links a {
-  margin-left: 20px;
-  color: white;
-  text-decoration: none;
-  font-size: 0.95rem;
-}
-
-.top-nav .nav-links a:hover {
-  text-decoration: underline;
-}
-
-.top-nav .search-bar {
-  margin-left: 20px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.9rem;
-}
-
-/* Container for the list of cards */
-.item-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
-}
-
-/* Auction card */
-.card {
-  display: flex;
-  width: 650px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background: white;
-}
-
-/* Image on the left */
-.card-img {
-  width: 300px;
-  height: 200px;
-  object-fit: cover;
-}
-
-/* Body on the right */
-.card-body {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.card-body h2 {
-  font-size: 1.25rem;
-  margin-bottom: 10px;
-  color: #222;
-}
-
-.card-desc {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 12px;
-}
-
-/* Pricing and category info */
-.card-info {
-  font-size: 0.9rem;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  color: #444;
-}
-
-/* Footer with closing time and buttons */
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* VIEW DEAL button */
-.view-deal {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  margin-left: 2%;
-}
-
-.view-deal:hover {
-  background-color: #45a049;
-}
-
-/* ADD TO CART button */
-.add-to-cart {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 8px;
-  font-size: 0.9rem;
-}
-
-/* .add-to-cart:hover {
-  background-color: #0069d9; */
-
-@media (max-width: 576px) {
-  .content {
-    padding: 20px 10px;
-  }
-
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  .stats-container {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .image-wrapper {
-    height: 300px;
-  }
-}
-
-/* Optional: For very large screens (centered content) */
-@media (min-width: 1600px) {
-  .content {
-    max-width: 1600px;
-    margin: 0 auto;
-  }
-}
-
-

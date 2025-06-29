@@ -323,7 +323,7 @@
 //                       {item.closingTime  || "N/A"}
 //                     </p>
 //                     <p>
-//                       <strong>Starting Price:</strong> 
+//                       <strong>Starting Price:</strong>
 //                       {item.startingPrice != null ? `$${item.startingPrice}` : "N/A"}
 //                     </p>
 //                     <p>
@@ -341,7 +341,6 @@
 // };
 
 // export default AdminPage;
-
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -606,6 +605,14 @@ const AdminPage = () => {
     setBidError(""); // Reset bid error
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+    localStorage.removeItem("role");
+    navigate("/");
+  };
+
   const items = Array.isArray(reportData)
     ? reportData
     : reportData
@@ -615,8 +622,10 @@ const AdminPage = () => {
   return (
     <div className="admin-container">
       <div className="admin-header">
-        <h1>Admin Dashboard</h1>
-        <div className="header-divider"></div>
+        <h1>ADMIN DASHBOARD</h1>
+        <button onClick={handleLogout} className="logout-btn">
+          Logout
+        </button>
       </div>
 
       <div className="form-wrapper">
@@ -778,7 +787,6 @@ const AdminPage = () => {
         )}
       </div>
 
-      {/* New section for Auction Details */}
       <div className="auction-details-section">
         <h2>Auction Details</h2>
         <div className="filter-container">

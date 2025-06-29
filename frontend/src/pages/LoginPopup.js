@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginPopup.css";
 
-const LoginPopup = ({ userType, onClose, redirectTo, onForgotPassword  }) => {
+const LoginPopup = ({ userType, onClose, redirectTo, onForgotPassword }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -125,7 +125,7 @@ const LoginPopup = ({ userType, onClose, redirectTo, onForgotPassword  }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">{isLogin ? "Login" : "Signup"}</button>
+          <button type="submit">{isLogin ? "Login" : "Create Account"}</button>
           {isLogin && !isCustomerRep && !isAdmin && (
             <button
               type="button"
