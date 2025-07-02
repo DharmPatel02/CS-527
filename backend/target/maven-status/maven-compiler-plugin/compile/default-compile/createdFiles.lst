@@ -12,6 +12,7 @@ com\database\auction\enums\RoleType.class
 com\database\auction\repository\BidRepository.class
 com\database\auction\entity\Users.class
 com\database\auction\service\AuctionStartNotificationService.class
+com\database\auction\utils\AdminUserInitializer.class
 com\database\auction\controllers\UserSignUpController.class
 com\database\auction\service\impl\NotificationServiceImpl.class
 com\database\auction\service\NotificationService.class

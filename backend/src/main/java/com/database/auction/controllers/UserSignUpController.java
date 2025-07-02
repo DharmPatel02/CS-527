@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -113,6 +114,27 @@ public class UserSignUpController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(users);
+    }
+
+    @PostMapping("/admin/create")
+    public ResponseEntity<UsersDTO> createAdminUser(@RequestBody Map<String, String> requestBody) {
+        try {
+            String username = requestBody.get("username");
+            String email = requestBody.get("email");
+            String passwordHash = requestBody.get("passwordHash");
+            
+            if (username == null || email == null || passwordHash == null) {
+                return ResponseEntity.badRequest().build();
+            }
+            
+            UsersDTO adminUser = usersService.createAdminUser(username, email, passwordHash);
+            log.info("Admin user created via REST endpoint: {}", adminUser.getUsername());
+            
+            return new ResponseEntity<>(adminUser, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            log.error("Error creating admin user: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
 }
