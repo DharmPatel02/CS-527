@@ -19,7 +19,7 @@ public class AuctionEndSubscription {
     @Column(name="auction_id", nullable=false)
     private Integer auctionId;
 
-    @Column(name="closing_time", columnDefinition="DATETIME")
+    @Column(name="closing_time", columnDefinition="TIMESTAMP")
     private Instant closingTime;
 
     @Column(name="triggered", nullable=false)

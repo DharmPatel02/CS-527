@@ -8,5 +8,5 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=builder /app/target/auction-system-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8080
+# Port is dynamically configured via environment variable in application.properties
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 
 @RequestMapping("/auth/auction-items")

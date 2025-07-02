@@ -21,7 +21,6 @@ import java.util.Map;
 
 
 @Slf4j
-@CrossOrigin(origins = "http://localhost:3000")  // Allow frontend access
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
