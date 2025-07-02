@@ -40,6 +40,7 @@ com\database\auction\entity\Notification.class
 com\database\auction\service\AuctionItemsService.class
 com\database\auction\dto\UsersDTO.class
 com\database\auction\scheduler\AuctionEventScheduler.class
+com\database\auction\controllers\HealthController.class
 com\database\auction\repository\AuctionEndSubscriptionRepository.class
 com\database\auction\entity\AuctionItems.class
 com\database\auction\dto\ProfileDTO.class
