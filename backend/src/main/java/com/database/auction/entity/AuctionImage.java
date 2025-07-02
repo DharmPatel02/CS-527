@@ -7,16 +7,19 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "AuctionImages")
+@Table(name = "auction_images")
 public class AuctionImage {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "image_url")
     private String imageUrl;
 
+    @Column(name = "image_mime")
+    private String imageMime;
+
     @Lob
-    @Column(name = "image_data", columnDefinition = "LONGBLOB")
+    @Column(name = "image_data")
     private byte[] imageData;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,6 +40,14 @@ public class AuctionImage {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getImageMime() {
+        return imageMime;
+    }
+
+    public void setImageMime(String imageMime) {
+        this.imageMime = imageMime;
     }
 
     public byte[] getImageData() {
