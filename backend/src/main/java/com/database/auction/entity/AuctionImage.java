@@ -19,7 +19,7 @@ public class AuctionImage {
     private String imageMime;
 
     @Lob
-    @Column(name = "image_data")
+    @Column(name = "image_data", columnDefinition = "BYTEA")
     private byte[] imageData;
 
     @ManyToOne(fetch = FetchType.LAZY)
