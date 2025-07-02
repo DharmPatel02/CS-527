@@ -22,6 +22,9 @@ public interface UsersService {
     int pwd_Change(int userId,String password_hash);
     int setPasswordToNull(int userId);
     List<UsersDTO> getAllNullPassword();
+    
+    // Method to create admin user
+    UsersDTO createAdminUser(String username, String email, String passwordHash);
 
     //UsersDTO loginUsers()
 

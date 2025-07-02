@@ -232,6 +232,34 @@ public class UsersServiceImpl implements UsersService {
 
         return list;
     }
+
+    @Override
+    public UsersDTO createAdminUser(String username, String email, String passwordHash) {
+        log.info("Creating admin user with username: {}, email: {}", username, email);
+        
+        // Check if user already exists
+        Optional<Users> existingUser = usersRepository.findByUsername(username);
+        if (existingUser.isPresent()) {
+            throw new RuntimeException("User with username '" + username + "' already exists");
+        }
+        
+        // Generate next available user_id
+        String maxUserIdSql = "SELECT COALESCE(MAX(user_id), 0) + 1 FROM users";
+        Integer nextUserId = jdbc.queryForObject(maxUserIdSql, Integer.class);
+        
+        // Create new admin user
+        Users adminUser = new Users();
+        adminUser.setUserId(nextUserId);
+        adminUser.setUsername(username);
+        adminUser.setEmail(email);
+        adminUser.setPassword_hash(passwordHash);
+        adminUser.setRole(RoleType.ADMIN);
+        
+        Users savedUser = usersRepository.save(adminUser);
+        log.info("Admin user created successfully with ID: {}", savedUser.getUserId());
+        
+        return UsersMapper.mapToUsersDto(savedUser);
+    }
 }
 
 
