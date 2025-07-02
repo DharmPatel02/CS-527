@@ -7,11 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "AuctionItems")
+@Table(name = "auction_items")
 public class AuctionItems {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "auction_id", unique = true)
