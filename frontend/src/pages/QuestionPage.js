@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./QuestionPage.css";
+import { API_ENDPOINTS } from "../config/api";
 
 const QuestionPage = () => {
   const { auctionId } = useParams();
@@ -23,7 +24,7 @@ const QuestionPage = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/auth/auction-items/getallquessans/${auctionId}`,
+        `API_ENDPOINTS.AUCTION_ITEMS/getallquessans/${auctionId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -78,7 +79,7 @@ const QuestionPage = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/auth/auction-items/insertquestion/${auctionId}`,
+        `API_ENDPOINTS.AUCTION_ITEMS/insertquestion/${auctionId}`,
         {
           method: "PUT",
           headers: {
@@ -202,7 +203,7 @@ export default QuestionPage;
 //     try {
 //       const token = localStorage.getItem("token");
 //       const response = await fetch(
-//         `//http://localhost:8080/auth/auction-items/getallquessans/${auctionId}`,
+//         `//API_ENDPOINTS.AUCTION_ITEMS/getallquessans/${auctionId}`,
 //         {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
@@ -238,7 +239,7 @@ export default QuestionPage;
 //       }
 
 //       const response = await fetch(
-//         `http://localhost:8080/auth/auction-items/insertquestion/${auctionId}`,
+//         `API_ENDPOINTS.AUCTION_ITEMS/insertquestion/${auctionId}`,
 //         {
 //           method: "PUT",
 //           headers: {
@@ -341,7 +342,7 @@ export default QuestionPage;
 //       try {
 //         const token = localStorage.getItem("token");
 //         const response = await fetch(
-//           `http://localhost:8080/auth/auction-items/getallquessans/${auctionId}`,
+//           `API_ENDPOINTS.AUCTION_ITEMS/getallquessans/${auctionId}`,
 //           {
 //             headers: {
 //               Authorization: `Bearer ${token}`,
@@ -412,7 +413,7 @@ export default QuestionPage;
 // //       try {
 // //         const token = localStorage.getItem("token");
 // //         const response = await fetch(
-// //           `http://localhost:8080/auth/auction-items/getallquessans/${auctionId}`,
+// //           `API_ENDPOINTS.AUCTION_ITEMS/getallquessans/${auctionId}`,
 // //           {
 // //             headers: {
 // //               Authorization: `Bearer ${token}`,
@@ -453,7 +454,7 @@ export default QuestionPage;
 //         }
 
 //         const response = await fetch(
-//           `http://localhost:8080/auth/auction-items/getallquessans/${auctionId}`,
+//           `API_ENDPOINTS.AUCTION_ITEMS/getallquessans/${auctionId}`,
 //           {
 //             headers: {
 //               Authorization: `Bearer ${token}`,

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./PasswordRequests.css";
+import { API_ENDPOINTS } from "../config/api";
 
 const PasswordRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -13,7 +14,7 @@ const PasswordRequests = () => {
   const fetchRequests = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/auth/null-passwords",
+        "API_ENDPOINTS.NULL_PASSWORDS",
         {
           method: "GET",
           headers: {
@@ -43,7 +44,7 @@ const PasswordRequests = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/update-password/${userId}`,
+        `${API_ENDPOINTS.BASE_URL}/update-password/${userId}`,
         {
           method: "POST",
           headers: {

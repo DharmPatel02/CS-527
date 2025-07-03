@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { API_ENDPOINTS } from "../config/api";
 
 const EditProfilePopup = ({ userData, onClose, onSave }) => {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ const EditProfilePopup = ({ userData, onClose, onSave }) => {
       const user_id = localStorage.getItem("user_id");
 
       const response = await fetch(
-        `http://localhost:8080/auth/editprofile/${user_id}`,
+        `${API_ENDPOINTS.BASE_URL}/auth/editprofile/${user_id}`,
         {
           method: "PUT",
           headers: {
@@ -268,7 +269,7 @@ export default EditProfilePopup;
 //       const userId = localStorage.getItem("userId");
 
 //       const response = await fetch(
-//         `http://localhost:8080/auth/editprofile/${userId}`,
+//         `${API_ENDPOINTS.BASE_URL}/auth/editprofile/${userId}`,
 //         {
 //           method: "PUT",
 //           headers: {
@@ -430,7 +431,7 @@ export default EditProfilePopup;
 //       const username = userData.username;
 
 //       const response = await fetch(
-//         `http://localhost:8080/auth/editprofile/${username}`,
+//         `${API_ENDPOINTS.BASE_URL}/auth/editprofile/${username}`,
 //         {
 //           method: "PUT",
 //           headers: {
@@ -549,7 +550,7 @@ export default EditProfilePopup;
 //         }
 
 //         const profileResponse = await fetch(
-//           `http://localhost:8080/auth/profile/${userId}`,
+//           `${API_ENDPOINTS.BASE_URL}/auth/profile/${userId}`,
 //           {
 //             method: "GET",
 //             headers: {

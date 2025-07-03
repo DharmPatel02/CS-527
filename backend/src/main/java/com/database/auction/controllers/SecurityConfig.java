@@ -34,9 +34,17 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Split the origins by comma and convert to list
-        List<String> origins = Arrays.asList(allowedOrigins.split(","));
-        configuration.setAllowedOrigins(origins); // Allow frontend access from environment variable
+        
+        // Allow all common frontend URLs
+        List<String> allowedOriginsList = Arrays.asList(
+            "http://localhost:3000",
+            "http://localhost:3001", 
+            "http://127.0.0.1:3000",
+            "https://auction-system-frontend.vercel.app",
+            "https://vehicle-auction-frontend.netlify.app"
+        );
+        
+        configuration.setAllowedOrigins(allowedOriginsList);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

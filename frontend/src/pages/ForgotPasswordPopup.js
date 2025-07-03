@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./ForgotPasswordPopup.css";
+import { API_ENDPOINTS } from "../config/api";
 
 const ForgotPasswordPopup = ({ onClose }) => {
   const [userId, setUserId] = useState("");
@@ -16,7 +17,7 @@ const ForgotPasswordPopup = ({ onClose }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/auth/nullify-password/${userId}`,
+        `${API_ENDPOINTS.BASE_URL}/auth/nullify-password/${userId}`,
         {
           method: "POST",
           headers: {

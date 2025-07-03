@@ -1,6 +1,7 @@
 // CustomerRepAndAdmin.jsx
 import React, { useEffect, useState } from 'react';
 import './Admin.css';
+import { API_ENDPOINTS } from "../config/api";
 
 function Admin() {
   const [users, setUsers] = useState([]);
@@ -8,7 +9,7 @@ function Admin() {
   const [newRep, setNewRep] = useState({ username: '', password: '', email: '' });
 
   useEffect(() => {
-    fetch('http://localhost:8080/admin/users')
+    fetch('API_ENDPOINTS.ADMIN_USERS')
       .then(res => res.json())
       .then(data => setUsers(data))
       .catch(err => console.error('Failed to load users:', err));
@@ -16,7 +17,7 @@ function Admin() {
 
   const createRep = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:8080/admin/create-customer-rep', {
+    const response = await fetch('API_ENDPOINTS.ADMIN_CREATE_REP', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -34,7 +35,7 @@ function Admin() {
   };
 
   const fetchReports = async () => {
-    const response = await fetch('http://localhost:8080/admin/sales-report');
+    const response = await fetch('API_ENDPOINTS.ADMIN_SALES_REPORT');
     const data = await response.json();
     setReports(data);
   };

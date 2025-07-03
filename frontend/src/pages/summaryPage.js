@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./CategoryPage.css";
+import { API_ENDPOINTS } from "../config/api";
 
 export default function SummaryPage({ addToCart }) {
   const [auctions, setAuctions] = useState([]);
@@ -26,7 +27,7 @@ export default function SummaryPage({ addToCart }) {
       try {
         const token = localStorage.getItem("token");
         const res = await fetch(
-          "http://localhost:8080/auth/auction-items/summary",
+          "API_ENDPOINTS.AUCTION_ITEMS_SUMMARY",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -55,7 +56,7 @@ export default function SummaryPage({ addToCart }) {
     const fetchNotifs = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/auth/notifications?userId=${myUserId}`,
+          `${API_ENDPOINTS.BASE_URL}/auth/notifications?userId=${myUserId}`,
           {
             credentials: "include",
             headers: {
@@ -79,7 +80,7 @@ export default function SummaryPage({ addToCart }) {
   const markRead = async (id) => {
     try {
       const res = await fetch(
-        `http://localhost:8080/auth/notifications/${id}/read`,
+        `${API_ENDPOINTS.BASE_URL}/auth/notifications/${id}/read`,
         {
           method: "POST",
           credentials: "include",
@@ -101,7 +102,7 @@ export default function SummaryPage({ addToCart }) {
         return;
       }
       await fetch(
-        `http://localhost:8080/auth/auction-items/${myUserId}/${auctionId}/notify`,
+        `API_ENDPOINTS.AUCTION_ITEMS/${myUserId}/${auctionId}/notify`,
         {
           method: "POST",
           credentials: "include",
