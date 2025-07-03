@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-//@RequestMapping("/auth")
-//@CrossOrigin(origins = "http://localhost:3000") // Replace with your React app's URL
+@RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:3000") // Enable CORS for local development
 public class UserLogin {
 
     Logger logger = LoggerFactory.getLogger(UserLogin.class);
