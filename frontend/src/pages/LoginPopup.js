@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_ENDPOINTS } from "../config/api";
 import "./LoginPopup.css";
 
 const LoginPopup = ({ userType, onClose, redirectTo, onForgotPassword }) => {
@@ -41,8 +42,7 @@ const LoginPopup = ({ userType, onClose, redirectTo, onForgotPassword }) => {
       role = userType.toUpperCase();
     }
 
-    const endpoint = isLogin ? "/auth/login" : "/auth/signup";
-    const url = `http://localhost:8080${endpoint}`;
+    const url = isLogin ? API_ENDPOINTS.LOGIN : API_ENDPOINTS.SIGNUP;
 
     try {
       const response = await fetch(url, {
