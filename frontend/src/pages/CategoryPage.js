@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import "./CategoryPage.css";
+import { API_ENDPOINTS } from "../config/api";
 
 const CategoryPage = ({ addToCart }) => {
   const { category } = useParams(); // "car" / "bike" / "truck"
@@ -19,7 +20,7 @@ const CategoryPage = ({ addToCart }) => {
     (async () => {
       try {
         const res = await fetch(
-          "http://localhost:8080/auth/auction-items/summary",
+          "API_ENDPOINTS.AUCTION_ITEMS_SUMMARY",
           {
             credentials: "include",
             headers: {
@@ -51,7 +52,7 @@ const CategoryPage = ({ addToCart }) => {
     const fetchNotifs = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/auth/notifications?userId=${myUserId}`,
+          `${API_ENDPOINTS.BASE_URL}/auth/notifications?userId=${myUserId}`,
           {
             credentials: "include",
             headers: {
@@ -80,7 +81,7 @@ const CategoryPage = ({ addToCart }) => {
   const markRead = async (id) => {
     try {
       const res = await fetch(
-        `http://localhost:8080/auth/notifications/${id}/read`,
+        `${API_ENDPOINTS.BASE_URL}/auth/notifications/${id}/read`,
         {
           method: "POST",
           credentials: "include",

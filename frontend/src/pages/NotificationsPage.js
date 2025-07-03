@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./NotificationPages.css";
 import "./CategoryPage.css";
+import { API_ENDPOINTS } from "../config/api";
 
 export default function NotificationsPanel() {
   const [notifs, setNotifs] = useState([]);
@@ -17,7 +18,7 @@ export default function NotificationsPanel() {
       setLoading(true);
       try {
         const res = await fetch(
-          `http://localhost:8080/auth/notifications?userId=${userId}`,
+          `${API_ENDPOINTS.BASE_URL}/auth/notifications?userId=${userId}`,
           { credentials: "include" }
         );
         if (res.ok) {
@@ -42,7 +43,7 @@ export default function NotificationsPanel() {
   const markRead = async (id) => {
     try {
       const res = await fetch(
-        `http://localhost:8080/auth/notifications/${id}/read`,
+        `${API_ENDPOINTS.BASE_URL}/auth/notifications/${id}/read`,
         {
           method: "POST",
           credentials: "include",
@@ -61,7 +62,7 @@ export default function NotificationsPanel() {
   const markAllRead = async () => {
     try {
       const promises = notifs.map((notif) =>
-        fetch(`http://localhost:8080/auth/notifications/${notif.id}/read`, {
+        fetch(`${API_ENDPOINTS.BASE_URL}/auth/notifications/${notif.id}/read`, {
           method: "POST",
           credentials: "include",
         })

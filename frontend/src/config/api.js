@@ -1,7 +1,5 @@
 // API Configuration
-const API_BASE_URL =
-  process.env.REACT_APP_API_URL ||
-  "https://vehicle-auction-system-backend.onrender.com";
+const API_BASE_URL = "https://vehicle-auction-system-backend.onrender.com";
 
 export const API_ENDPOINTS = {
   BASE_URL: API_BASE_URL,
@@ -51,6 +49,11 @@ export const API_ENDPOINTS = {
   NULLIFY_PASSWORD: (userId) =>
     `${API_BASE_URL}/auth/nullify-password/${userId}`,
   UPDATE_PASSWORD: (userId) => `${API_BASE_URL}/update-password/${userId}`,
+
+  // Additional missing endpoints
+  ADMIN_USERS: `${API_BASE_URL}/admin/users`,
+  ADMIN_CREATE_REP: `${API_BASE_URL}/admin/create-customer-rep`,
+  ADMIN_SALES_REPORT: `${API_BASE_URL}/admin/sales-report`,
 };
 
 export default API_BASE_URL;

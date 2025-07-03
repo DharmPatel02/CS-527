@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = {"http://localhost:3000", "https://auction-system-frontend.vercel.app", "https://vehicle-auction-frontend.netlify.app"}) // Enable CORS for local and production
+
 public class UserLogin {
 
     Logger logger = LoggerFactory.getLogger(UserLogin.class);

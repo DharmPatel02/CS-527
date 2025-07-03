@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import "./ProfilePage.css";
 import "./EditProfilePopup.css";
+import { API_ENDPOINTS } from "../config/api";
 
 // Success Popup Component
 const SuccessPopup = ({ onClose }) => {
@@ -182,7 +183,7 @@ const EditProfilePopup = ({ userData, onClose, onSave }) => {
       if (!token) throw new Error("No authentication token found");
 
       const response = await fetch(
-        `http://localhost:8080/auth/editprofile/${userId}`,
+        `${API_ENDPOINTS.BASE_URL}/auth/editprofile/${userId}`,
         {
           method: "PUT",
           headers: {
@@ -380,7 +381,7 @@ const ProfilePage = () => {
         if (!userId || !token) throw new Error("Authentication data missing");
 
         const profileResponse = await fetch(
-          `http://localhost:8080/auth/profile/${userId}`,
+          `${API_ENDPOINTS.BASE_URL}/auth/profile/${userId}`,
           {
             method: "GET",
             headers: {
@@ -438,7 +439,7 @@ const ProfilePage = () => {
     const fetchNotifs = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/auth/notifications?userId=${myUserId}`,
+          `${API_ENDPOINTS.BASE_URL}/auth/notifications?userId=${myUserId}`,
           {
             credentials: "include",
             headers: {
@@ -466,7 +467,7 @@ const ProfilePage = () => {
   const markRead = async (id) => {
     try {
       const res = await fetch(
-        `http://localhost:8080/auth/notifications/${id}/read`,
+        `${API_ENDPOINTS.BASE_URL}/auth/notifications/${id}/read`,
         {
           method: "POST",
           credentials: "include",
@@ -494,7 +495,7 @@ const ProfilePage = () => {
       if (!userId || !token) throw new Error("Authentication data missing");
 
       const ordersResponse = await fetch(
-        `http://localhost:8080/auth/auction-items/buyer/${userId}/orders`,
+        `API_ENDPOINTS.AUCTION_ITEMS/buyer/${userId}/orders`,
         {
           method: "GET",
           headers: {

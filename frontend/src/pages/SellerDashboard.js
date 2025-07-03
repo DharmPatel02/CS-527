@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import "./SellerDashboardStyle.css";
+import { API_ENDPOINTS } from "../config/api";
 
 const SellerDashboard = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const SellerDashboard = () => {
       try {
         const sellerId = localStorage.getItem("userId");
         const res = await fetch(
-          `http://localhost:8080/auth/auction-items/summarySeller/${sellerId}`,
+          `API_ENDPOINTS.AUCTION_ITEMS_SUMMARYSeller/${sellerId}`,
           {
             credentials: "include",
             headers: {
@@ -63,7 +64,7 @@ const SellerDashboard = () => {
     const fetchNotifs = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/auth/notifications?userId=${myUserId}`,
+          `${API_ENDPOINTS.BASE_URL}/auth/notifications?userId=${myUserId}`,
           {
             credentials: "include",
             headers: {
@@ -150,7 +151,7 @@ const SellerDashboard = () => {
     const closingDate = new Date(newItem.closing_time);
     closingDate.setHours(closingDate.getHours() - 4);
     const closingTime = closingDate.toISOString();
-    const baseUrl = "http://localhost:8080/auth/auction-items";
+    const baseUrl = "API_ENDPOINTS.AUCTION_ITEMS";
     const url = editingId
       ? `${baseUrl}/${sellerId}/update`
       : `${baseUrl}/${sellerId}/upload`;

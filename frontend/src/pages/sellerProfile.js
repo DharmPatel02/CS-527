@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './sellerProfileStyle.css';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { API_ENDPOINTS } from "../config/api";
+import "./sellerProfileStyle.css";
 
 export default function SellerProfile() {
   const [profile, setProfile] = useState(null);
@@ -9,13 +10,12 @@ export default function SellerProfile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const sellerId = localStorage.getItem('userId');
-        const authToken = localStorage.getItem('authToken');
-        const res = await fetch(
-          `http://localhost:8080/auth/sellers/${sellerId}`,
-          { headers: { 'Authorization': `Bearer ${authToken}` } }
-        );
-        if (!res.ok) throw new Error('Failed to fetch profile');
+        const sellerId = localStorage.getItem("userId");
+        const authToken = localStorage.getItem("authToken");
+        const res = await fetch(API_ENDPOINTS.SELLER_PROFILE(sellerId), {
+          headers: { Authorization: `Bearer ${authToken}` },
+        });
+        if (!res.ok) throw new Error("Failed to fetch profile");
         const data = await res.json();
         setProfile(data);
       } catch (err) {
@@ -35,7 +35,7 @@ export default function SellerProfile() {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate('/');
+    navigate("/");
   };
 
   if (!profile) {
@@ -47,7 +47,7 @@ export default function SellerProfile() {
       <header className="profile-header">
         <h2>Your Profile</h2>
         <div>
-          <button onClick={() => navigate('/seller-dashboard')}>
+          <button onClick={() => navigate("/seller-dashboard")}>
             Dashboard
           </button>
           <button onClick={handleLogout}>Logout</button>
@@ -55,10 +55,14 @@ export default function SellerProfile() {
       </header>
 
       <section className="profile-details">
-        <p><strong>Name:</strong> {profile.name}</p>
-        <p><strong>Email:</strong> {profile.email}</p>
         <p>
-          <strong>Joined:</strong>{' '}
+          <strong>Name:</strong> {profile.name}
+        </p>
+        <p>
+          <strong>Email:</strong> {profile.email}
+        </p>
+        <p>
+          <strong>Joined:</strong>{" "}
           {new Date(profile.createdAt).toLocaleDateString()}
         </p>
         {/* add any other seller fields here */}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerRepresentatives.css";
+import { API_ENDPOINTS } from "../config/api";
 
 const CustomerRepresentative = () => {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ const CustomerRepresentative = () => {
 
       // Fetch answered questions
       const answeredResponse = await fetch(
-        `http://localhost:8080/auth/auction-items/getallquessans/${auctionIdQA}`,
+        `API_ENDPOINTS.AUCTION_ITEMS/getallquessans/${auctionIdQA}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -66,7 +67,7 @@ const CustomerRepresentative = () => {
       // Fetch unanswered questions
       try {
         const unansweredResponse = await fetch(
-          `http://localhost:8080/questions/unanswered/${auctionIdQA}`,
+          `${API_ENDPOINTS.BASE_URL}/questions/unanswered/${auctionIdQA}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -114,7 +115,7 @@ const CustomerRepresentative = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:8080/auth/auction-items/update_answer/${questionId}/${auctionId}`,
+        `API_ENDPOINTS.AUCTION_ITEMS/update_answer/${questionId}/${auctionId}`,
         {
           method: "POST",
           headers: {
@@ -169,7 +170,7 @@ const CustomerRepresentative = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        "http://localhost:8080/auth/null-passwords",
+        "API_ENDPOINTS.NULL_PASSWORDS",
         {
           method: "GET",
           headers: {
@@ -223,7 +224,7 @@ const CustomerRepresentative = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:8080/auth/pwd_change/${userId}`,
+        `${API_ENDPOINTS.BASE_URL}/auth/pwd_change/${userId}`,
         {
           method: "POST",
           headers: {
@@ -407,7 +408,7 @@ const CustomerRepresentative = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:8080/auth/profile/${userId}`,
+        `${API_ENDPOINTS.BASE_URL}/auth/profile/${userId}`,
         {
           method: "GET",
           headers: {
@@ -459,7 +460,7 @@ const CustomerRepresentative = () => {
       }
 
       const updateResponse = await fetch(
-        `http://localhost:8080/auth/editprofile/${userId}`,
+        `${API_ENDPOINTS.BASE_URL}/auth/editprofile/${userId}`,
         {
           method: "PUT",
           headers: {
@@ -485,7 +486,7 @@ const CustomerRepresentative = () => {
       if (formData.password_hash) {
         console.log("Attempting to update password for user:", userId);
         const pwdResponse = await fetch(
-          `http://localhost:8080/auth/pwd_change/${userId}`,
+          `${API_ENDPOINTS.BASE_URL}/auth/pwd_change/${userId}`,
           {
             method: "POST",
             headers: {

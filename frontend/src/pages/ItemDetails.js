@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import "./ItemDetails.css";
+import { API_ENDPOINTS } from "../config/api";
 
 const ItemDetail = () => {
   const { itemId } = useParams();
@@ -19,7 +20,7 @@ const ItemDetail = () => {
   // Fetch user role
   const fetchUserRole = useCallback(async () => {
     try {
-      const res = await fetch(`http://localhost:8080/auth/profile/${myUserId}`, {
+      const res = await fetch(`${API_ENDPOINTS.BASE_URL}/auth/profile/${myUserId}`, {
         credentials: "include",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -38,7 +39,7 @@ const ItemDetail = () => {
   const fetchAuction = useCallback(async () => {
     try {
       const res = await fetch(
-        "http://localhost:8080/auth/auction-items/summary",
+        "API_ENDPOINTS.AUCTION_ITEMS_SUMMARY",
         {
           credentials: "include",
           headers: {
@@ -108,7 +109,7 @@ const ItemDetail = () => {
     };
     try {
       const res = await fetch(
-        "http://localhost:8080/auth/auction-items/update",
+        "API_ENDPOINTS.AUCTION_ITEMS/update",
         {
           method: "PUT",
           headers: {
@@ -142,7 +143,7 @@ const ItemDetail = () => {
       reserve_price: newReserve,
     };
     try {
-      const res = await fetch("http://localhost:8080/auth/bids", {
+      const res = await fetch("API_ENDPOINTS.BIDS", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -392,7 +393,7 @@ export default ItemDetail;
 //   const fetchAuction = useCallback(async () => {
 //     try {
 //       const res = await fetch(
-//         "http://localhost:8080/auth/auction-items/summary",
+//         "API_ENDPOINTS.AUCTION_ITEMS_SUMMARY",
 //         {
 //           credentials: "include",
 //           headers: {
@@ -456,7 +457,7 @@ export default ItemDetail;
 //     };
 //     try {
 //       const res = await fetch(
-//         "http://localhost:8080/auth/auction-items/update",
+//         "API_ENDPOINTS.AUCTION_ITEMS/update",
 //         {
 //           method: "PUT",
 //           headers: {
@@ -490,7 +491,7 @@ export default ItemDetail;
 //       reserve_price: newReserve,
 //     };
 //     try {
-//       const res = await fetch("http://localhost:8080/auth/bids", {
+//       const res = await fetch("API_ENDPOINTS.BIDS", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -710,7 +711,7 @@ export default ItemDetail;
 //   const fetchAuction = useCallback(async () => {
 //     try {
 //       const res = await fetch(
-//         "http://localhost:8080/auth/auction-items/summary",
+//         "API_ENDPOINTS.AUCTION_ITEMS_SUMMARY",
 //         {
 //           credentials: "include",
 //           headers: {
@@ -778,7 +779,7 @@ export default ItemDetail;
 //     };
 //     try {
 //       const res = await fetch(
-//         "http://localhost:8080/auth/auction-items/update",
+//         "API_ENDPOINTS.AUCTION_ITEMS/update",
 //         {
 //           method: "PUT",
 //           headers: {
@@ -812,7 +813,7 @@ export default ItemDetail;
 //       reserve_price: newReserve,
 //     };
 //     try {
-//       const res = await fetch("http://localhost:8080/auth/bids", {
+//       const res = await fetch("API_ENDPOINTS.BIDS", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -1034,7 +1035,7 @@ export default ItemDetail;
 //   const fetchAuction = useCallback(async () => {
 //     try {
 //       const res = await fetch(
-//         "http://localhost:8080/auth/auction-items/summary",
+//         "API_ENDPOINTS.AUCTION_ITEMS_SUMMARY",
 //         {
 //           credentials: "include",
 //           headers: {
@@ -1102,7 +1103,7 @@ export default ItemDetail;
 //     };
 //     try {
 //       const res = await fetch(
-//         "http://localhost:8080/auth/auction-items/update",
+//         "API_ENDPOINTS.AUCTION_ITEMS/update",
 //         {
 //           method: "PUT",
 //           headers: {
@@ -1136,7 +1137,7 @@ export default ItemDetail;
 //       reserve_price: newReserve,
 //     };
 //     try {
-//       const res = await fetch("http://localhost:8080/auth/bids", {
+//       const res = await fetch("API_ENDPOINTS.BIDS", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -1361,7 +1362,7 @@ export default ItemDetail;
 //   const fetchAuction = useCallback(async () => {
 //     try {
 //       const res = await fetch(
-//         "http://localhost:8080/auth/auction-items/summary",
+//         "API_ENDPOINTS.AUCTION_ITEMS_SUMMARY",
 //         {
 //           // credentials: "include",
 //           // headers: {
@@ -1461,7 +1462,7 @@ export default ItemDetail;
 //     };
 //     try {
 //       //   const res = await fetch(
-//       //     "http://localhost:8080/auth/auction-items/update",
+//       //     "API_ENDPOINTS.AUCTION_ITEMS/update",
 //       //     {
 //       //       method: "PUT",
 //       //       headers: {
@@ -1479,7 +1480,7 @@ export default ItemDetail;
 //       //   console.error(`PUT /auth/auction-items/update ${res.status}: ${txt}`);
 //       //   return false;
 //       const res = await fetch(
-//         "http://localhost:8080/auth/auction-items/update",
+//         "API_ENDPOINTS.AUCTION_ITEMS/update",
 //         {
 //           method: "PUT",
 //           headers: {
@@ -1520,7 +1521,7 @@ export default ItemDetail;
 //       reserve_price: newReserve,
 //     };
 //     try {
-//       const res = await fetch("http://localhost:8080/auth/bids", {
+//       const res = await fetch("API_ENDPOINTS.BIDS", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -1844,7 +1845,7 @@ export default ItemDetail;
 //   const fetchAuction = useCallback(async () => {
 //     try {
 //       const res = await fetch(
-//         "http://localhost:8080/auth/auction-items/summary",
+//         "API_ENDPOINTS.AUCTION_ITEMS_SUMMARY",
 //         {
 //           credentials: "include",
 //           headers: {
@@ -1908,7 +1909,7 @@ export default ItemDetail;
 
 //     try {
 //       const res = await fetch(
-//         "http://localhost:8080/auth/auction-items/update",
+//         "API_ENDPOINTS.AUCTION_ITEMS/update",
 //         {
 //           method: "PUT",
 //           headers: {
@@ -1953,7 +1954,7 @@ export default ItemDetail;
 //     };
 
 //     try {
-//       const res = await fetch("http://localhost:8080/auth/bids", {
+//       const res = await fetch("API_ENDPOINTS.BIDS", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -2168,7 +2169,7 @@ export default ItemDetail;
 //   // Fetch item summary
 //   const fetchAuction = useCallback(async () => {
 //     try {
-//       const res = await fetch("http://localhost:8080/auth/auction-items/summary", {
+//       const res = await fetch("API_ENDPOINTS.AUCTION_ITEMS_SUMMARY", {
 //         credentials: 'include',
 //         headers: {
 //           "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -2224,7 +2225,7 @@ export default ItemDetail;
 //     };
 
 //     try {
-//       const res = await fetch("http://localhost:8080/auth/auction-items/update", {
+//       const res = await fetch("API_ENDPOINTS.AUCTION_ITEMS/update", {
 //         method: "PUT",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -2266,7 +2267,7 @@ export default ItemDetail;
 //     };
 
 //     try {
-//       const res = await fetch("http://localhost:8080/auth/bids", {
+//       const res = await fetch("API_ENDPOINTS.BIDS", {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
