@@ -23,7 +23,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://auction-system-frontend.vercel.app", "https://vehicle-auction-frontend.netlify.app"})
 @AllArgsConstructor
 public class UserSignUpController {
 
