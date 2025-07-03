@@ -34,15 +34,12 @@ const SellerDashboard = () => {
     async function loadItems() {
       try {
         const sellerId = localStorage.getItem("userId");
-        const res = await fetch(
-          `API_ENDPOINTS.AUCTION_ITEMS_SUMMARYSeller/${sellerId}`,
-          {
-            credentials: "include",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const res = await fetch(API_ENDPOINTS.SELLER_ITEMS(sellerId), {
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         if (!res.ok) throw new Error(`Status ${res.status}`);
         const data = await res.json();
         console.log("Backend response from /summarySeller:", data);
@@ -151,10 +148,9 @@ const SellerDashboard = () => {
     const closingDate = new Date(newItem.closing_time);
     closingDate.setHours(closingDate.getHours() - 4);
     const closingTime = closingDate.toISOString();
-    const baseUrl = "API_ENDPOINTS.AUCTION_ITEMS";
     const url = editingId
-      ? `${baseUrl}/${sellerId}/update`
-      : `${baseUrl}/${sellerId}/upload`;
+      ? `${API_ENDPOINTS.BASE_URL}/auth/auction-items/${sellerId}/update`
+      : `${API_ENDPOINTS.BASE_URL}/auth/auction-items/${sellerId}/upload`;
     const method = editingId ? "PUT" : "POST";
 
     // Validation: Ensure min_price is >= starting_price if both are provided

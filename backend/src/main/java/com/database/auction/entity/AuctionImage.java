@@ -18,13 +18,8 @@ public class AuctionImage {
     @Column(name = "image_mime")
     private String imageMime;
 
-    // @Lob
-    // @Column(name = "image_data", columnDefinition = "BYTEA")
-    // private byte[] imageData;
-
-    @Lob
-@Column(name = "image_data")
-private byte[] imageData;
+    @Column(name = "image_data", columnDefinition = "BYTEA")
+    private byte[] imageData;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auction_item_id")

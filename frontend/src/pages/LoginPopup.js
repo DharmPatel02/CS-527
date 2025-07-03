@@ -34,6 +34,19 @@ const LoginPopup = ({ userType, onClose, redirectTo, onForgotPassword }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Clear previous errors
+
+    // Validation for signup
+    if (!isLogin) {
+      if (!email || !email.includes("@")) {
+        setError("Please enter a valid email address");
+        return;
+      }
+      if (!username || !password) {
+        setError("Username and password are required");
+        return;
+      }
+    }
 
     let role;
     if (isCustomerRep) {
@@ -45,17 +58,27 @@ const LoginPopup = ({ userType, onClose, redirectTo, onForgotPassword }) => {
     const url = isLogin ? API_ENDPOINTS.LOGIN : API_ENDPOINTS.SIGNUP;
 
     try {
+      let requestBody;
+      if (isLogin) {
+        requestBody = {
+          username,
+          password_hash: password,
+        };
+      } else {
+        requestBody = {
+          username,
+          password_hash: password,
+          email,
+          role,
+        };
+      }
+
       const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username,
-          password_hash: password,
-          email: isLogin ? undefined : email,
-          role,
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       const data = await response.json();

@@ -49,11 +49,6 @@ export const API_ENDPOINTS = {
   NULLIFY_PASSWORD: (userId) =>
     `${API_BASE_URL}/auth/nullify-password/${userId}`,
   UPDATE_PASSWORD: (userId) => `${API_BASE_URL}/update-password/${userId}`,
-
-  // Additional missing endpoints
-  ADMIN_USERS: `${API_BASE_URL}/admin/users`,
-  ADMIN_CREATE_REP: `${API_BASE_URL}/admin/create-customer-rep`,
-  ADMIN_SALES_REPORT: `${API_BASE_URL}/admin/sales-report`,
 };
 
 export default API_BASE_URL;
