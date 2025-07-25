@@ -24,7 +24,7 @@ const QuestionPage = () => {
       }
 
       const response = await fetch(
-        `API_ENDPOINTS.AUCTION_ITEMS/getallquessans/${auctionId}`,
+        `${API_ENDPOINTS.BASE_URL}/auth/auction-items/getallquessans/${auctionId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -79,7 +79,7 @@ const QuestionPage = () => {
       }
 
       const response = await fetch(
-        `API_ENDPOINTS.AUCTION_ITEMS/insertquestion/${auctionId}`,
+        `${API_ENDPOINTS.BASE_URL}/auth/auction-items/insertquestion/${auctionId}`,
         {
           method: "PUT",
           headers: {

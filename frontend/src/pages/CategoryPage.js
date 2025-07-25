@@ -19,15 +19,12 @@ const CategoryPage = ({ addToCart }) => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(
-          "API_ENDPOINTS.AUCTION_ITEMS_SUMMARY",
-          {
-            credentials: "include",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const res = await fetch(API_ENDPOINTS.AUCTION_ITEMS_SUMMARY, {
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
         const data = await res.json();
         console.log("fetched auctions:", data);
@@ -103,19 +100,28 @@ const CategoryPage = ({ addToCart }) => {
   const getImageUrl = (item) => {
     if (item.images) {
       if (Array.isArray(item.images) && typeof item.images[0] === "string") {
-        return item.images[0];
+        // Fix localhost URLs
+        const url = item.images[0];
+        if (url.includes("localhost:8080")) {
+          return url.replace("http://localhost:8080", API_ENDPOINTS.BASE_URL);
+        }
+        return url;
       }
       if (
         Array.isArray(item.images) &&
         item.images[0] &&
         (item.images[0].url || item.images[0].src)
       ) {
-        return item.images[0].url || item.images[0].src;
+        const url = item.images[0].url || item.images[0].src;
+        if (url.includes("localhost:8080")) {
+          return url.replace("http://localhost:8080", API_ENDPOINTS.BASE_URL);
+        }
+        return url;
       }
     }
     if (item.imageUrl) return item.imageUrl;
     if (item.image) return item.image;
-    return "https://via.placeholder.com/300x200?text=No+Image";
+    return "https://images.unsplash.com/photo-1494976688153-ca3ce1d4b4c5?w=300&h=200&fit=crop&crop=center";
   };
 
   // Filter auctions by category, closingTime, and searchTerm

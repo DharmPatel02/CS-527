@@ -20,12 +20,15 @@ const ItemDetail = () => {
   // Fetch user role
   const fetchUserRole = useCallback(async () => {
     try {
-      const res = await fetch(`${API_ENDPOINTS.BASE_URL}/auth/profile/${myUserId}`, {
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const res = await fetch(
+        `${API_ENDPOINTS.BASE_URL}/auth/profile/${myUserId}`,
+        {
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (!res.ok) throw new Error(`Fetch role failed: ${res.status}`);
       const data = await res.json();
       setUserRole(data.role?.toLowerCase() || "");
@@ -38,15 +41,12 @@ const ItemDetail = () => {
   // Load auction summary
   const fetchAuction = useCallback(async () => {
     try {
-      const res = await fetch(
-        "API_ENDPOINTS.AUCTION_ITEMS_SUMMARY",
-        {
-          credentials: "include",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const res = await fetch(API_ENDPOINTS.AUCTION_ITEMS_SUMMARY, {
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
       const data = await res.json();
       const item = data.find((i) => String(i.auctionId || i.id) === itemId);
@@ -109,7 +109,7 @@ const ItemDetail = () => {
     };
     try {
       const res = await fetch(
-        "API_ENDPOINTS.AUCTION_ITEMS/update",
+        `${API_ENDPOINTS.BASE_URL}/auth/auction-items/update`,
         {
           method: "PUT",
           headers: {
@@ -143,7 +143,7 @@ const ItemDetail = () => {
       reserve_price: newReserve,
     };
     try {
-      const res = await fetch("API_ENDPOINTS.BIDS", {
+      const res = await fetch(`${API_ENDPOINTS.BASE_URL}/auth/bids`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
