@@ -259,6 +259,14 @@ const SellerDashboard = () => {
   );
   const closed = items.filter((i) => new Date(i.closing_time) <= now);
 
+  // Helper to fix localhost URLs in image URLs
+  const fixImageUrl = (url) => {
+    if (typeof url === "string" && url.includes("localhost:8080")) {
+      return url.replace("http://localhost:8080", API_ENDPOINTS.BASE_URL);
+    }
+    return url;
+  };
+
   const determineWinner = (item) => {
     const finalBid = parseFloat(item.current_bid);
     const reservePrice = item.min_price ? parseFloat(item.min_price) : null;
@@ -482,7 +490,7 @@ const SellerDashboard = () => {
                         {item.images.slice(0, 3).map((url, index) => (
                           <img
                             key={index}
-                            src={url}
+                            src={fixImageUrl(url)}
                             alt={item.item_name}
                             className="table-image"
                           />
@@ -578,7 +586,7 @@ const SellerDashboard = () => {
                         {item.images.slice(0, 3).map((url, index) => (
                           <img
                             key={index}
-                            src={url}
+                            src={fixImageUrl(url)}
                             alt={item.item_name}
                             className="table-image"
                           />

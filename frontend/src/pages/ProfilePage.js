@@ -495,7 +495,7 @@ const ProfilePage = () => {
       if (!userId || !token) throw new Error("Authentication data missing");
 
       const ordersResponse = await fetch(
-        `API_ENDPOINTS.AUCTION_ITEMS/buyer/${userId}/orders`,
+        `${API_ENDPOINTS.BASE_URL}/auth/auction-items/buyer/${userId}/orders`,
         {
           method: "GET",
           headers: {

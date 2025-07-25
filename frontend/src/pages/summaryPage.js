@@ -26,15 +26,12 @@ export default function SummaryPage({ addToCart }) {
     const fetchAuctions = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch(
-          "API_ENDPOINTS.AUCTION_ITEMS_SUMMARY",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            credentials: "include",
-          }
-        );
+        const res = await fetch(API_ENDPOINTS.AUCTION_ITEMS_SUMMARY, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        });
         if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
         const data = await res.json();
         console.log("Fetched auctions in SummaryPage:", data);
@@ -102,7 +99,7 @@ export default function SummaryPage({ addToCart }) {
         return;
       }
       await fetch(
-        `API_ENDPOINTS.AUCTION_ITEMS/${myUserId}/${auctionId}/notify`,
+        `${API_ENDPOINTS.BASE_URL}/auth/auction-items/${myUserId}/${auctionId}/notify`,
         {
           method: "POST",
           credentials: "include",
@@ -120,12 +117,24 @@ export default function SummaryPage({ addToCart }) {
   const getImageUrl = (item) => {
     if (item.images?.length) {
       const img = item.images[0];
-      return typeof img === "string" ? img : img.url || img.src;
+      // If backend image URL as object
+      if (typeof img === "object" && img.id) {
+        return `${API_ENDPOINTS.BASE_URL}/auth/auction-items/${item.id}/images/${img.id}`;
+      }
+      // If backend image URL as string, replace localhost with production URL
+      if (typeof img === "string") {
+        if (img.includes("localhost:8080")) {
+          return img.replace("http://localhost:8080", API_ENDPOINTS.BASE_URL);
+        }
+        return img;
+      }
+      return img.url || img.src;
     }
+    // Use a working placeholder
     return (
       item.imageUrl ||
       item.image ||
-      "https://via.placeholder.com/300x200?text=No+Image"
+      "https://images.unsplash.com/photo-1494976688153-ca3ce1d4b4c5?w=300&h=200&fit=crop&crop=center"
     );
   };
 
