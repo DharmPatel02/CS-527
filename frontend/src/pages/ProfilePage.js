@@ -146,7 +146,7 @@ const EditProfilePopup = ({ userData, onClose, onSave }) => {
     // Validate phone number format if provided
     if (
       formData.phone_number &&
-      !/^\+?[\d\s\-\(\)]{10,}$/.test(formData.phone_number)
+      !/^\+?[\d\s\-()]{10,}$/.test(formData.phone_number)
     ) {
       errors.phone_number = "Please enter a valid phone number";
     }
