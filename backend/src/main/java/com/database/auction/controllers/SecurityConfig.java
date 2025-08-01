@@ -40,8 +40,8 @@ public class SecurityConfig {
             "http://localhost:3000",
             "http://localhost:3001", 
             "http://127.0.0.1:3000",
-            "https://auction-system-frontend.vercel.app",
-            "https://vehicle-auction-frontend.netlify.app"
+            "https://vehicle-auction-system-frontend.vercel.app",
+            "https://auction-system-frontend.vercel.app"
         );
         
         configuration.setAllowedOrigins(allowedOriginsList);
