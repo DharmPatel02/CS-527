@@ -3,11 +3,16 @@ import "./HomePage.css";
 import LoginPopup from "./LoginPopup";
 import ForgotPasswordPopup from "./ForgotPasswordPopup";
 import PasswordRequests from "./PasswordRequests";
+import testBackend from "../test-backend";
 
 const HomePage = () => {
   const [openPopup, setOpenPopup] = useState(null);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [showPasswordRequests, setShowPasswordRequests] = useState(false);
+
+  const handleTestBackend = () => {
+    testBackend();
+  };
 
   return (
     <div className="homepage-container">
@@ -25,6 +30,20 @@ const HomePage = () => {
               Discover premium vehicles from trusted sellers worldwide. Join
               thousands of satisfied customers in our secure marketplace.
             </p>
+            <button
+              onClick={handleTestBackend}
+              style={{
+                background: "#007bff",
+                color: "white",
+                border: "none",
+                padding: "10px 20px",
+                borderRadius: "5px",
+                cursor: "pointer",
+                marginTop: "10px",
+              }}
+            >
+              🔧 Test Backend Connection
+            </button>
           </div>
         </div>
       </div>

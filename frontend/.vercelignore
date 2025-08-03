@@ -1,0 +1,1 @@
+CORS_ORIGINS = https://vehicle-auction-system.netlify.app,https://vehicle-auction-system-frontend.vercel.app,http://localhost:3000 
