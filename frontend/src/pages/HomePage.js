@@ -4,6 +4,7 @@ import LoginPopup from "./LoginPopup";
 import ForgotPasswordPopup from "./ForgotPasswordPopup";
 import PasswordRequests from "./PasswordRequests";
 import testBackend from "../test-backend";
+import testCORS from "../test-cors";
 
 const HomePage = () => {
   const [openPopup, setOpenPopup] = useState(null);
@@ -12,6 +13,10 @@ const HomePage = () => {
 
   const handleTestBackend = () => {
     testBackend();
+  };
+
+  const handleTestCORS = () => {
+    testCORS();
   };
 
   return (
@@ -30,20 +35,35 @@ const HomePage = () => {
               Discover premium vehicles from trusted sellers worldwide. Join
               thousands of satisfied customers in our secure marketplace.
             </p>
-            <button
-              onClick={handleTestBackend}
-              style={{
-                background: "#007bff",
-                color: "white",
-                border: "none",
-                padding: "10px 20px",
-                borderRadius: "5px",
-                cursor: "pointer",
-                marginTop: "10px",
-              }}
-            >
-              🔧 Test Backend Connection
-            </button>
+            <div style={{ marginTop: "10px" }}>
+              <button
+                onClick={handleTestBackend}
+                style={{
+                  background: "#007bff",
+                  color: "white",
+                  border: "none",
+                  padding: "10px 20px",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                  marginRight: "10px",
+                }}
+              >
+                🔧 Test Backend Connection
+              </button>
+              <button
+                onClick={handleTestCORS}
+                style={{
+                  background: "#28a745",
+                  color: "white",
+                  border: "none",
+                  padding: "10px 20px",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                🌐 Test CORS Headers
+              </button>
+            </div>
           </div>
         </div>
       </div>
