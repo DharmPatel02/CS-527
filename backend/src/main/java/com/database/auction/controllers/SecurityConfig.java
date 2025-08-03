@@ -35,19 +35,29 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // Allow all common frontend URLs
-        List<String> allowedOriginsList = Arrays.asList(
-            "http://localhost:3000",
-            "http://localhost:3001", 
-            "http://127.0.0.1:3000",
-            "https://vehicle-auction-system-frontend.vercel.app",
-            "https://auction-system-frontend.vercel.app"
-        );
+        // Parse allowed origins from environment variable
+        List<String> allowedOriginsList;
+        if (allowedOrigins != null && !allowedOrigins.trim().isEmpty()) {
+            allowedOriginsList = Arrays.asList(allowedOrigins.split(","));
+        } else {
+            // Fallback to default origins
+            allowedOriginsList = Arrays.asList(
+                "http://localhost:3000",
+                "http://localhost:3001", 
+                "http://127.0.0.1:3000",
+                "https://vehicle-auction-system-frontend.vercel.app",
+                "https://auction-system-frontend.vercel.app",
+                "https://vehicle-auction-system.netlify.app",
+                "https://*.netlify.app"
+            );
+        }
         
+        System.out.println("CORS Allowed Origins: " + allowedOriginsList);
         configuration.setAllowedOrigins(allowedOriginsList);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
+        configuration.setExposedHeaders(List.of("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

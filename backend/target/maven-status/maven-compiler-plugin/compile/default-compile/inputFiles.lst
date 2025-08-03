@@ -1,5 +1,6 @@
 C:\Users\dharm\Desktop\Auction System original\CS--527\backend\src\main\java\com\database\auction\AuctionSystemApplication.java
 C:\Users\dharm\Desktop\Auction System original\CS--527\backend\src\main\java\com\database\auction\configuration\AutowiringSpringBeanJobFactory.java
+C:\Users\dharm\Desktop\Auction System original\CS--527\backend\src\main\java\com\database\auction\configuration\CorsConfig.java
 C:\Users\dharm\Desktop\Auction System original\CS--527\backend\src\main\java\com\database\auction\configuration\QuartzConfig.java
 C:\Users\dharm\Desktop\Auction System original\CS--527\backend\src\main\java\com\database\auction\controllers\AuctionEndSubscriptionController.java
 C:\Users\dharm\Desktop\Auction System original\CS--527\backend\src\main\java\com\database\auction\controllers\AuctionItemsController.java
