@@ -85,10 +85,11 @@ const LoginPopup = ({ userType, onClose, redirectTo, onForgotPassword }) => {
 
       if (response.ok) {
         if (isLogin) {
-          localStorage.setItem("token", data.token);
+          // Store user data without token since backend doesn't use JWT
           localStorage.setItem("userId", data.user_id);
-          localStorage.setItem("username", username);
-          localStorage.setItem("role", role);
+          localStorage.setItem("username", data.username);
+          localStorage.setItem("role", data.role);
+          localStorage.setItem("email", data.email);
 
           console.log("Login successful:", data);
 

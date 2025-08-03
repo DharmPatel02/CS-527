@@ -24,8 +24,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))  // Enable CORS
                 .csrf(csrf -> csrf.disable())  // Disable CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/health", "/auth/**").permitAll()  // Allow health check and auth endpoints
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()  // Allow all endpoints for now
                 );
 
         return http.build();
