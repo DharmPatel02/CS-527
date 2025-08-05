@@ -41,11 +41,21 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public UsersDTO createUsers(UsersDTO usersDTO) {
-        Users users = UsersMapper.mapToUsers(usersDTO);
-        System.out.println(users.toString());
-        Users savedUsers = usersRepository.save(users);
+        try {
+            log.info("Creating user with username: {}, email: {}, role: {}", 
+                    usersDTO.getUsername(), usersDTO.getEmail(), usersDTO.getRole());
+            
+            Users users = UsersMapper.mapToUsers(usersDTO);
+            log.info("Mapped user entity: {}", users.toString());
+            
+            Users savedUsers = usersRepository.save(users);
+            log.info("User saved successfully with ID: {}", savedUsers.getId());
 
-        return UsersMapper.mapToUsersDto(savedUsers);
+            return UsersMapper.mapToUsersDto(savedUsers);
+        } catch (Exception e) {
+            log.error("Error creating user: {}", e.getMessage(), e);
+            throw new RuntimeException("Failed to create user: " + e.getMessage(), e);
+        }
     }
 
     @Override

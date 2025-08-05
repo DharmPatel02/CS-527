@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 @Entity
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class Users {
     @Id
@@ -29,12 +29,4 @@ public class Users {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private RoleType role;
-
-    public Users(Long id, String username, String password_hash, String email, RoleType role) {
-        this.id = id;
-        this.username = username;
-        this.password_hash = password_hash;
-        this.email = email;
-        this.role = role;
-    }
 }
