@@ -32,9 +32,24 @@ public class UserSignUpController {
 
     @PostMapping("/signup")
     public ResponseEntity<UsersDTO> createUsers(@RequestBody UsersDTO usersDTO){
-        System.out.println("Sign up for Username : "+usersDTO.getUsername());
-        System.out.println("The role of User "+usersDTO.getRole());
-        return new ResponseEntity<>(usersService.createUsers(usersDTO), HttpStatus.CREATED);
+        try {
+            log.info("Sign up request for Username: {}, Email: {}, Role: {}", 
+                    usersDTO.getUsername(), usersDTO.getEmail(), usersDTO.getRole());
+            
+            if (usersDTO.getUsername() == null || usersDTO.getEmail() == null || 
+                usersDTO.getPassword_hash() == null || usersDTO.getRole() == null) {
+                log.error("Missing required fields in signup request");
+                return ResponseEntity.badRequest().build();
+            }
+            
+            UsersDTO createdUser = usersService.createUsers(usersDTO);
+            log.info("User created successfully: {}", createdUser.getUsername());
+            return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+            
+        } catch (Exception e) {
+            log.error("Error creating user: {}", e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("{user_id}")
