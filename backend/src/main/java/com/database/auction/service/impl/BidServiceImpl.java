@@ -121,7 +121,7 @@ public class BidServiceImpl implements BidService {
                 .findByAuctionIdNative(dto.getAuctionId())
                 .orElseThrow(() -> new AuctionItemNotFoundException(
                         "Auction not found: " + dto.getAuctionId()));
-        Users buyer = usersRepo.findById(dto.getBuyerId())
+        Users buyer = usersRepo.findById((long) dto.getBuyerId())
                 .orElseThrow(() -> new UserNotFound(
                         "Buyer not found: " + dto.getBuyerId()));
 
@@ -211,7 +211,7 @@ public class BidServiceImpl implements BidService {
 
     @Override
     public List<BidDto> getBidsByBuyer(int buyerId) {
-        usersRepo.findById(buyerId)
+        usersRepo.findById((long) buyerId)
                 .orElseThrow(() -> new UserNotFound("Buyer not found: " + buyerId));
         return bidRepo.findAllByBuyerId(buyerId)
                 .stream()
