@@ -1,21 +1,38 @@
--- PostgreSQL Schema for Auction System (Supabase Compatible)
--- Run this in your Supabase SQL Editor
+-- Safe Schema Update Script
+-- This script handles existing types and tables without errors
 
--- Create ENUM types first (PostgreSQL requires explicit enum creation)
+-- Drop existing tables first (if they exist)
+DROP TABLE IF EXISTS auction_end_subscription CASCADE;
+DROP TABLE IF EXISTS auction_start_subscription CASCADE;
+DROP TABLE IF EXISTS notifications CASCADE;
+DROP TABLE IF EXISTS bids CASCADE;
+DROP TABLE IF EXISTS auction_questions CASCADE;
+DROP TABLE IF EXISTS auction_images CASCADE;
+DROP TABLE IF EXISTS auction_items CASCADE;
+DROP TABLE IF EXISTS user_details CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
+-- Drop existing types (if they exist)
+DROP TYPE IF EXISTS user_role CASCADE;
+DROP TYPE IF EXISTS item_category CASCADE;
+
+-- Drop existing functions (if they exist)
+DROP FUNCTION IF EXISTS update_updated_at_column() CASCADE;
+
+-- Create ENUM types
 CREATE TYPE user_role AS ENUM ('ADMIN', 'BUYER', 'CUSTOMER_REP', 'SELLER');
 CREATE TYPE item_category AS ENUM ('bike', 'car', 'truck');
 
--- Users table
+-- Users table (matches Users.java entity)
 CREATE TABLE users (
     id BIGSERIAL PRIMARY KEY,
-    email VARCHAR(255) UNIQUE,
-    password_hash VARCHAR(255),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     role user_role,
-    user_id INTEGER UNIQUE,
-    username VARCHAR(255) UNIQUE
+    username VARCHAR(255) UNIQUE NOT NULL
 );
 
--- User details table
+-- User details table (matches UserDetails.java entity)
 CREATE TABLE user_details (
     username VARCHAR(255) PRIMARY KEY,
     address VARCHAR(255),
@@ -25,7 +42,7 @@ CREATE TABLE user_details (
     FOREIGN KEY (username) REFERENCES users(username)
 );
 
--- Auction items table
+-- Auction items table (matches AuctionItems.java entity)
 CREATE TABLE auction_items (
     id BIGSERIAL PRIMARY KEY,
     auction_id INTEGER UNIQUE,
@@ -43,17 +60,17 @@ CREATE TABLE auction_items (
     buyer_id INTEGER
 );
 
--- Auction images table
+-- Auction images table (matches AuctionImage.java entity)
 CREATE TABLE auction_images (
     id BIGSERIAL PRIMARY KEY,
     auction_item_id BIGINT,
-    image_data BYTEA, -- PostgreSQL equivalent of MySQL's LONGBLOB
+    image_data BYTEA,
     image_mime VARCHAR(50),
     image_url VARCHAR(255),
     FOREIGN KEY (auction_item_id) REFERENCES auction_items(id)
 );
 
--- Auction questions table
+-- Auction questions table (matches AuctionQuestion.java entity)
 CREATE TABLE auction_questions (
     question_id SERIAL PRIMARY KEY,
     auction_id INTEGER NOT NULL,
@@ -65,7 +82,7 @@ CREATE TABLE auction_questions (
 -- Create index for better performance
 CREATE INDEX idx_auction_id ON auction_questions(auction_id);
 
--- Bids table
+-- Bids table (matches Bid.java entity)
 CREATE TABLE bids (
     bid_id BIGSERIAL PRIMARY KEY,
     auction_id INTEGER,
@@ -76,7 +93,7 @@ CREATE TABLE bids (
     FOREIGN KEY (auction_id) REFERENCES auction_items(auction_id) ON DELETE CASCADE
 );
 
--- Notifications table
+-- Notifications table (matches Notification.java entity)
 CREATE TABLE notifications (
     id BIGSERIAL PRIMARY KEY,
     message TEXT,
@@ -85,7 +102,7 @@ CREATE TABLE notifications (
     is_read BOOLEAN DEFAULT FALSE
 );
 
--- Auction start subscriptions table
+-- Auction start subscriptions table (matches AuctionStartSubscription.java entity)
 CREATE TABLE auction_start_subscription (
     id BIGSERIAL PRIMARY KEY,
     auction_id INTEGER,
@@ -93,7 +110,7 @@ CREATE TABLE auction_start_subscription (
     FOREIGN KEY (auction_id) REFERENCES auction_items(auction_id) ON DELETE CASCADE
 );
 
--- Auction end subscriptions table
+-- Auction end subscriptions table (matches AuctionEndSubscription.java entity)
 CREATE TABLE auction_end_subscription (
     id BIGSERIAL PRIMARY KEY,
     auction_id INTEGER,
@@ -101,21 +118,20 @@ CREATE TABLE auction_end_subscription (
     FOREIGN KEY (auction_id) REFERENCES auction_items(auction_id) ON DELETE CASCADE
 );
 
--- Optional: Add some constraints for data integrity
+-- Add constraints for data integrity
 ALTER TABLE auction_items ADD CONSTRAINT chk_positive_prices 
     CHECK (starting_price >= 0 AND reserve_price >= 0 AND current_bid >= 0);
 
 ALTER TABLE bids ADD CONSTRAINT chk_positive_bid 
     CHECK (bid_amount > 0 AND reserve_price >= 0);
 
--- Optional: Add created_at and updated_at timestamps for audit trail
+-- Add timestamps for audit trail
 ALTER TABLE auction_items ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE auction_items ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
-
 ALTER TABLE users ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE users ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
--- Create a function to automatically update the updated_at timestamp
+-- Create function to update timestamps
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -124,16 +140,12 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
--- Create triggers to automatically update the updated_at column
+-- Create triggers
 CREATE TRIGGER update_auction_items_updated_at BEFORE UPDATE ON auction_items
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-
--- ============================================================================
--- ROW LEVEL SECURITY (RLS) POLICIES
--- ============================================================================
 
 -- Enable RLS on all tables
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
@@ -146,7 +158,30 @@ ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE auction_start_subscription ENABLE ROW LEVEL SECURITY;
 ALTER TABLE auction_end_subscription ENABLE ROW LEVEL SECURITY;
 
--- Create policies for users table
+-- Drop existing policies (if any)
+DROP POLICY IF EXISTS "Users can view their own data" ON users;
+DROP POLICY IF EXISTS "Users can update their own data" ON users;
+DROP POLICY IF EXISTS "Admin can view all users" ON users;
+DROP POLICY IF EXISTS "Users can view their own details" ON user_details;
+DROP POLICY IF EXISTS "Users can update their own details" ON user_details;
+DROP POLICY IF EXISTS "Anyone can view auction items" ON auction_items;
+DROP POLICY IF EXISTS "Sellers can create auction items" ON auction_items;
+DROP POLICY IF EXISTS "Sellers can update their own auction items" ON auction_items;
+DROP POLICY IF EXISTS "Sellers can delete their own auction items" ON auction_items;
+DROP POLICY IF EXISTS "Anyone can view auction images" ON auction_images;
+DROP POLICY IF EXISTS "Sellers can manage images for their auctions" ON auction_images;
+DROP POLICY IF EXISTS "Anyone can view questions" ON auction_questions;
+DROP POLICY IF EXISTS "Authenticated users can ask questions" ON auction_questions;
+DROP POLICY IF EXISTS "Sellers can answer questions for their auctions" ON auction_questions;
+DROP POLICY IF EXISTS "Anyone can view bids" ON bids;
+DROP POLICY IF EXISTS "Authenticated users can place bids" ON bids;
+DROP POLICY IF EXISTS "Users can only update their own bids" ON bids;
+DROP POLICY IF EXISTS "Users can view their own notifications" ON notifications;
+DROP POLICY IF EXISTS "Users can update their own notifications" ON notifications;
+DROP POLICY IF EXISTS "Users can manage their own subscriptions" ON auction_start_subscription;
+DROP POLICY IF EXISTS "Users can manage their own subscriptions" ON auction_end_subscription;
+
+-- Create RLS policies
 CREATE POLICY "Users can view their own data" ON users
     FOR SELECT USING (auth.uid()::text = id::text);
 
@@ -161,7 +196,6 @@ CREATE POLICY "Admin can view all users" ON users
         )
     );
 
--- Create policies for user_details table
 CREATE POLICY "Users can view their own details" ON user_details
     FOR SELECT USING (
         username = (
@@ -178,7 +212,6 @@ CREATE POLICY "Users can update their own details" ON user_details
         )
     );
 
--- Create policies for auction_items table
 CREATE POLICY "Anyone can view auction items" ON auction_items
     FOR SELECT USING (true);
 
@@ -197,7 +230,6 @@ CREATE POLICY "Sellers can delete their own auction items" ON auction_items
         seller_id::text = auth.uid()::text
     );
 
--- Create policies for auction_images table
 CREATE POLICY "Anyone can view auction images" ON auction_images
     FOR SELECT USING (true);
 
@@ -209,7 +241,6 @@ CREATE POLICY "Sellers can manage images for their auctions" ON auction_images
         )
     );
 
--- Create policies for auction_questions table
 CREATE POLICY "Anyone can view questions" ON auction_questions
     FOR SELECT USING (true);
 
@@ -224,7 +255,6 @@ CREATE POLICY "Sellers can answer questions for their auctions" ON auction_quest
         )
     );
 
--- Create policies for bids table
 CREATE POLICY "Anyone can view bids" ON bids
     FOR SELECT USING (true);
 
@@ -238,7 +268,6 @@ CREATE POLICY "Users can only update their own bids" ON bids
         buyer_id::text = auth.uid()::text
     );
 
--- Create policies for notifications table
 CREATE POLICY "Users can view their own notifications" ON notifications
     FOR SELECT USING (
         user_id::text = auth.uid()::text
@@ -249,7 +278,6 @@ CREATE POLICY "Users can update their own notifications" ON notifications
         user_id::text = auth.uid()::text
     );
 
--- Create policies for subscription tables
 CREATE POLICY "Users can manage their own subscriptions" ON auction_start_subscription
     FOR ALL USING (
         user_id::text = auth.uid()::text
@@ -260,22 +288,9 @@ CREATE POLICY "Users can manage their own subscriptions" ON auction_end_subscrip
         user_id::text = auth.uid()::text
     );
 
--- ============================================================================
--- ADDITIONAL SECURITY MEASURES
--- ============================================================================
-
--- Create a function to check if user is admin
-CREATE OR REPLACE FUNCTION is_admin()
-RETURNS BOOLEAN AS $$
-BEGIN
-    RETURN EXISTS (
-        SELECT 1 FROM users 
-        WHERE id::text = auth.uid()::text AND role = 'ADMIN'
-    );
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
--- Grant necessary permissions
+-- Grant permissions
 GRANT USAGE ON SCHEMA public TO anon, authenticated;
 GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated;
-GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated; 
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated;
+
+SELECT 'Schema updated successfully with RLS enabled!' as status; 

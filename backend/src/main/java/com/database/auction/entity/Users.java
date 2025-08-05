@@ -14,8 +14,8 @@ import lombok.*;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", updatable = false, nullable = false)
-    private int userId;;
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
 
     @Column(name = "username",unique = true, nullable = false)
     private String username;
@@ -30,8 +30,8 @@ public class Users {
     @Column(name = "role")
     private RoleType role;
 
-    public Users(int userId, String username, String password_hash, String email, RoleType role) {
-        this.userId = userId;
+    public Users(Long id, String username, String password_hash, String email, RoleType role) {
+        this.id = id;
         this.username = username;
         this.password_hash = password_hash;
         this.email = email;
