@@ -1,5 +1,5 @@
--- PostgreSQL Schema for Auction System (Supabase Compatible)
--- Run this in your Supabase SQL Editor
+-- Create Auction System Schema with RLS
+-- Run this if your database is empty or mostly empty
 
 -- Create ENUM types first (PostgreSQL requires explicit enum creation)
 CREATE TYPE user_role AS ENUM ('ADMIN', 'BUYER', 'CUSTOMER_REP', 'SELLER');
@@ -47,7 +47,7 @@ CREATE TABLE auction_items (
 CREATE TABLE auction_images (
     id BIGSERIAL PRIMARY KEY,
     auction_item_id BIGINT,
-    image_data BYTEA, -- PostgreSQL equivalent of MySQL's LONGBLOB
+    image_data BYTEA,
     image_mime VARCHAR(50),
     image_url VARCHAR(255),
     FOREIGN KEY (auction_item_id) REFERENCES auction_items(id)
@@ -101,21 +101,20 @@ CREATE TABLE auction_end_subscription (
     FOREIGN KEY (auction_id) REFERENCES auction_items(auction_id) ON DELETE CASCADE
 );
 
--- Optional: Add some constraints for data integrity
+-- Add constraints for data integrity
 ALTER TABLE auction_items ADD CONSTRAINT chk_positive_prices 
     CHECK (starting_price >= 0 AND reserve_price >= 0 AND current_bid >= 0);
 
 ALTER TABLE bids ADD CONSTRAINT chk_positive_bid 
     CHECK (bid_amount > 0 AND reserve_price >= 0);
 
--- Optional: Add created_at and updated_at timestamps for audit trail
+-- Add timestamps for audit trail
 ALTER TABLE auction_items ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE auction_items ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
-
 ALTER TABLE users ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE users ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
--- Create a function to automatically update the updated_at timestamp
+-- Create function to update timestamps
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -124,16 +123,12 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
--- Create triggers to automatically update the updated_at column
+-- Create triggers
 CREATE TRIGGER update_auction_items_updated_at BEFORE UPDATE ON auction_items
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-
--- ============================================================================
--- ROW LEVEL SECURITY (RLS) POLICIES
--- ============================================================================
 
 -- Enable RLS on all tables
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
@@ -146,7 +141,7 @@ ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE auction_start_subscription ENABLE ROW LEVEL SECURITY;
 ALTER TABLE auction_end_subscription ENABLE ROW LEVEL SECURITY;
 
--- Create policies for users table
+-- Create RLS policies
 CREATE POLICY "Users can view their own data" ON users
     FOR SELECT USING (auth.uid()::text = id::text);
 
@@ -161,7 +156,6 @@ CREATE POLICY "Admin can view all users" ON users
         )
     );
 
--- Create policies for user_details table
 CREATE POLICY "Users can view their own details" ON user_details
     FOR SELECT USING (
         username = (
@@ -178,7 +172,6 @@ CREATE POLICY "Users can update their own details" ON user_details
         )
     );
 
--- Create policies for auction_items table
 CREATE POLICY "Anyone can view auction items" ON auction_items
     FOR SELECT USING (true);
 
@@ -197,7 +190,6 @@ CREATE POLICY "Sellers can delete their own auction items" ON auction_items
         seller_id::text = auth.uid()::text
     );
 
--- Create policies for auction_images table
 CREATE POLICY "Anyone can view auction images" ON auction_images
     FOR SELECT USING (true);
 
@@ -209,7 +201,6 @@ CREATE POLICY "Sellers can manage images for their auctions" ON auction_images
         )
     );
 
--- Create policies for auction_questions table
 CREATE POLICY "Anyone can view questions" ON auction_questions
     FOR SELECT USING (true);
 
@@ -224,7 +215,6 @@ CREATE POLICY "Sellers can answer questions for their auctions" ON auction_quest
         )
     );
 
--- Create policies for bids table
 CREATE POLICY "Anyone can view bids" ON bids
     FOR SELECT USING (true);
 
@@ -238,7 +228,6 @@ CREATE POLICY "Users can only update their own bids" ON bids
         buyer_id::text = auth.uid()::text
     );
 
--- Create policies for notifications table
 CREATE POLICY "Users can view their own notifications" ON notifications
     FOR SELECT USING (
         user_id::text = auth.uid()::text
@@ -249,7 +238,6 @@ CREATE POLICY "Users can update their own notifications" ON notifications
         user_id::text = auth.uid()::text
     );
 
--- Create policies for subscription tables
 CREATE POLICY "Users can manage their own subscriptions" ON auction_start_subscription
     FOR ALL USING (
         user_id::text = auth.uid()::text
@@ -260,22 +248,9 @@ CREATE POLICY "Users can manage their own subscriptions" ON auction_end_subscrip
         user_id::text = auth.uid()::text
     );
 
--- ============================================================================
--- ADDITIONAL SECURITY MEASURES
--- ============================================================================
-
--- Create a function to check if user is admin
-CREATE OR REPLACE FUNCTION is_admin()
-RETURNS BOOLEAN AS $$
-BEGIN
-    RETURN EXISTS (
-        SELECT 1 FROM users 
-        WHERE id::text = auth.uid()::text AND role = 'ADMIN'
-    );
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
--- Grant necessary permissions
+-- Grant permissions
 GRANT USAGE ON SCHEMA public TO anon, authenticated;
 GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated;
-GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated; 
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated;
+
+SELECT 'Schema created successfully with RLS enabled!' as status; 

@@ -16,9 +16,8 @@ public class Bid {
     @JoinColumn(name = "auction_id", nullable = false)
     private AuctionItems auctionItem;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "buyer_id", nullable = false)
-    private Users buyer;
+    @Column(name = "buyer_id", nullable = false)
+    private Integer buyerId;
 
     @Column(name = "bid_time", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -43,11 +42,11 @@ public class Bid {
         this.auctionItem = auctionItem;
     }
 
-    public Users getBuyer() {
-        return buyer;
+    public Integer getBuyerId() {
+        return buyerId;
     }
-    public void setBuyer(Users buyer) {
-        this.buyer = buyer;
+    public void setBuyerId(Integer buyerId) {
+        this.buyerId = buyerId;
     }
 
     public Date getBidTime() {
