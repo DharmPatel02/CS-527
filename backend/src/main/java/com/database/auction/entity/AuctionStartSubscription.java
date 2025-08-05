@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "auction_start_subscriptions")
+@Table(name = "auction_start_subscription")
 public class AuctionStartSubscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
