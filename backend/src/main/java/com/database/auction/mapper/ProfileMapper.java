@@ -7,7 +7,7 @@ import com.database.auction.entity.UserDetails;
 public class ProfileMapper {
     public static ProfileDTO toProfileDto(Users user, UserDetails details) {
         ProfileDTO dto = new ProfileDTO();
-        dto.setUserId(user.getUserId());
+        dto.setUserId(user.getId().intValue());
         dto.setUsername(user.getUsername());
         dto.setEmail(user.getEmail());
         dto.setRole(user.getRole());

@@ -7,7 +7,7 @@ public class UsersMapper {
 
     public static UsersDTO mapToUsersDto(Users users){
         UsersDTO dto = new UsersDTO();
-        dto.setUser_id(users.getUserId());
+        dto.setUser_id(users.getId().intValue());
         dto.setUsername(users.getUsername());
         dto.setPassword_hash(users.getPassword_hash());
         dto.setEmail(users.getEmail());

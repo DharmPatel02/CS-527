@@ -11,7 +11,7 @@ public class BidMapper {
         BidDto dto = new BidDto();
         dto.setBidId(bid.getBidId());
         dto.setAuctionId(bid.getAuctionItem().getId().intValue());
-        dto.setBuyerId(bid.getBuyer().getUserId());
+        dto.setBuyerId(bid.getBuyerId());
         dto.setBidTime(bid.getBidTime());
         dto.setBidAmount(bid.getBidAmount());
         dto.setReservePrice(bid.getReservePrice());
@@ -23,7 +23,7 @@ public class BidMapper {
                         com.database.auction.entity.Users buyer) {
         Bid bid = new Bid();
         bid.setAuctionItem(auctionItem);
-        bid.setBuyer(buyer);
+        bid.setBuyerId(buyer.getId().intValue());
         bid.setBidTime(dto.getBidTime());
         bid.setBidAmount(dto.getBidAmount());
         bid.setReservePrice(dto.getReservePrice());

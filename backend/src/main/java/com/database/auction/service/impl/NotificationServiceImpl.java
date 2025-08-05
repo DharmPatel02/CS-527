@@ -20,7 +20,7 @@ public class NotificationServiceImpl implements NotificationService {
   public void alertOutbid(int userId, int auctionId, String message) {
     Notification n = new Notification();
     n.setUserId(userId);
-    n.setAuctionId(auctionId);
+    n.setTimestamp(java.time.Instant.now());
     n.setMessage(message);
     repo.save(n);
   }

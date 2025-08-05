@@ -189,12 +189,12 @@ public class UsersServiceImpl implements UsersService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
 
 
-        System.out.println(user.getUserId());
+        System.out.println(user.getId());
         String sql = """
                 
                    update users u
                    set password_hash=null
-                    WHERE u.user_id=?;
+                    WHERE u.id=?;
                 """;
 
         int rows = jdbc.update(
@@ -213,7 +213,7 @@ public class UsersServiceImpl implements UsersService {
 
     public List<UsersDTO> getAllNullPassword() {
         String sql = """
-                SELECT user_id, username, password_hash, email
+                SELECT id, username, password_hash, email
                   FROM users
                  WHERE password_hash IS NULL
                 """;
@@ -222,7 +222,7 @@ public class UsersServiceImpl implements UsersService {
                 sql,
                 (rs, rowNum) -> {
                     UsersDTO p = new UsersDTO();
-                    p.setUser_id(rs.getInt("user_id"));
+                    p.setUser_id(rs.getInt("id"));
                     p.setUsername(rs.getString("username"));
                     p.setPassword_hash(rs.getString("password_hash"));
                     p.setEmail(rs.getString("email"));
@@ -244,19 +244,18 @@ public class UsersServiceImpl implements UsersService {
         }
         
         // Generate next available user_id
-        String maxUserIdSql = "SELECT COALESCE(MAX(user_id), 0) + 1 FROM users";
+        String maxUserIdSql = "SELECT COALESCE(MAX(id), 0) + 1 FROM users";
         Integer nextUserId = jdbc.queryForObject(maxUserIdSql, Integer.class);
         
         // Create new admin user
         Users adminUser = new Users();
-        adminUser.setUserId(nextUserId);
         adminUser.setUsername(username);
         adminUser.setEmail(email);
         adminUser.setPassword_hash(passwordHash);
         adminUser.setRole(RoleType.ADMIN);
         
         Users savedUser = usersRepository.save(adminUser);
-        log.info("Admin user created successfully with ID: {}", savedUser.getUserId());
+        log.info("Admin user created successfully with ID: {}", savedUser.getId());
         
         return UsersMapper.mapToUsersDto(savedUser);
     }

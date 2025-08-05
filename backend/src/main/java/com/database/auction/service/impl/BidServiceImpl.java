@@ -161,15 +161,15 @@ public class BidServiceImpl implements BidService {
                 .max(Comparator.comparing(Bid::getReservePrice));
 
         item.setWinningBuyerId(
-                winner.map(b -> b.getBuyer().getUserId()).orElse(null)
+                winner.map(b -> b.getBuyerId()).orElse(null)
         );
 
         itemsRepo.save(item);
 
         // 6a) If this new bid was NOT the top bid, notify this bidder
         Bid highestBid = allBids.get(0);
-        int newBidderId      = savedBid.getBuyer().getUserId();
-        int currentWinnerId  = highestBid.getBuyer().getUserId();
+        int newBidderId      = savedBid.getBuyerId();
+        int currentWinnerId  = highestBid.getBuyerId();
         if (newBidderId != currentWinnerId) {
             String msg = String.format(
                     "Your bid on auction %d was not high enough. Current top bid: £%.2f",
@@ -182,7 +182,7 @@ public class BidServiceImpl implements BidService {
         // 6b) If there was a previous top and they lost, notify them too
         if (previousTop.isPresent()) {
             Bid oldTop   = previousTop.get();
-            int oldUserId = oldTop.getBuyer().getUserId();
+            int oldUserId = oldTop.getBuyerId();
             if (oldUserId != currentWinnerId) {
                 String msg = String.format(
                         "You have been outbid on auction %d. New top bid: £%.2f",
@@ -213,7 +213,7 @@ public class BidServiceImpl implements BidService {
     public List<BidDto> getBidsByBuyer(int buyerId) {
         usersRepo.findById(buyerId)
                 .orElseThrow(() -> new UserNotFound("Buyer not found: " + buyerId));
-        return bidRepo.findAllByBuyer_UserId(buyerId)
+        return bidRepo.findAllByBuyerId(buyerId)
                 .stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
