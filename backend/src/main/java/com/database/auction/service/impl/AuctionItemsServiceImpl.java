@@ -71,7 +71,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
     public AuctionItemDto insertAuctionItem(AuctionItemDto auctionItemDto) {
         log.info("Inserting new Auction Item");
         // Verify the seller exists and is of role SELLER
-        Users seller = userRepository.findByUserId(auctionItemDto.getSellerId());
+        Users seller = userRepository.findById((long) auctionItemDto.getSellerId()).orElse(null);
         if (seller == null || !RoleType.SELLER.equals(seller.getRole())) {
             throw new RuntimeException("Invalid seller: User not found or does not have SELLER role");
         }
@@ -152,7 +152,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
 
             Integer winnerId = item.getWinningBuyerId();
             if (winnerId != null) {
-                userRepository.findById(winnerId)
+                userRepository.findById((long) winnerId)
                         .ifPresent(u -> dto.setBuyerUsername(u.getUsername()));
             } else {
                 dto.setBuyerUsername(null);
@@ -366,7 +366,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
     public List<AuctionItemDto> getsalesreportBySellerId(Integer seller_id) {
         System.out.println("In Service Implementation");
         // fetch the questions for this itemId
-        Users seller = userRepository.findByUserId(seller_id);
+        Users seller = userRepository.findById((long) seller_id).orElse(null);
         if(seller_id==null || !RoleType.SELLER.equals(seller.getRole())){
             throw new IllegalArgumentException("Seller id must be provided");
 
@@ -567,7 +567,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
                 }
         );
 
-        Users seller = userRepository.findByUserId(profiledto.getUserId());
+        Users seller = userRepository.findById((long) profiledto.getUserId()).orElse(null);
         if(!RoleType.BUYER.equals(seller.getRole())){
             throw new IllegalArgumentException("Buyer id not found");
 
