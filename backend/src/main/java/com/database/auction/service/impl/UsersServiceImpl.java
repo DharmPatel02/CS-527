@@ -50,7 +50,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public UsersDTO getUsers(Integer user_id) {
-        Users users = usersRepository.findById(user_id)
+        Users users = usersRepository.findById((long) user_id)
                 .orElseThrow(() -> new UserNotFound("User Does not exist " + user_id));
         return UsersMapper.mapToUsersDto(users);
     }
@@ -72,7 +72,7 @@ public class UsersServiceImpl implements UsersService {
         // JDBC-based fetching as before...
         String sql = """
                 SELECT 
-                  u.user_id         AS userId,
+                  u.id              AS userId,
                   u.username        AS username,
                   u.password_hash   AS passwordHash,
                   u.email           AS email,
@@ -138,7 +138,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public ProfileDTO getProfileByUserId(int userId) {
         // fetch the username for this userId
-        Users user = usersRepository.findById(userId)
+        Users user = usersRepository.findById((long) userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
         // reuse your JDBC-based loader
         return getProfileByUsername(user.getUsername());
@@ -147,7 +147,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public ProfileDTO updateProfileByUserId(int userId, ProfileDTO dto) {
         // fetch the username for this userId
-        Users user = usersRepository.findById(userId)
+        Users user = usersRepository.findById((long) userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
 
         // delegate to your existing username-based updater
@@ -157,7 +157,7 @@ public class UsersServiceImpl implements UsersService {
     public int pwd_Change(int userId, String password_hash) {
         System.out.println("In Service Implementation");
         // fetch the username for this userId
-        Users user = usersRepository.findById(userId)
+        Users user = usersRepository.findById((long) userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
         // reuse your JDBC-based loader
         System.out.println(password_hash);
@@ -165,12 +165,12 @@ public class UsersServiceImpl implements UsersService {
                 
                     UPDATE users u
                     SET  u.password_hash = ?
-                    WHERE u.user_id = ?;
+                    WHERE u.id = ?;
                 """;
 
         int rows = jdbc.update(
                 sql,
-                password_hash, userId
+                password_hash, (long) userId
 
         );
         System.out.println("Rows updated: " + rows);
@@ -185,7 +185,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     public int setPasswordToNull(int userId) {
-        Users user = usersRepository.findById(userId)
+        Users user = usersRepository.findById((long) userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
 
 
@@ -198,7 +198,7 @@ public class UsersServiceImpl implements UsersService {
                 """;
 
         int rows = jdbc.update(
-                sql, userId
+                sql, (long) userId
         );
 
         System.out.println("Rows updated: " + rows);
