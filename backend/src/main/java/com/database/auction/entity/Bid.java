@@ -13,7 +13,7 @@ public class Bid {
     private Long bidId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "auction_id", nullable = false)
+    @JoinColumn(name = "auction_item_id", nullable = false)
     private AuctionItems auctionItem;
 
     @Column(name = "buyer_id", nullable = false)
