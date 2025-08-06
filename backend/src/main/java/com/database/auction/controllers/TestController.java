@@ -199,4 +199,63 @@ public class TestController {
         }
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/debug-signup-exact")
+    public ResponseEntity<Map<String, Object>> debugSignupExact(@RequestBody Map<String, String> request) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            String username = request.get("username");
+            String email = request.get("email");
+            String password = request.get("password");
+            String role = request.get("role");
+            
+            log.info("=== DEBUG SIGNUP EXACT ===");
+            log.info("Received request: username={}, email={}, role={}", username, email, role);
+            
+            // Step 1: Create UsersDTO
+            UsersDTO usersDTO = new UsersDTO();
+            usersDTO.setUsername(username);
+            usersDTO.setEmail(email);
+            usersDTO.setPassword_hash(password);
+            usersDTO.setRole(RoleType.valueOf(role));
+            
+            log.info("Created UsersDTO: {}", usersDTO.toString());
+            
+            // Step 2: Create Users entity
+            Users users = new Users();
+            users.setUsername(usersDTO.getUsername());
+            users.setEmail(usersDTO.getEmail());
+            users.setPassword_hash(usersDTO.getPassword_hash());
+            users.setRole(usersDTO.getRole());
+            
+            log.info("Created Users entity: {}", users.toString());
+            log.info("Role type: {}, Role value: {}", users.getRole().getClass().getName(), users.getRole());
+            
+            // Step 3: Save to database
+            log.info("Attempting to save user...");
+            Users savedUsers = usersRepository.save(users);
+            
+            log.info("User saved successfully: {}", savedUsers.toString());
+            
+            response.put("success", true);
+            response.put("user_id", savedUsers.getId());
+            response.put("username", savedUsers.getUsername());
+            response.put("role", savedUsers.getRole().toString());
+            response.put("message", "User created successfully");
+            
+            // Clean up
+            usersRepository.delete(savedUsers);
+            response.put("cleaned_up", true);
+            
+        } catch (Exception e) {
+            log.error("=== DEBUG SIGNUP EXACT FAILED ===");
+            log.error("Error: {}", e.getMessage(), e);
+            
+            response.put("success", false);
+            response.put("error", e.getMessage());
+            response.put("error_type", e.getClass().getSimpleName());
+            response.put("error_stack", e.getStackTrace());
+        }
+        return ResponseEntity.ok(response);
+    }
 } 
