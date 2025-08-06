@@ -1,5 +1,6 @@
 package com.database.auction.entity;
 
+import com.database.auction.converter.RoleTypeConverter;
 import com.database.auction.enums.RoleType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,7 +27,7 @@ public class Users {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
+    @Convert(converter = RoleTypeConverter.class)
+    @Column(name = "role", columnDefinition = "user_role")
     private RoleType role;
 }
