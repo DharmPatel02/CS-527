@@ -42,19 +42,71 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public UsersDTO createUsers(UsersDTO usersDTO) {
         try {
+            log.info("=== USERSERVICE CREATEUSERS START ===");
             log.info("Creating user with username: {}, email: {}, role: {}", 
                     usersDTO.getUsername(), usersDTO.getEmail(), usersDTO.getRole());
             
+            // Additional validation
+            if (usersDTO.getUsername() == null || usersDTO.getUsername().trim().isEmpty()) {
+                throw new IllegalArgumentException("Username cannot be null or empty");
+            }
+            
+            if (usersDTO.getEmail() == null || usersDTO.getEmail().trim().isEmpty()) {
+                throw new IllegalArgumentException("Email cannot be null or empty");
+            }
+            
+            if (usersDTO.getPassword_hash() == null || usersDTO.getPassword_hash().trim().isEmpty()) {
+                throw new IllegalArgumentException("Password cannot be null or empty");
+            }
+            
+            if (usersDTO.getRole() == null) {
+                throw new IllegalArgumentException("Role cannot be null");
+            }
+            
+            log.info("Validation passed, mapping DTO to entity...");
+            
+            // Map DTO to entity
             Users users = UsersMapper.mapToUsers(usersDTO);
             log.info("Mapped user entity: {}", users.toString());
             
+            // Check if user already exists
+            log.info("Checking if user already exists...");
+            Optional<Users> existingUser = usersRepository.findByUsername(usersDTO.getUsername());
+            if (existingUser.isPresent()) {
+                log.error("User with username '{}' already exists", usersDTO.getUsername());
+                throw new RuntimeException("User with username '" + usersDTO.getUsername() + "' already exists");
+            }
+            
+            Optional<Users> existingEmail = usersRepository.findByEmail(usersDTO.getEmail());
+            if (existingEmail.isPresent()) {
+                log.error("User with email '{}' already exists", usersDTO.getEmail());
+                throw new RuntimeException("User with email '" + usersDTO.getEmail() + "' already exists");
+            }
+            
+            log.info("No existing user found, attempting to save...");
+            
+            // Save user
             Users savedUsers = usersRepository.save(users);
             log.info("User saved successfully with ID: {}", savedUsers.getId());
-
-            return UsersMapper.mapToUsersDto(savedUsers);
+            
+            // Map back to DTO
+            UsersDTO result = UsersMapper.mapToUsersDto(savedUsers);
+            log.info("Mapped back to DTO: {}", result.toString());
+            
+            log.info("=== USERSERVICE CREATEUSERS SUCCESS ===");
+            return result;
+            
         } catch (Exception e) {
+            log.error("=== USERSERVICE CREATEUSERS FAILED ===");
             log.error("Error creating user: {}", e.getMessage(), e);
-            throw new RuntimeException("Failed to create user: " + e.getMessage(), e);
+            
+            if (e instanceof IllegalArgumentException) {
+                throw e; // Re-throw validation errors
+            } else if (e instanceof RuntimeException) {
+                throw e; // Re-throw business logic errors
+            } else {
+                throw new RuntimeException("Failed to create user: " + e.getMessage(), e);
+            }
         }
     }
 
