@@ -53,28 +53,37 @@ SELECT id, username, email, role, pg_typeof(role) as role_type FROM users ORDER 
 SELECT '=== TESTING USER INSERTION ===' as section;
 
 -- Test 1: Try inserting with explicit enum cast
-BEGIN;
-INSERT INTO users (username, password_hash, email, role) 
-VALUES ('test_user_1', 'test_hash', 'test1@test.com', 'BUYER'::user_role);
-SELECT 'Test 1 - Explicit cast: SUCCESS' as result, id, username, role FROM users WHERE username = 'test_user_1';
-ROLLBACK;
+DO $$
+BEGIN
+    INSERT INTO users (username, password_hash, email, role) 
+    VALUES ('test_user_1', 'test_hash', 'test1@test.com', 'BUYER'::user_role);
+    RAISE NOTICE 'Test 1 - Explicit cast: SUCCESS';
+EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'Test 1 - Explicit cast: FAILED - %', SQLERRM;
+END $$;
 
 -- Test 2: Try inserting without cast
-BEGIN;
-INSERT INTO users (username, password_hash, email, role) 
-VALUES ('test_user_2', 'test_hash', 'test2@test.com', 'BUYER');
-SELECT 'Test 2 - No cast: SUCCESS' as result, id, username, role FROM users WHERE username = 'test_user_2';
-ROLLBACK;
+DO $$
+BEGIN
+    INSERT INTO users (username, password_hash, email, role) 
+    VALUES ('test_user_2', 'test_hash', 'test2@test.com', 'BUYER');
+    RAISE NOTICE 'Test 2 - No cast: SUCCESS';
+EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'Test 2 - No cast: FAILED - %', SQLERRM;
+END $$;
 
 -- Test 3: Check what happens with invalid enum value
-BEGIN;
-INSERT INTO users (username, password_hash, email, role) 
-VALUES ('test_user_3', 'test_hash', 'test3@test.com', 'INVALID_ROLE');
-SELECT 'Test 3 - Invalid role: SUCCESS' as result, id, username, role FROM users WHERE username = 'test_user_3';
-ROLLBACK;
+DO $$
+BEGIN
+    INSERT INTO users (username, password_hash, email, role) 
+    VALUES ('test_user_3', 'test_hash', 'test3@test.com', 'INVALID_ROLE');
+    RAISE NOTICE 'Test 3 - Invalid role: SUCCESS';
 EXCEPTION WHEN OTHERS THEN
-    SELECT 'Test 3 - Invalid role: FAILED - ' || SQLERRM as result;
-    ROLLBACK;
+    RAISE NOTICE 'Test 3 - Invalid role: FAILED - %', SQLERRM;
+END $$;
+
+-- Clean up test users
+DELETE FROM users WHERE username IN ('test_user_1', 'test_user_2', 'test_user_3');
 
 -- Query 7: Check backend connection and permissions
 SELECT '=== CHECKING PERMISSIONS ===' as section;
