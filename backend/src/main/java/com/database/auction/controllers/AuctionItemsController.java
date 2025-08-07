@@ -97,8 +97,7 @@ public class AuctionItemsController {
             value = "/{seller_id}/upload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public ResponseEntity<Void> uploadAuctionItem(
-            //  @RequestParam int auctionId,
+    public ResponseEntity<?> uploadAuctionItem(
             @PathVariable("seller_id") int sellerId,
             @RequestParam("item_name") String itemName,
             @RequestParam("category") Category category,
@@ -108,60 +107,71 @@ public class AuctionItemsController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             LocalDateTime closingTime,
             @RequestParam("start_time")
-            //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             String startT,
             @RequestParam(value = "description", required = false) String description,
-            @RequestParam("min_price")       Double minPrice,
+            @RequestParam("min_price") Double minPrice,
             @RequestParam(value = "current_bid", required = false) Double currentBid,
             @RequestParam("images") MultipartFile[] images
-    ) throws IOException, SchedulerException {
-        LocalDateTime startTime;
-        log.info("inserting the items");
-        if ("null".equals(startT )) {
-            startTime  = LocalDateTime.now();
-        } else{
-            startTime = LocalDateTime.parse(startT ,
-                    DateTimeFormatter.ISO_DATE_TIME);
+    ) {
+        try {
+            log.info("=== UPLOAD AUCTION ITEM START ===");
+            log.info("Seller ID: {}, Item: {}, Category: {}", sellerId, itemName, category);
+            
+            LocalDateTime startTime;
+            if ("null".equals(startT) || startT == null || startT.trim().isEmpty()) {
+                startTime = LocalDateTime.now();
+            } else {
+                startTime = LocalDateTime.parse(startT, DateTimeFormatter.ISO_DATE_TIME);
+            }
+
+            // Convert LocalDateTime to java.util.Date
+            Date closing = Date.from(closingTime.atZone(ZoneId.systemDefault()).toInstant());
+
+            // 1) Save AuctionItems
+            AuctionItems item = new AuctionItems();
+            item.setseller_id(sellerId);
+            item.setitem_name(itemName);
+            item.setCategory(category);
+            item.setStartingPrice(startingPrice);
+            item.setbid_increment(bidIncrement);
+            item.setStartTime(Date.from(startTime.atZone(ZoneId.systemDefault()).toInstant()));
+            item.setClosingTime(closing);
+            item.setDescription(description);
+            item.setCurrentBid(currentBid != null ? currentBid : startingPrice);
+            item.setMinPrice(minPrice);
+
+            // Generate auction ID
+            Long maxAuctionId = auctionItemsRepository.findMaxAuctionId();
+            item.setauction_id((int)(maxAuctionId + 1));
+            
+            log.info("Generated auction ID: {}", item.getauction_id());
+            
+            AuctionItems saved = auctionItemsRepository.save(item);
+            log.info("Auction item saved with ID: {}", saved.getId());
+
+            // 2) Save uploaded images
+            for (MultipartFile file : images) {
+                if (file != null && !file.isEmpty()) {
+                    AuctionImage img = new AuctionImage();
+                    img.setImageUrl(file.getOriginalFilename());
+                    img.setAuctionItem(saved);
+                    img.setImageData(file.getBytes());
+                    imagesRepo.save(img);
+                    log.info("Saved image: {}", file.getOriginalFilename());
+                }
+            }
+            
+            auctionEndNotificationService.subscribe(Math.toIntExact(saved.getId()));
+            
+            log.info("=== UPLOAD AUCTION ITEM SUCCESS ===");
+            return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+
+        } catch (Exception e) {
+            log.error("=== UPLOAD AUCTION ITEM FAILED ===");
+            log.error("Error uploading auction item: {}", e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to upload auction item: " + e.getMessage());
         }
-        //log.info("Uploaded time is "+startTime.toString());
-
-        // Convert LocalDateTime to java.util.Date
-        Date closing = Date.from(closingTime.atZone(ZoneId.systemDefault()).toInstant());
-
-        // 1) Save AuctionItems
-        AuctionItems item = new AuctionItems();
-        // item.setauction_id(auctionId);
-        item.setseller_id(sellerId);
-        item.setitem_name(itemName);
-        item.setCategory(category);
-        item.setStartingPrice(startingPrice);
-        item.setbid_increment(bidIncrement);
-        item.setStartTime(Date.from(startTime.atZone(ZoneId.systemDefault()).toInstant()));
-        item.setClosingTime(closing);
-        item.setDescription(description);
-        item.setCurrentBid(currentBid != null ? currentBid : startingPrice);
-        item.setMinPrice(minPrice);
-
-        // ────────────────────────────────────────────────────────────
-        // ★ Here's the new bit: manually assign the primary key ★
-        Long maxAuctionId = auctionItemsRepository.findMaxAuctionId();
-        item.setauction_id((int)(maxAuctionId + 1));
-        // ────────────────────────────────────────────────────────────
-        AuctionItems saved = auctionItemsRepository.save(item);
-
-
-        // 2) Save uploaded images
-        for (MultipartFile file : images) {
-            AuctionImage img = new AuctionImage();
-            img.setImageUrl(file.getOriginalFilename());
-            img.setAuctionItem(saved);
-            img.setImageData(file.getBytes());
-            imagesRepo.save(img);
-        }
-        //auctionEventScheduler.scheduleEndForAuction(saved);
-        auctionEndNotificationService.subscribe(Math.toIntExact(saved.getId()));
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{itemId}/images/{imageId}")

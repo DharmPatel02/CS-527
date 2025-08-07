@@ -24,7 +24,7 @@ public class AuctionItems {
     private String itemName;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "category")
+    @Column(name = "category", columnDefinition = "item_category")
     private Category category;
 
     @Column(name = "starting_price")
