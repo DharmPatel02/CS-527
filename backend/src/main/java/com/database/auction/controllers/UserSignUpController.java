@@ -107,7 +107,7 @@ public class UserSignUpController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UsersDTO> loginUser(@RequestBody @Valid LoginDTO loginDTO) {
+    public ResponseEntity<UsersDTO> loginUser(@RequestBody LoginDTO loginDTO) {
         try {
             log.info("Login attempt for username: {}", loginDTO.getUsername());
             UsersDTO user = usersService.loginUser(loginDTO);
