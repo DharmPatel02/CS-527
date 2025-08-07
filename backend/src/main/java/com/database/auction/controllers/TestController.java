@@ -212,6 +212,22 @@ public class TestController {
             log.info("=== DEBUG SIGNUP EXACT ===");
             log.info("Received request: username={}, email={}, role={}", username, email, role);
             
+            // Set default values if not provided
+            if (username == null || username.trim().isEmpty()) {
+                username = "test_user_" + System.currentTimeMillis();
+            }
+            if (email == null || email.trim().isEmpty()) {
+                email = "test" + System.currentTimeMillis() + "@test.com";
+            }
+            if (password == null || password.trim().isEmpty()) {
+                password = "test123";
+            }
+            if (role == null || role.trim().isEmpty()) {
+                role = "BUYER";
+            }
+            
+            log.info("Using values: username={}, email={}, role={}", username, email, role);
+            
             // Step 1: Create UsersDTO
             UsersDTO usersDTO = new UsersDTO();
             usersDTO.setUsername(username);
