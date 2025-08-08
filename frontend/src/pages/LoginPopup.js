@@ -86,22 +86,25 @@ const LoginPopup = ({ userType, onClose, redirectTo, onForgotPassword }) => {
       if (response.ok) {
         if (isLogin) {
           // Store user data and a simple session token so the app routes allow access
+          const normalizedRole = (data.role || role || "")
+            .toString()
+            .toUpperCase();
           localStorage.setItem("userId", data.user_id);
           localStorage.setItem("username", data.username);
-          localStorage.setItem("role", data.role);
+          localStorage.setItem("role", normalizedRole);
           localStorage.setItem("email", data.email);
           // minimal session token for client-side guards
           localStorage.setItem("token", "session");
 
           console.log("Login successful:", data);
 
-          if (role === "BUYER") {
+          if (normalizedRole === "BUYER") {
             navigate("/summary");
-          } else if (role === "SELLER") {
+          } else if (normalizedRole === "SELLER") {
             navigate("/SellerDashboard");
-          } else if (role === "CUSTOMER_REP") {
+          } else if (normalizedRole === "CUSTOMER_REP") {
             navigate(redirectTo || "/customer-representative");
-          } else if (role === "ADMIN") {
+          } else if (normalizedRole === "ADMIN") {
             // Add admin case
             navigate("/admin");
           }
