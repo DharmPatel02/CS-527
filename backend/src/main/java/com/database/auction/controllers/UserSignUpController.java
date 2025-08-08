@@ -4,9 +4,7 @@ import com.database.auction.dto.LoginDTO;
 import com.database.auction.dto.PasswordDTO;
 import com.database.auction.dto.ProfileDTO;
 import com.database.auction.dto.UsersDTO;
-import com.database.auction.entity.Users;
 import com.database.auction.service.UsersService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -81,6 +79,18 @@ public class UserSignUpController {
             log.info("=== SIGNUP REQUEST SUCCESS ===");
             return new ResponseEntity<>(response, HttpStatus.CREATED);
             
+        } catch (RuntimeException e) {
+            if (e.getMessage() != null && e.getMessage().contains("already exists")) {
+                response.put("success", false);
+                response.put("error", e.getMessage());
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+            }
+            log.error("=== SIGNUP REQUEST FAILED ===");
+            log.error("Error creating user: {}", e.getMessage(), e);
+            response.put("success", false);
+            response.put("error", "Failed to create user: " + e.getMessage());
+            response.put("error_type", e.getClass().getSimpleName());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         } catch (Exception e) {
             log.error("=== SIGNUP REQUEST FAILED ===");
             log.error("Error creating user: {}", e.getMessage(), e);

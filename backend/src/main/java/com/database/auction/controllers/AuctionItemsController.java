@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -97,6 +98,7 @@ public class AuctionItemsController {
             value = "/{seller_id}/upload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
+    @Transactional
     public ResponseEntity<?> uploadAuctionItem(
             @PathVariable("seller_id") int sellerId,
             @RequestParam("item_name") String itemName,

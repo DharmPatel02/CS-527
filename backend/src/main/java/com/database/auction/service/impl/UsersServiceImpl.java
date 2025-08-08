@@ -3,17 +3,14 @@ package com.database.auction.service.impl;
 import com.database.auction.dto.LoginDTO;
 import com.database.auction.dto.ProfileDTO;
 import com.database.auction.dto.UsersDTO;
-import com.database.auction.entity.UserDetails;
 import com.database.auction.entity.Users;
 import com.database.auction.enums.RoleType;
 import com.database.auction.exception.UserNotFound;
-import com.database.auction.mapper.ProfileMapper;
 import com.database.auction.mapper.UsersMapper;
 import com.database.auction.repository.UserDetailsRepository;
 import com.database.auction.repository.UsersRepository;
 import com.database.auction.service.UsersService;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -65,8 +62,14 @@ public class UsersServiceImpl implements UsersService {
             
             log.info("Validation passed, mapping DTO to entity...");
             
-            // Map DTO to entity
+            // Map DTO to entity and hash password
             Users users = UsersMapper.mapToUsers(usersDTO);
+            // Simple BCrypt hashing; replace raw password with hash
+            if (users.getPassword_hash() != null && !users.getPassword_hash().isBlank()) {
+                String hashed = org.springframework.security.crypto.bcrypt.BCrypt
+                        .hashpw(users.getPassword_hash(), org.springframework.security.crypto.bcrypt.BCrypt.gensalt(10));
+                users.setPassword_hash(hashed);
+            }
             log.info("Mapped user entity: {}", users.toString());
             
             // Check if user already exists
@@ -120,11 +123,29 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public UsersDTO loginUser(LoginDTO loginDTO) {
         Users users = usersRepository.findByUsername(loginDTO.getUsername()).orElseThrow();
-        System.out.println("Finding Username for " + loginDTO.getUsername() + " And " + loginDTO.getPassword_hash());
-        if (users.getPassword_hash().equals(loginDTO.getPassword_hash())) {
-            log.info("Username & Password is matching");
-        } else {
-            throw new UserNotFound("Password is not matching for " + loginDTO.getUsername());
+        String storedHash = users.getPassword_hash();
+        String candidate  = loginDTO.getPassword_hash();
+
+        if (storedHash == null || candidate == null || candidate.isBlank()) {
+            throw new UserNotFound("Invalid credentials for " + loginDTO.getUsername());
+        }
+
+        boolean matches;
+        try {
+            matches = org.springframework.security.crypto.bcrypt.BCrypt.checkpw(candidate, storedHash);
+        } catch (Exception e) {
+            // If legacy users had plaintext, allow one-time upgrade: compare plain, then rehash
+            matches = storedHash.equals(candidate);
+            if (matches) {
+                String rehash = org.springframework.security.crypto.bcrypt.BCrypt
+                        .hashpw(candidate, org.springframework.security.crypto.bcrypt.BCrypt.gensalt(10));
+                users.setPassword_hash(rehash);
+                usersRepository.save(users);
+            }
+        }
+
+        if (!matches) {
+            throw new UserNotFound("Invalid credentials for " + loginDTO.getUsername());
         }
         return UsersMapper.mapToUsersDto(users);
     }
@@ -223,8 +244,11 @@ public class UsersServiceImpl implements UsersService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
         // reuse your JDBC-based loader
         System.out.println(password_hash);
+        // Hash new password
+        String newHash = org.springframework.security.crypto.bcrypt.BCrypt
+                .hashpw(password_hash, org.springframework.security.crypto.bcrypt.BCrypt.gensalt(10));
+
         String sql = """
-                
                     UPDATE users u
                     SET  u.password_hash = ?
                     WHERE u.id = ?;
@@ -232,7 +256,7 @@ public class UsersServiceImpl implements UsersService {
 
         int rows = jdbc.update(
                 sql,
-                password_hash, (long) userId
+                newHash, (long) userId
 
         );
         System.out.println("Rows updated: " + rows);
@@ -305,15 +329,14 @@ public class UsersServiceImpl implements UsersService {
             throw new RuntimeException("User with username '" + username + "' already exists");
         }
         
-        // Generate next available user_id
-        String maxUserIdSql = "SELECT COALESCE(MAX(id), 0) + 1 FROM users";
-        Integer nextUserId = jdbc.queryForObject(maxUserIdSql, Integer.class);
-        
         // Create new admin user
         Users adminUser = new Users();
         adminUser.setUsername(username);
         adminUser.setEmail(email);
-        adminUser.setPassword_hash(passwordHash);
+        // hash the provided password
+        String hashed = org.springframework.security.crypto.bcrypt.BCrypt
+                .hashpw(passwordHash, org.springframework.security.crypto.bcrypt.BCrypt.gensalt(10));
+        adminUser.setPassword_hash(hashed);
         adminUser.setRole(RoleType.ADMIN);
         
         Users savedUser = usersRepository.save(adminUser);

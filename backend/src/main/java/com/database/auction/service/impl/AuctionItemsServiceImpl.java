@@ -4,13 +4,11 @@ package com.database.auction.service.impl;
 import com.database.auction.dto.*;
 import com.database.auction.entity.AuctionImage;
 import com.database.auction.entity.AuctionItems;
-import com.database.auction.entity.Bid;
 import com.database.auction.entity.Users;
 import com.database.auction.enums.Category;
 import com.database.auction.enums.RoleType;
 import com.database.auction.exception.AuctionItemNotFoundException;
 import com.database.auction.mapper.AuctionItemsMapper;
-import com.database.auction.mapper.QuestionRowMapper;
 import com.database.auction.repository.AuctionItemsRepository;
 import com.database.auction.repository.BidRepository;
 import com.database.auction.repository.UsersRepository;
@@ -20,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,7 +29,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
     private final AuctionItemsRepository auctionItemsRepository;
     private final AuctionItemsMapper auctionItemsMapper;
     private final UsersRepository userRepository;
-    private final BidRepository bidRepo;
+    private final BidRepository bidRepo; // kept for future use and compatibility
     private final JdbcTemplate jdbc;
     private final AuctionEndNotificationServiceImpl auctionEndNotificationService;
 
@@ -72,7 +69,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
         log.info("Inserting new Auction Item");
         // Verify the seller exists and is of role SELLER
         Users seller = userRepository.findById((long) auctionItemDto.getSellerId()).orElse(null);
-        if (seller == null || !RoleType.SELLER.equals(seller.getRole())) {
+        if (seller == null || seller.getRole() == null || !RoleType.SELLER.equals(seller.getRole())) {
             throw new RuntimeException("Invalid seller: User not found or does not have SELLER role");
         }
 
@@ -128,7 +125,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
 
             // build image URLs
             List<String> urls = item.getImages().stream()
-                    .map(img -> "http://localhost:8080/auth/auction-items/"
+                    .map(img -> "/auth/auction-items/"
                             + item.getId()
                             + "/images/"
                             + img.getId())
@@ -501,10 +498,18 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
                   ORDER BY COUNT(*) DESC
                   LIMIT 1
                 )
-                SELECT ud.*
-                FROM user_details AS ud
+                SELECT u.id       AS userId,
+                       u.username AS username,
+                       u.email    AS email,
+                       u.role     AS role,
+                       d.first_name AS firstName,
+                       d.last_name  AS lastName,
+                       d.address    AS address,
+                       d.phone_number AS phoneNumber
+                FROM users u
+                LEFT JOIN user_details d ON d.username = u.username
                 JOIN BestBuyer   AS bb
-                  ON ud.id = bb.buyer_id;
+                  ON u.id = bb.buyer_id;
               """;
 
         List<AuctionItemDto> auctionlist = jdbc.query(
@@ -535,19 +540,18 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
 
         String sql2 = """
                 WITH BestBuyer AS (
-                  SELECT\s
+                  SELECT
                     buyer_id
                   FROM bids
                   GROUP BY buyer_id
                   ORDER BY COUNT(*) DESC
                   LIMIT 1
                 )
-                -- Step B: pull all auction_items for that buyer
                 SELECT ai.*
                 FROM auction_items AS ai
-                JOIN bids AS b\s
-                  ON ai.auction_id = b.auction_id
-                JOIN BestBuyer AS bb\s
+                JOIN bids AS b
+                  ON ai.id = b.auction_item_id
+                JOIN BestBuyer AS bb
                   ON b.buyer_id = bb.buyer_id;
                     """;
 

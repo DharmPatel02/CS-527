@@ -3,7 +3,6 @@ package com.database.auction.mapper;
 
 import com.database.auction.dto.AuctionItemDto;
 import com.database.auction.dto.AuctionItemSummaryDto;
-import com.database.auction.entity.AuctionImage;
 import com.database.auction.entity.AuctionItems;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -34,12 +33,11 @@ public class AuctionItemsMapper {
         dto.setStartTime(auctionItem.getStartTime());
         // ← here’s the change: build full URLs
         List<String> imageUrls = auctionItem.getImages().stream()
-                .limit(1)   //Will change later
-                .map(img -> "http://localhost:8080/auth/auction-items/"
+                .limit(1)
+                .map(img -> "/auth/auction-items/"
                         + auctionItem.getId()
                         + "/images/"
-                        + img.getId()
-                )
+                        + img.getId())
                 .collect(Collectors.toList());
         dto.setImages(imageUrls);
 
@@ -79,7 +77,7 @@ public class AuctionItemsMapper {
 
         List<String> firstImageUrl = auctionItem.getImages().stream()
                 .limit(1)
-                .map(img -> "http://localhost:8080/auth/auction-items/"
+                .map(img -> "/auth/auction-items/"
                         + auctionItem.getId()
                         + "/images/"
                         + img.getId())
