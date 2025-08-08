@@ -122,7 +122,14 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public UsersDTO loginUser(LoginDTO loginDTO) {
-        Users users = usersRepository.findByUsername(loginDTO.getUsername()).orElseThrow();
+        Users users = usersRepository.findByUsername(loginDTO.getUsername()).orElse(null);
+        if (users == null && loginDTO.getUsername() != null && loginDTO.getUsername().contains("@")) {
+            users = usersRepository.findByEmail(loginDTO.getUsername()).orElse(null);
+        }
+        if (users == null) {
+            throw new UserNotFound("Invalid credentials for " + loginDTO.getUsername());
+        }
+
         String storedHash = users.getPassword_hash();
         String candidate  = loginDTO.getPassword_hash();
 
