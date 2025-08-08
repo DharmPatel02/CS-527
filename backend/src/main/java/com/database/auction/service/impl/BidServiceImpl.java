@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -113,6 +114,7 @@ public class BidServiceImpl implements BidService {
 //    }
 
     @Override
+    @Transactional
     public BidDto placeBid(BidDto dto) {
         log.info("Placing bid by buyer {} on auction {}", dto.getBuyerId(), dto.getAuctionId());
 
@@ -124,6 +126,11 @@ public class BidServiceImpl implements BidService {
         Users buyer = usersRepo.findById((long) dto.getBuyerId())
                 .orElseThrow(() -> new UserNotFound(
                         "Buyer not found: " + dto.getBuyerId()));
+
+        // prevent bids after closing time
+        if (item.getClosingTime() != null && item.getClosingTime().before(new java.util.Date())) {
+            throw new IllegalStateException("Auction is closed");
+        }
 
         if (dto.getBidTime() == null) {
             dto.setBidTime(new Date());
@@ -151,6 +158,16 @@ public class BidServiceImpl implements BidService {
             // --- SECOND OR LATER BID: second-highest + increment
             double secondReserve = allBids.get(1).getReservePrice();
             newCurrentBid = secondReserve + item.getbid_increment();
+        }
+
+        // enforce bidAmount at least current + increment for later bids
+        if (allBids.size() > 1) {
+            double minAllowed = (item.getCurrentBid() == null)
+                    ? item.getStartingPrice() + item.getbid_increment()
+                    : item.getCurrentBid() + item.getbid_increment();
+            if (dto.getBidAmount() == null || dto.getBidAmount() < minAllowed) {
+                throw new IllegalArgumentException("Bid amount below minimum increment");
+            }
         }
         item.setCurrentBid(newCurrentBid);
 
