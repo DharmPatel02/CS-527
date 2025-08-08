@@ -9,7 +9,7 @@ const Navbar = () => {
 
   // Function to determine the correct home route based on user role
   const getHomeRoute = () => {
-    const role = localStorage.getItem("role");
+    const role = (localStorage.getItem("role") || "").toUpperCase();
     const token = localStorage.getItem("token");
 
     console.log("Debug - Role from localStorage:", role);
@@ -30,7 +30,7 @@ const Navbar = () => {
       case "ADMIN":
         console.log("Debug - Admin detected, redirecting to admin");
         return "/admin";
-      case "CUSTOMER_REPRESENTATIVE":
+      case "CUSTOMER_REP":
         console.log(
           "Debug - Customer Rep detected, redirecting to customer-representative"
         );
