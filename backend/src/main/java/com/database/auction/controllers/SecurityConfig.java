@@ -41,6 +41,12 @@ public class SecurityConfig {
                     .map(String::trim)
                     .filter(s -> !s.isEmpty())
                     .toList();
+            // Always include wildcard patterns for preview domains
+            if (!allowedList.contains("https://*.netlify.app")) {
+                allowedList = new java.util.ArrayList<>(allowedList);
+                ((java.util.ArrayList<String>) allowedList).add("https://*.netlify.app");
+                ((java.util.ArrayList<String>) allowedList).add("https://*.vercel.app");
+            }
         } else {
             // Fallback to default origins and patterns
             allowedList = Arrays.asList(
