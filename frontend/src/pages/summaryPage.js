@@ -14,7 +14,7 @@ export default function SummaryPage({ addToCart }) {
   // 1. Auth guard
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
+    const role = (localStorage.getItem("role") || "").toUpperCase();
     if (!token || role !== "BUYER") {
       console.log("Invalid token or role, redirecting to login");
       navigate("/");

@@ -21,7 +21,7 @@ const AdminPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const role = localStorage.getItem("role");
+    const role = (localStorage.getItem("role") || "").toUpperCase();
     const token = localStorage.getItem("token");
 
     console.log("Token from localStorage:", token);
