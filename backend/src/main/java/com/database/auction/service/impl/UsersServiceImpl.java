@@ -62,14 +62,8 @@ public class UsersServiceImpl implements UsersService {
             
             log.info("Validation passed, mapping DTO to entity...");
             
-            // Map DTO to entity and hash password
+            // Map DTO to entity; store password as provided (no hashing per requirement)
             Users users = UsersMapper.mapToUsers(usersDTO);
-            // Simple BCrypt hashing; replace raw password with hash
-            if (users.getPassword_hash() != null && !users.getPassword_hash().isBlank()) {
-                String hashed = org.springframework.security.crypto.bcrypt.BCrypt
-                        .hashpw(users.getPassword_hash(), org.springframework.security.crypto.bcrypt.BCrypt.gensalt(10));
-                users.setPassword_hash(hashed);
-            }
             log.info("Mapped user entity: {}", users.toString());
             
             // Check if user already exists
@@ -137,18 +131,16 @@ public class UsersServiceImpl implements UsersService {
             throw new UserNotFound("Invalid credentials for " + loginDTO.getUsername());
         }
 
-        boolean matches;
-        try {
-            matches = org.springframework.security.crypto.bcrypt.BCrypt.checkpw(candidate, storedHash);
-        } catch (Exception e) {
-            // If legacy users had plaintext, allow one-time upgrade: compare plain, then rehash
+        boolean matches = false;
+        // Accept existing hashed users (backward compatibility)
+        if (storedHash.startsWith("$2")) {
+            try {
+                matches = org.springframework.security.crypto.bcrypt.BCrypt.checkpw(candidate, storedHash);
+            } catch (Exception ignore) { /* fall through */ }
+        }
+        // Plain-text comparison (new requirement)
+        if (!matches) {
             matches = storedHash.equals(candidate);
-            if (matches) {
-                String rehash = org.springframework.security.crypto.bcrypt.BCrypt
-                        .hashpw(candidate, org.springframework.security.crypto.bcrypt.BCrypt.gensalt(10));
-                users.setPassword_hash(rehash);
-                usersRepository.save(users);
-            }
         }
 
         if (!matches) {
@@ -251,10 +243,6 @@ public class UsersServiceImpl implements UsersService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
         // reuse your JDBC-based loader
         System.out.println(password_hash);
-        // Hash new password
-        String newHash = org.springframework.security.crypto.bcrypt.BCrypt
-                .hashpw(password_hash, org.springframework.security.crypto.bcrypt.BCrypt.gensalt(10));
-
         String sql = """
                     UPDATE users u
                     SET  u.password_hash = ?
@@ -263,7 +251,7 @@ public class UsersServiceImpl implements UsersService {
 
         int rows = jdbc.update(
                 sql,
-                newHash, (long) userId
+                password_hash, (long) userId
 
         );
         System.out.println("Rows updated: " + rows);
@@ -336,14 +324,11 @@ public class UsersServiceImpl implements UsersService {
             throw new RuntimeException("User with username '" + username + "' already exists");
         }
         
-        // Create new admin user
+        // Create new admin user (store password as provided)
         Users adminUser = new Users();
         adminUser.setUsername(username);
         adminUser.setEmail(email);
-        // hash the provided password
-        String hashed = org.springframework.security.crypto.bcrypt.BCrypt
-                .hashpw(passwordHash, org.springframework.security.crypto.bcrypt.BCrypt.gensalt(10));
-        adminUser.setPassword_hash(hashed);
+        adminUser.setPassword_hash(passwordHash);
         adminUser.setRole(RoleType.ADMIN);
         
         Users savedUser = usersRepository.save(adminUser);
