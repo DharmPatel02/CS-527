@@ -33,27 +33,34 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        
+
         // Parse allowed origins from environment variable
-        List<String> allowedOriginsList;
+        List<String> allowedList;
         if (allowedOrigins != null && !allowedOrigins.trim().isEmpty()) {
-            allowedOriginsList = Arrays.asList(allowedOrigins.split(","));
+            allowedList = Arrays.stream(allowedOrigins.split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .toList();
         } else {
-            // Fallback to default origins
-            allowedOriginsList = Arrays.asList(
+            // Fallback to default origins and patterns
+            allowedList = Arrays.asList(
                 "http://localhost:3000",
-                "http://localhost:3001", 
+                "http://localhost:3001",
                 "http://127.0.0.1:3000",
+                // common preview domains
+                "https://*.netlify.app",
+                "https://*.vercel.app",
+                // known production URLs
                 "https://vehicle-auction-system-frontend.vercel.app",
                 "https://auction-system-frontend.vercel.app",
-                "https://vehicle-auction-system.netlify.app",
-                "https://*.netlify.app"
+                "https://vehicle-auction-system.netlify.app"
             );
         }
-        
-        System.out.println("CORS Allowed Origins: " + allowedOriginsList);
-        configuration.setAllowedOrigins(allowedOriginsList);
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        System.out.println("CORS Allowed Origin Patterns: " + allowedList);
+        // Use origin patterns to support wildcard subdomains like *.netlify.app
+        configuration.setAllowedOriginPatterns(allowedList);
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
         configuration.setExposedHeaders(List.of("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
