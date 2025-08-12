@@ -117,20 +117,22 @@ export default function SummaryPage({ addToCart }) {
   const getImageUrl = (item) => {
     if (item.images?.length) {
       const img = item.images[0];
-      // If backend image URL as object
-      if (typeof img === "object" && img.id) {
-        return `${API_ENDPOINTS.BASE_URL}/auth/auction-items/${item.id}/images/${img.id}`;
-      }
-      // If backend image URL as string, replace localhost with production URL
       if (typeof img === "string") {
+        if (img.startsWith("/")) {
+          return `${API_ENDPOINTS.BASE_URL}${img}`;
+        }
         if (img.includes("localhost:8080")) {
           return img.replace("http://localhost:8080", API_ENDPOINTS.BASE_URL);
         }
         return img;
       }
-      return img.url || img.src;
+      if (typeof img === "object" && img.id && (item.id || item.itemId)) {
+        const itemIdForPath = item.id || item.itemId;
+        return `${API_ENDPOINTS.BASE_URL}/auth/auction-items/${itemIdForPath}/images/${img.id}`;
+      }
+      return img?.url || img?.src;
     }
-    // Use a working placeholder
+    // Placeholder
     return (
       item.imageUrl ||
       item.image ||

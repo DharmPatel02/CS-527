@@ -261,15 +261,26 @@ const ItemDetail = () => {
     }
   };
 
-  // Get image URL
+  // Get image URL with base prefixing for relative paths
   const getImageUrl = (item) => {
-    if (item.images?.length) {
+    if (item?.images?.length) {
       const img = item.images[0];
-      return typeof img === "string" ? img : img.url || img.src;
+      if (typeof img === "string") {
+        if (img.startsWith("/")) return `${API_ENDPOINTS.BASE_URL}${img}`;
+        if (img.includes("localhost:8080")) {
+          return img.replace("http://localhost:8080", API_ENDPOINTS.BASE_URL);
+        }
+        return img;
+      }
+      if (img && img.id && (item.id || item.itemId)) {
+        const itemIdForPath = item.id || item.itemId;
+        return `${API_ENDPOINTS.BASE_URL}/auth/auction-items/${itemIdForPath}/images/${img.id}`;
+      }
+      return img?.url || img?.src;
     }
     return (
-      item.imageUrl ||
-      item.image ||
+      item?.imageUrl ||
+      item?.image ||
       "https://via.placeholder.com/300x200?text=No+Image"
     );
   };

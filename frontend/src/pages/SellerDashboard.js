@@ -259,9 +259,13 @@ const SellerDashboard = () => {
   );
   const closed = items.filter((i) => new Date(i.closing_time) <= now);
 
-  // Helper to fix localhost URLs in image URLs
+  // Helper to fix relative and localhost URLs in image URLs
   const fixImageUrl = (url) => {
-    if (typeof url === "string" && url.includes("localhost:8080")) {
+    if (typeof url !== "string") return url;
+    if (url.startsWith("/")) {
+      return `${API_ENDPOINTS.BASE_URL}${url}`;
+    }
+    if (url.includes("localhost:8080")) {
       return url.replace("http://localhost:8080", API_ENDPOINTS.BASE_URL);
     }
     return url;
