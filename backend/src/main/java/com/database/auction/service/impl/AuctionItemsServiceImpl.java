@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -47,6 +48,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<AuctionItemDto> findAllAuctionItems() {
         List<AuctionItems> items = auctionItemsRepository.findAll();
         return items.stream()
@@ -55,6 +57,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AuctionItemSummaryDto> findAllAuctionItemSummaries() {
         List<AuctionItems> items = auctionItemsRepository.findAll();
         log.info(String.valueOf(items.stream()
@@ -102,6 +105,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public AuctionItemDto findAuctionItemByAuctionId(int auction_id) {
         AuctionItems item = auctionItemsRepository.findByAuctionIdNative(auction_id)
                 .orElseThrow(() -> new AuctionItemNotFoundException(
@@ -110,6 +114,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AuctionItemSummaryDto> findAuctionItemsByCategory(Category category) {
         List<AuctionItems> items = auctionItemsRepository.findAllByCategory(category);
         return items.stream()
@@ -118,6 +123,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AuctionItemSellerSummaryDto> findSellerSummary(int sellerId) {
         return auctionItemsRepository.findBySellerId(sellerId).stream().map(item -> {
             AuctionItemSellerSummaryDto dto = new AuctionItemSellerSummaryDto();
@@ -209,6 +215,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
     }
 
 
+    @Transactional(readOnly = true)
     public List<QuestionDTO> getallquessans(int auctionId) {
         System.out.println("In Service Implementation");
         log.info("Fetching questions for auction_id: {}", auctionId);
@@ -241,6 +248,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
     }
 
 
+    @Transactional(readOnly = true)
     public List<AuctionItemDto> getSalesReportByAuctionId(Integer auction_id) {
         System.out.println("In Service Implementation");
 
@@ -281,6 +289,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
         return list;
     }
 
+    @Transactional(readOnly = true)
     public List<AuctionItemDto> getsalesreport() {
         System.out.println("In Service Implementation");
 
@@ -319,6 +328,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
     }
 
 
+    @Transactional(readOnly = true)
     public List<AuctionItemDto> getsalesreportByCategory(String category) {
         System.out.println("In Service Implementation");
         // fetch the questions for this itemId
@@ -360,6 +370,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
 
 
 
+    @Transactional(readOnly = true)
     public List<AuctionItemDto> getsalesreportBySellerId(Integer seller_id) {
         System.out.println("In Service Implementation");
         // fetch the questions for this itemId
@@ -401,6 +412,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<BuyerOrderDTO> findOrdersByBuyer(int buyerId) {
         Date now = new Date();
         return auctionItemsRepository
@@ -429,6 +441,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<QuestionDTO> getUnansweredQuestions(int auctionId) {
         String sql = """
         SELECT question_id,
@@ -457,6 +470,7 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AuctionItemDto> searchAuctions(String query) {
         // 1) text‐based matches
         List<AuctionItems> textMatches =

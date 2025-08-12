@@ -103,7 +103,7 @@ public class AuctionItemsController {
             @PathVariable("seller_id") int sellerId,
             @RequestParam("item_name") String itemName,
             @RequestParam("category") Category category,
-            @RequestParam("starting_price") Double startingPrice,
+            @RequestParam(value = "starting_price", required = false) Double startingPrice,
             @RequestParam("bid_increment") Double bidIncrement,
             @RequestParam("closing_time")
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -111,9 +111,9 @@ public class AuctionItemsController {
             @RequestParam("start_time")
             String startT,
             @RequestParam(value = "description", required = false) String description,
-            @RequestParam("min_price") Double minPrice,
+            @RequestParam(value = "min_price", required = false) Double minPrice,
             @RequestParam(value = "current_bid", required = false) Double currentBid,
-            @RequestParam("images") MultipartFile[] images
+            @RequestParam(value = "images", required = false) MultipartFile[] images
     ) {
         try {
             log.info("=== UPLOAD AUCTION ITEM START ===");
@@ -152,18 +152,21 @@ public class AuctionItemsController {
             log.info("Auction item saved with ID: {}", saved.getId());
 
             // 2) Save uploaded images
-            for (MultipartFile file : images) {
-                if (file != null && !file.isEmpty()) {
-                    AuctionImage img = new AuctionImage();
-                    img.setImageUrl(file.getOriginalFilename());
-                    img.setAuctionItem(saved);
-                    img.setImageData(file.getBytes());
-                    imagesRepo.save(img);
-                    log.info("Saved image: {}", file.getOriginalFilename());
+            if (images != null) {
+                for (MultipartFile file : images) {
+                    if (file != null && !file.isEmpty()) {
+                        AuctionImage img = new AuctionImage();
+                        img.setImageUrl(file.getOriginalFilename());
+                        img.setAuctionItem(saved);
+                        img.setImageData(file.getBytes());
+                        imagesRepo.save(img);
+                        log.info("Saved image: {}", file.getOriginalFilename());
+                    }
                 }
             }
             
-            auctionEndNotificationService.subscribe(Math.toIntExact(saved.getId()));
+            // Subscribe by logical auction_id (not DB PK) to align with other code paths
+            auctionEndNotificationService.subscribe(saved.getauction_id());
             
             log.info("=== UPLOAD AUCTION ITEM SUCCESS ===");
             return ResponseEntity.status(HttpStatus.CREATED).body(saved);
