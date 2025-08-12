@@ -1,6 +1,6 @@
 package com.database.auction.dto;
 
-import com.database.auction.enums.RoleType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,19 +8,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-//@AllArgsConstructor
 public class PasswordDTO {
 
+    // Accept both snake_case and camelCase JSON keys
+    @JsonProperty("password_hash")
+    private String passwordHash;
 
-    private String password_hash;
-
-
-
-//    public UsersDTO(Integer user_id, String username, String password_hash, String email, RoleType role) {
-//        this.user_id = user_id;
-//        this.username = username;
-//        this.password_hash = password_hash;
-//        this.email = email;
-//        this.role = role;
-//    }
+    // Backwards-compatible accessors used elsewhere in code
+    public String getPassword_hash() { return passwordHash; }
+    public void setPassword_hash(String v) { this.passwordHash = v; }
 }
