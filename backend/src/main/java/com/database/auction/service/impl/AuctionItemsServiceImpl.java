@@ -171,18 +171,12 @@ public class AuctionItemsServiceImpl implements AuctionItemsService {
         // reuse your JDBC-based loader
         System.out.println(auction_id);
         String sql = """
-        
-            UPDATE auction_questions q
-            SET  q.answer = ?
-            WHERE q.question_id = ? and q.auction_id=?;
+            UPDATE auction_questions
+               SET answer = ?
+             WHERE question_id = ?
         """;
 
-        int rows= jdbc.update(
-                sql,
-                answer,
-                question_id,auction_id
-
-        );
+        int rows= jdbc.update(sql, answer, question_id);
         System.out.println("Rows updated: " + rows);
 
         if (rows != 1) {
