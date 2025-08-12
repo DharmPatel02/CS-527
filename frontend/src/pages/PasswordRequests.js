@@ -13,16 +13,14 @@ const PasswordRequests = () => {
 
   const fetchRequests = async () => {
     try {
-      const response = await fetch(
-        "API_ENDPOINTS.NULL_PASSWORDS",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await fetch(API_ENDPOINTS.NULL_PASSWORDS, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -44,9 +42,10 @@ const PasswordRequests = () => {
 
     try {
       const response = await fetch(
-        `${API_ENDPOINTS.BASE_URL}/update-password/${userId}`,
+        `${API_ENDPOINTS.BASE_URL}/auth/pwd_change/${userId}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -117,5 +116,3 @@ const PasswordRequests = () => {
 };
 
 export default PasswordRequests;
-
-

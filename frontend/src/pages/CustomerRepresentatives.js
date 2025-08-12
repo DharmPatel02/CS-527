@@ -232,6 +232,7 @@ const CustomerRepresentative = () => {
         `${API_ENDPOINTS.BASE_URL}/auth/pwd_change/${userId}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
