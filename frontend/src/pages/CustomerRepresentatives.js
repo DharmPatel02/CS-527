@@ -47,8 +47,9 @@ const CustomerRepresentative = () => {
 
       // Fetch answered questions
       const answeredResponse = await fetch(
-        `API_ENDPOINTS.AUCTION_ITEMS/getallquessans/${auctionIdQA}`,
+        `${API_ENDPOINTS.BASE_URL}/auth/auction-items/getallquessans/${auctionIdQA}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -58,8 +59,9 @@ const CustomerRepresentative = () => {
           `Failed to fetch answered questions: ${answeredResponse.statusText}`
         );
       }
-
-      const answeredQuestions = await answeredResponse.json();
+      // Parse answered (handle 204/empty body)
+      const answeredText = await answeredResponse.text();
+      const answeredQuestions = answeredText ? JSON.parse(answeredText) : [];
       let combinedQuestions = Array.isArray(answeredQuestions)
         ? answeredQuestions
         : [];
@@ -67,8 +69,9 @@ const CustomerRepresentative = () => {
       // Fetch unanswered questions
       try {
         const unansweredResponse = await fetch(
-          `${API_ENDPOINTS.BASE_URL}/questions/unanswered/${auctionIdQA}`,
+          `${API_ENDPOINTS.BASE_URL}/auth/auction-items/questions/unanswered/${auctionIdQA}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -79,7 +82,10 @@ const CustomerRepresentative = () => {
           );
         }
 
-        const unansweredQuestions = await unansweredResponse.json();
+        const unansweredText = await unansweredResponse.text();
+        const unansweredQuestions = unansweredText
+          ? JSON.parse(unansweredText)
+          : [];
         const unansweredArray = Array.isArray(unansweredQuestions)
           ? unansweredQuestions
           : [];
@@ -115,9 +121,10 @@ const CustomerRepresentative = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `API_ENDPOINTS.AUCTION_ITEMS/update_answer/${questionId}/${auctionId}`,
+        `${API_ENDPOINTS.BASE_URL}/auth/auction-items/update_answer/${questionId}/${auctionId}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -169,16 +176,14 @@ const CustomerRepresentative = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        "API_ENDPOINTS.NULL_PASSWORDS",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(API_ENDPOINTS.NULL_PASSWORDS, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.status === 204) {
         setError("There are no password requests.");
