@@ -232,13 +232,17 @@ const CustomerRepresentative = () => {
         `${API_ENDPOINTS.BASE_URL}/auth/pwd_change/${userId}`,
         {
           method: "POST",
+          mode: "cors",
           credentials: "include",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json; charset=utf-8",
+            Accept: "application/json, text/plain, */*",
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
+            // send both keys to be extra-safe with DTO binding
             password_hash: password,
+            passwordHash: password,
           }),
         }
       );
