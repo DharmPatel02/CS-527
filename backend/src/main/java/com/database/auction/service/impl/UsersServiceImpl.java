@@ -244,9 +244,9 @@ public class UsersServiceImpl implements UsersService {
         // reuse your JDBC-based loader
         System.out.println(password_hash);
         String sql = """
-                    UPDATE users u
-                    SET  u.password_hash = ?
-                    WHERE u.id = ?;
+                    UPDATE users
+                       SET password_hash = ?
+                     WHERE id = ?;
                 """;
 
         int rows = jdbc.update(
@@ -272,10 +272,9 @@ public class UsersServiceImpl implements UsersService {
 
         System.out.println(user.getId());
         String sql = """
-                
-                   update users u
-                   set password_hash=null
-                    WHERE u.id=?;
+                   UPDATE users
+                      SET password_hash = NULL
+                    WHERE id = ?;
                 """;
 
         int rows = jdbc.update(
