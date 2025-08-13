@@ -1,7 +1,6 @@
 package com.database.auction.controllers;
 
 import com.database.auction.dto.LoginDTO;
-import com.database.auction.dto.PasswordDTO;
 import com.database.auction.dto.ProfileDTO;
 import com.database.auction.dto.UsersDTO;
 import com.database.auction.service.UsersService;
@@ -10,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -151,12 +149,32 @@ public class UserSignUpController {
         }
     }
 
-    @PostMapping(value = "/pwd_change/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> pwd_Change(@PathVariable int userId, @RequestBody PasswordDTO password_hash) {
+    @PostMapping(value = "/pwd_change/{userId}")
+    public ResponseEntity<Void> pwd_Change(
+            @PathVariable int userId,
+            @RequestBody(required = false) Map<String, Object> body,
+            @RequestParam(value = "password_hash", required = false) String passwordHashSnake,
+            @RequestParam(value = "passwordHash", required = false) String passwordHashCamel
+    ) {
         try {
-            log.info("Password change request for user ID: {}", userId);
-            int rows = usersService.pwd_Change(userId, password_hash.getPassword_hash());
-            
+            // Extract password from any of: JSON body (snake or camel) or query/form params
+            String passwordValue = null;
+            if (body != null) {
+                Object v = body.get("password_hash");
+                if (v == null) v = body.get("passwordHash");
+                if (v != null) passwordValue = String.valueOf(v);
+            }
+            if (passwordValue == null) passwordValue = passwordHashSnake;
+            if (passwordValue == null) passwordValue = passwordHashCamel;
+
+            log.info("Password change request for user ID: {} (payload present: {})", userId, body != null);
+            if (passwordValue == null || passwordValue.isBlank()) {
+                log.warn("Password change failed: missing password for user {}", userId);
+                return ResponseEntity.badRequest().build();
+            }
+
+            int rows = usersService.pwd_Change(userId, passwordValue);
+
             if (rows > 0) {
                 log.info("Password changed successfully for user ID: {}", userId);
                 return ResponseEntity.status(HttpStatus.CREATED).build();
